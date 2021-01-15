@@ -1316,7 +1316,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fe0191;
+  background: #a7987c;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2608,8 +2608,14 @@ ul.breadcrumb li + li:last-child {
   -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
 }
+.post-body {
+  margin-left: 40px;
+  margin-right: 40px;
+  margin-bottom: 5px;
+}
 .content-wrap {
-  background-color: rgba(187,255,255,0.1);
+  background-color: rgba(255,255,255,0.4);
+  padding: 20px;
 }
 .content post posts-expand {
   background-color: #fff;
@@ -2623,7 +2629,7 @@ ul.breadcrumb li + li:last-child {
   background: #86bee9;
 }
 .site-title {
-  color: #fffacd;
+  color: #fff;
 }
 .site-subtitle {
   color: #fffff0;
@@ -2646,4 +2652,7 @@ a {
 }
 .headband {
   background: #86bee9;
+}
+.sidebar-inner {
+  background: #ffebeb;
 }
