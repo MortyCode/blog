@@ -462,6 +462,259 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/11/java/Redis%E5%A4%87%E8%A6%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/11/java/Redis%E5%A4%87%E8%A6%81/" class="post-title-link" itemprop="url">Redis备要</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-11 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-11T00:00:00+08:00">2020-02-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-18 16:47:53" itemprop="dateModified" datetime="2021-02-18T16:47:53+08:00">2021-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>  书单：<br>  《 Redis的设计与实现》<br>        《Netty、Redis、Zookeeper高并发实战》</p>
+</blockquote>
+<hr>
+<h1 id="1-Redis是什么"><a href="#1-Redis是什么" class="headerlink" title="1. Redis是什么"></a>1. Redis是什么</h1><p>Redis是一个C语言开发的高性能Key-Value数据库。</p>
+<hr>
+<h1 id="2-Redis的使用场景"><a href="#2-Redis的使用场景" class="headerlink" title="2. Redis的使用场景"></a>2. Redis的使用场景</h1><ul>
+<li>缓存</li>
+<li>分布式锁</li>
+<li>GEO可以支持地理位置搜索</li>
+<li>消息订阅<h2 id="2-1缓存"><a href="#2-1缓存" class="headerlink" title="2.1缓存"></a>2.1缓存</h2><h3 id="2-1-1-缓存穿透"><a href="#2-1-1-缓存穿透" class="headerlink" title="2.1.1 缓存穿透"></a>2.1.1 缓存穿透</h3>缓存穿透指的客户端不断的查询一个数据库不存在的值，多次缓存都没有命中，缓存失去了存在的意义，导致DB不断被直接访问，产生很大压力，就是缓存穿透。<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3></li>
+</ul>
+<ol>
+<li>布隆过滤器 -&gt;将不存在的数据在布隆过滤器中做过滤</li>
+<li>存储空值-&gt;直接将不存在的数据也进行存储，只不过是空值</li>
+</ol>
+<p>以上方法虽然可以解决缓存穿透，但是有可能会有数据一致性的问题。</p>
+<h3 id="2-1-2-缓存击穿"><a href="#2-1-2-缓存击穿" class="headerlink" title="2.1.2 缓存击穿"></a>2.1.2 缓存击穿</h3><p>热点数据缓存失效后，大量请求并发访问，同时去缓存数据，导致的数据库压力暴增。</p>
+<h3 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h3><h3 id="2-1-3-缓存雪崩"><a href="#2-1-3-缓存雪崩" class="headerlink" title="2.1.3 缓存雪崩"></a>2.1.3 缓存雪崩</h3><p> 大量数据同时过期，然后去缓存的适合，引发大量访问数据库，数据库压力过大甚至down机</p>
+<h3 id="解决-2"><a href="#解决-2" class="headerlink" title="解决"></a>解决</h3><ol>
+<li>随机时间过期</li>
+<li>缓存永不过期策略</li>
+<li>缓存添加锁机制和重试，保证某一个缓存在同一时刻，只能被一个线程缓存，</li>
+<li>对于部分新功能增加的热点缓存，可以在程序启动后主动进行缓存 ，进行数据预热</li>
+<li>Redis高可用，（集群,见下面集群篇）</li>
+</ol>
+<h2 id="2-2-缓存一致性的问题"><a href="#2-2-缓存一致性的问题" class="headerlink" title="2.2 缓存一致性的问题"></a>2.2 缓存一致性的问题</h2><p>注意，无论是先写缓存后写数据库，还是先写数据库后写缓存，都是有问题的，因为读写是并发的，都会出现数据不一致的情况。</p>
+<h3 id="1-写后删除"><a href="#1-写后删除" class="headerlink" title="1.  写后删除"></a>1.  写后删除</h3><p>在写入数据库成功后，删除缓存，这样在数据访问的适合，重新缓存，就能获取到最新的数据。这种其实也是有几率失败了，如一个读操作没有命中缓存，然后准备存储空的时候，写操作执行了删除，然后读操作在写缓存的时候就是错误的。</p>
+<h3 id="2-延时双删"><a href="#2-延时双删" class="headerlink" title="2. 延时双删"></a>2. 延时双删</h3><p>为了解决上面的问题，可以使用延时双删的策略，一般是 删除缓存-&gt;更新数据-&gt;sleep(n) -&gt;删除缓存的方式解决</p>
+<h3 id="3-只写缓存"><a href="#3-只写缓存" class="headerlink" title="3. 只写缓存"></a>3. 只写缓存</h3><p>只写缓存，然后异步更新到mysql类似与mq，msyql之类的刷盘机制，即我们只操作缓存，然后通过异步的方式，去更新数据库</p>
+<h3 id="4-借助于canal工具更新"><a href="#4-借助于canal工具更新" class="headerlink" title="4.借助于canal工具更新"></a>4.借助于canal工具更新</h3><p>程序只写入数据库，然后另外的线程监听canal，更新缓存</p>
+<blockquote>
+<p>这里学习了左耳耗子的博客 <a target="_blank" rel="noopener" href="https://coolshell.cn/articles/17416.html">https://coolshell.cn/articles/17416.html</a></p>
+</blockquote>
+<hr>
+<h2 id="2-2-分布式锁"><a href="#2-2-分布式锁" class="headerlink" title="2.2 分布式锁"></a>2.2 分布式锁</h2><h3 id="分布式锁需要满足的条件："><a href="#分布式锁需要满足的条件：" class="headerlink" title="分布式锁需要满足的条件："></a>分布式锁需要满足的条件：</h3><ol>
+<li>存储空间 -&gt; zai </li>
+<li>唯一标示</li>
+<li>至少两个可变状态<h3 id="分布式锁核心概念"><a href="#分布式锁核心概念" class="headerlink" title="分布式锁核心概念"></a>分布式锁核心概念</h3></li>
+<li>加锁</li>
+<li>解锁</li>
+<li>锁超时<h3 id="2-2-1-Redis分布式锁"><a href="#2-2-1-Redis分布式锁" class="headerlink" title="2.2.1 Redis分布式锁"></a>2.2.1 Redis分布式锁</h3></li>
+<li>加锁<br>基于set 命令的NX PX/EX 选项来实现加锁(在2.6之后可以用，2.6之前需要使用lua)<br>NX:不存在才设置<br>PX/EX:超时时间（区别 一个毫秒/一个秒）<br>value: 唯一标示字符串，在解锁的时候使用</li>
+<li>解锁<br>需要使用LUA脚本，将加锁时候Value的唯一字符串进行判断，如果相同，则说明是当前锁，<h4 id="redisson实现了基于Redis的分布式锁"><a href="#redisson实现了基于Redis的分布式锁" class="headerlink" title="redisson实现了基于Redis的分布式锁"></a>redisson实现了基于Redis的分布式锁</h4></li>
+</ol>
+<h3 id="2-2-2-ZK实现的分布式锁"><a href="#2-2-2-ZK实现的分布式锁" class="headerlink" title="2.2.2 ZK实现的分布式锁"></a>2.2.2 ZK实现的分布式锁</h3><ul>
+<li><p>最基本的是利用ZK节点不能重复的特性，来实现分布式锁，但是这样可能产生惊群效应</p>
+</li>
+<li><p>ZK中还有一种名为临时节点的节点，临时节点由某个客户端创建，当客户端与ZK集群断开连接，则该节点自动被删除。EPHEMERAL_SEQUENTIAL为临时顺序节点。</p>
+</li>
+<li><p>ZK临时顺序节点是天然的发号器</p>
+</li>
+<li><p>ZK的递增节点可以保证锁的公平性</p>
+</li>
+<li><p>ZK的节点监听可以保证节点的锁的传递</p>
+</li>
+<li><p>ZK的节点监听可以避免惊群效应</p>
+</li>
+</ul>
+<h4 id="加锁过程"><a href="#加锁过程" class="headerlink" title="加锁过程"></a>加锁过程</h4><ol>
+<li>在一个永久节点下面创建一个临时节点，然后判断自己是否是最小的那个节点，如果不是，就监听前一个节点</li>
+<li>如果监听到前一个节点释放，就判断自己是否是最小的那个节点，如果是则加锁成功，否则持续监听，</li>
+<li>完成后删除自己的节点，进行锁释放工作</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>性能不高</p>
+<h5 id="Menagerie-实现了基于ZK的分布式锁"><a href="#Menagerie-实现了基于ZK的分布式锁" class="headerlink" title="Menagerie 实现了基于ZK的分布式锁"></a>Menagerie 实现了基于ZK的分布式锁</h5><h3 id="分布式锁选择"><a href="#分布式锁选择" class="headerlink" title="分布式锁选择"></a>分布式锁选择</h3><blockquote>
+<p>并发高，性能要求高redis ,高可靠，高可用，公平，ZK</p>
+</blockquote>
+<ul>
+<li>基于Redis的分布式锁。适用于并发量很大、性能要求很高而可靠性问题可以通过其他方案去弥补的场景。</li>
+<li>基于ZooKeeper的分布式锁。适用于高可靠（高可用），而并发量不是太高的场景。</li>
+</ul>
+<hr>
+<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>Redis服务器默认会创建16个数据库，自定义是由 db num属性决定的</p>
+<h2 id="数据库键空间"><a href="#数据库键空间" class="headerlink" title="数据库键空间"></a>数据库键空间</h2><ul>
+<li>dict字典保存了数据库中的所有键值对，我们将这个字典称为键空间（key space）</li>
+<li>在读取一个键之后，服务器会更新键的LRU（最后一次使用）时间，这个值可以用于计算键的闲置时间，使用OBJECT idletime命令可以查看键key的闲置时间。</li>
+<li>在读取一个键之后（读操作和写操作都要对键进行读取），服务器会根据键是否存在来更新服务器的键空间命中（hit）次数或键空间不命中（miss）次数，这两个值可以在INFO stats命令的keyspace_hits属性和keyspace_misses属性中查看。</li>
+</ul>
+<h2 id="key的过期时间"><a href="#key的过期时间" class="headerlink" title="key的过期时间"></a>key的过期时间</h2><ul>
+<li>redisDb结构的expires字典保存了数据库中所有键的过期时间，我们称这个字典为过期字典</li>
+<li>过期字典的键是一个指针，这个指针指向键空间中的某个键对象（也即是某个数据库键）</li>
+<li>过期字典的值是一个long 类型的整数，这个整数保存了键所指向的数据库键的过期时间——一个毫秒精度的UNIX时间戳。<h3 id="过期键的判定"><a href="#过期键的判定" class="headerlink" title="过期键的判定"></a>过期键的判定</h3>1）检查给定键是否存在于过期字典：如果存在，那么取得键的过期时间。2）检查当前UNIX时间戳是否大于键的过期时间：如果是的话，那么键已经过期；否则的话，键未过期。<h3 id="过期键的删除策略"><a href="#过期键的删除策略" class="headerlink" title="过期键的删除策略"></a>过期键的删除策略</h3></li>
+<li>定时删除：在设置键的过期时间的同时，创建一个定时器（timer），让定时器在键的过期时间来临时，立即执行对键的删除操作。对内存是友好的，可以保证键被尽快删除，但是如果过多键同时到期，对cpu极度不友好，影响服务器的响应时间。</li>
+<li>惰性删除：放任键过期不管，但是每次从键空间中获取键时，都检查取得的键是否过期，如果过期的话，就删除该键；如果没有过期，就返回该键。对内存不友好，可能造成内存中存在很多过期的数据，有内存泄漏的危险。但是对cpu是友好的，因为只有在用的时候才回去清楚。</li>
+<li>定期删除：每隔一段时间，程序就对数据库进行一次检查，删除里面的过期键。至于要删除多少过期键，以及要检查多少个数据库，则由算法决定。</li>
+</ul>
+<h3 id="AOF和RDB对过期的处理"><a href="#AOF和RDB对过期的处理" class="headerlink" title="AOF和RDB对过期的处理"></a>AOF和RDB对过期的处理</h3><ul>
+<li>AOF: 在键没有被删除的时候是没有任何影响的，删除的键会产生一个DEL语句，在AOF重写的过程中，会把DEL的语句优化掉。</li>
+<li>RDB: 过期的键不会载入RDB文件，从RDB文件加载的时候，过期的键也不会加载到内存<h3 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h3>当服务器运行在复制模式下时，从服务器的过期键删除动作由主服务器控制，从服务器不会去主动删除。当主服务器删除一个过期键之后，它会向所有从服务器发送一条DEL命令，显式地删除过期键</li>
+</ul>
+<hr>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><h2 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h2><ul>
+<li>服务器中的非空数据库以及它们的键值对统称为数据库状态。</li>
+<li>RDB将Redis在内存中的数据库状态保存到磁盘里面，避免数据意外丢失。</li>
+<li>RDB可以手动执行也可以自动执行</li>
+<li>SAVE命令 和 BGSAVE命令都可以生产RDB文件。</li>
+<li>SAVE命令会阻塞Redis服务器进程，直到RDB文件创建完毕为止，在服务器进程阻塞期间，服务器不能处理任何命令请求：</li>
+<li>BGSAVE命令会派生出一个子进程，然后由子进程负责创建RDB文件，服务器进程（父进程）继续处理命令请求：</li>
+<li>如果开启AOF,则默认使用AOF,因为AOF更新频率更高<br><img src="https://upload-images.jianshu.io/upload_images/13349286-1071625264fa0153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数据库恢复"></li>
+<li>服务器在载入RDB文件期间，会一直处于阻塞状态，直到载入工作完成为止。</li>
+<li>自动间隔性保存：服务器状态中会保存所有用save选项设置的保存条件，当任意一个保存条件被满足时，服务器会自动执行BGSAVE命令。包括像多少时间进行了多少次修改，</li>
+<li>Redis的服务器周期性操作函数serverCron默认每隔100毫秒就会执行一次，该函数用于对正在运行的服务器进行维护，它的其中一项工作就是检查save选项所设置的保存条件是否已经满足，如果满足的话，就执行BGSAVE命令。</li>
+<li>对于不同类型的键值对，RDB文件会使用不同的方式来保存它们。</li>
+</ul>
+<h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><ul>
+<li>AOF持久化是通过保存Redis服务器所执行的写命令来记录数据库状态的</li>
+<li>AOF写入时机：每次在结束文件事件前，都会考虑是否把新内容添加到AOF缓冲区中，AOF缓冲区有三种方式刷盘，1 每次刷盘 2. 每隔1s刷 3. 等缓冲区满后刷新</li>
+<li>AOF文件的读取，创建伪客户端，由伪客户端一条一条的执行AOF日志，直到执行完毕</li>
+</ul>
+<h3 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h3><ul>
+<li>重写是在子进程中完成</li>
+<li>重写和原AOF文件无关，根据数据库当前状态，生成一份新的AOF文件</li>
+<li>在重写的过程中，会维持一个重写缓冲区，在重写过程中执行的命令都是在缓冲区进行记录，在重写完成后追加到新文件结尾，然后替换旧的文件，完成一个重写。</li>
+</ul>
+<hr>
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><p>Redis服务器是一个事件驱动程序，服务器需要处理文件事件和事件事件</p>
+<h2 id="文件事件"><a href="#文件事件" class="headerlink" title="文件事件"></a>文件事件</h2><ul>
+<li>文件事件处理器是基于Reactor模式实现的网络通信程序。</li>
+<li>文件事件处理器使用I/O多路复用（multiplexing）程序来同时监听多个套接字，并根据套接字目前执行的任务来为套接字关联不同的事件处理器。</li>
+<li>当被监听的套接字准备好执行连接应答（accept）、读取（read）、写入（write）、关闭（close）等操作时，与操作相对应的文件事件就会产生，这时文件事件处理器就会调用套接字之前关联好的事件处理器来处理这些事件。<br><img src="https://upload-images.jianshu.io/upload_images/13349286-8b39131c2f6ea462.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="处理过程"></li>
+<li>当多个IO事件发生的时候，IO复用程序会将所有的套接字放在一个队列中，以有序，同步，一个一个的处理套接字。当上一个处理完成之后，才会去处理下一个套接字，这也就是为什么总有人说Redis是单线程的原因。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13349286-6d323150658f06c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件处理队列"></p>
+<h2 id="时间事件"><a href="#时间事件" class="headerlink" title="时间事件"></a>时间事件</h2><ul>
+<li>服务器在一般情况下只执行serverCron函数一个时间事件，并且这个事件是周期性事件。</li>
+</ul>
+<h2 id="事件的调度与执行"><a href="#事件的调度与执行" class="headerlink" title="事件的调度与执行"></a>事件的调度与执行</h2><ul>
+<li>文件事件和时间事件之间是合作关系，服务器会轮流处理这两种事件，并且处理事件的过程中也不会进行抢占。</li>
+<li>时间事件的实际处理时间通常会比设定的到达时间晚一些。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13349286-ff359fcdfa5b4b10.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="事件的调度"></p>
+<h1 id="serverCron函数"><a href="#serverCron函数" class="headerlink" title="serverCron函数"></a>serverCron函数</h1><p>Redis服务器中的serverCron函数默认每隔100毫秒执行一次，这个函数负责管理服务器的资源，并保持服务器自身的良好运转。</p>
+<h3 id="更新服务器时间缓存"><a href="#更新服务器时间缓存" class="headerlink" title="更新服务器时间缓存"></a>更新服务器时间缓存</h3><ul>
+<li>在精度要求不高的情况下，如果需要获得时间信息，Redis是直接从缓存获取，一般包括日志，是否持久化等情况下<h3 id="更新LRU时间信息"><a href="#更新LRU时间信息" class="headerlink" title="更新LRU时间信息"></a>更新LRU时间信息</h3></li>
+<li>每个Redis对象都会有一个lru属性，这个lru属性保存了对象最后一次被命令访问的时间</li>
+</ul>
+<hr>
+<h1 id="Redis的淘汰策略"><a href="#Redis的淘汰策略" class="headerlink" title="Redis的淘汰策略"></a>Redis的淘汰策略</h1><ul>
+<li>从已经设置过期时间的key中挑选最近最少使用的</li>
+<li>从已经设置过期时间的key中最快过期的</li>
+<li>从已经设置过期时间的key随机淘汰</li>
+<li>从整个数据选择最近最少使用</li>
+<li>从整个数据随机淘汰</li>
+<li>不淘汰</li>
+</ul>
+<hr>
+<h1 id="Redis高可用"><a href="#Redis高可用" class="headerlink" title="Redis高可用"></a>Redis高可用</h1><h2 id="1-复制"><a href="#1-复制" class="headerlink" title="1.  复制"></a>1.  复制</h2><ul>
+<li> 基于RDB实现初始化，也就是同步操作，使用AOF实现同步复制，也就是命令传播</li>
+<li>缺点：不支持自动扩容，没有高可用，可能产生数据不一致的问题<h3 id="旧版复制功能"><a href="#旧版复制功能" class="headerlink" title="旧版复制功能"></a>旧版复制功能</h3><h4 id="同步操作-SYNC命令"><a href="#同步操作-SYNC命令" class="headerlink" title="同步操作 - SYNC命令"></a>同步操作 - SYNC命令</h4><img src="https://upload-images.jianshu.io/upload_images/13349286-dc2a345e872321ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="复制过程"><h4 id="复制的时机"><a href="#复制的时机" class="headerlink" title="复制的时机"></a>复制的时机</h4></li>
+<li>从初次连接同步主的内容</li>
+<li>从断线之后，再次去同步主的内容<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4></li>
+<li>同步十分低效，耗费大量的资源</li>
+<li>在断线重联的情况下，大部分数据是相同的，但是还是要执行全量同步<h4 id="命令传播"><a href="#命令传播" class="headerlink" title="命令传播"></a>命令传播</h4>在同步操作完成后，暂时主从一致，但是如果主一旦发生写操作，主会将写操作命令发送给从，从服务其执行后，再次回到一致的状态<h3 id="新版复制功能"><a href="#新版复制功能" class="headerlink" title="新版复制功能"></a>新版复制功能</h3><h4 id="PSYNC命令"><a href="#PSYNC命令" class="headerlink" title="PSYNC命令"></a>PSYNC命令</h4></li>
+<li>在初次同步相同，但是断线重联的时候，只会发送在断线期间执行的写操作，而不是全量同步</li>
+<li>主从维持着一个复制的偏移量，通过偏移量，很容易就知道主从是否一致</li>
+<li>在主发送写操作的时候，同时会将写操作保存在一个固定队列中，这样，如果重联只会的偏移量在队列中，就可以迅速使用队列中的命令进行恢复</li>
+</ul>
+<h3 id="心跳检测"><a href="#心跳检测" class="headerlink" title="心跳检测"></a>心跳检测</h3><p>在命令传播的阶段，从服务器会每秒1次向主服务器发送心跳请求<br>用来：</p>
+<ul>
+<li>检测主从服务器的网络连接状态</li>
+<li>辅助实现min-slaves配置选项，主服务会检测从服务器最少多少个，延迟多少的时候才写入数据。</li>
+<li>检测命令丢失<h2 id="2-哨兵"><a href="#2-哨兵" class="headerlink" title="2. 哨兵"></a>2. 哨兵</h2>基于主从复制，可以自动实现切换主从结构</li>
+<li>哨兵由一个或者多个组成哨兵集群</li>
+<li>哨兵检测主从所有的节点</li>
+<li>当主节点挂掉的时候，哨兵会从其中一个从节点挑选一个作为主节点，当挂掉的主节点从新上线后，会降级当前主节点的从节点。<h2 id="3-Cluster"><a href="#3-Cluster" class="headerlink" title="3. Cluster"></a>3. Cluster</h2></li>
+<li>实际上辅助和哨兵至是实现了Redis的高可用，但是其每一个机器都是存储完整数据，资源浪费很严重</li>
+<li>节点通过握手来将其他节点添加到自己所处的集群当中。</li>
+<li>集群的整个数据库被分为16384个槽（slot），数据库中的每个键都属于这16384个槽的其中一个，集群中的每个节点可以处理0个或最多16384个槽。</li>
+<li>集群中的16384个槽可以分别指派给集群中的各个节点，每个节点都会记录哪些槽指派给了自己，而哪些槽又被指派给了其他节点。</li>
+<li>在Cluster执行lua脚本的时候，会有一定的问题，因为Redis要求执行lua的脚本都在一个节点上面，如果你的lua脚本包含多个节点，就会报错，解决方法是在key中增加{}，如果key中包含{}, 就会使用第一个{}内部的字符串作为hash key，这样就可以保证拥有同样{}内部字符串的key就会拥有相同slot。</li>
+<li>节点在接到一个命令请求时，会先检查这个命令请求要处理的键所在的槽是否由自己负责，如果不是的话，节点将向客户端返回一个MOVED错误，MOVED错误携带的信息可以指引客户端转向至正在负责相关槽的节点。</li>
+<li>使用了跳跃表来保存槽和键之间的关系</li>
+<li>重新分片： 将节点A的槽数据至节点B，Redis使用了redis-trib来实现。<ul>
+<li>过程：1. 通知A做好准备，2，通知B做好准备 3，获取n个键值 4，发送migrate命令，将选中的进行迁移 5，重复直到复制完成 6，将指派信息通知集群。</li>
+</ul>
+</li>
+<li>ask错误：如果节点A正在迁移槽i至节点B，那么当节点A没能在自己的数据库中找到命令指定的数据库键时，节点A会向客户端返回一个ASK错误，指引客户端到节点B继续查找指定的数据库键。</li>
+<li>  Redis集群中的节点分为主节点（master）和从节点（slave），其中主节点用于处理槽，而从节点则用于复制某个主节点，并在被复制的主节点下线时，代替下线主节点继续处理命令请求。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/10/java/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -653,6 +906,151 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350033901">https://zhuanlan.zhihu.com/p/350033901</a><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html">https://tech.meituan.com/2017/12/22/ddd-in-practice.html</a></p>
 </blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/09/java/RockeqMq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/09/java/RockeqMq/" class="post-title-link" itemprop="url">RockeqMQ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-09 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-09T00:00:00+08:00">2020-02-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-02-18 16:48:38" itemprop="dateModified" datetime="2021-02-18T16:48:38+08:00">2021-02-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="架构组成"><a href="#架构组成" class="headerlink" title="架构组成"></a>架构组成</h1><h2 id="NameServer"><a href="#NameServer" class="headerlink" title="NameServer"></a>NameServer</h2><ul>
+<li>无状态的元数据管理</li>
+<li>元数据（Border的信息，包含名称，地址，集群，以及心跳时间）</li>
+<li>无主从概念，多个NameServer可以组成一个集群<h3 id="路由信息"><a href="#路由信息" class="headerlink" title="路由信息"></a>路由信息</h3></li>
+<li>Topic消息队列路由信息，消息发送时根据路由表进行负载均衡。</li>
+<li>Broker基础信息，包含brokerName、所属集群名称、主备Broker地址。</li>
+<li>Broker集群信息，存储集群中所有Broker名称。</li>
+<li>Broker状态信息。NameServer每次收到心跳包时会替换该信息。</li>
+<li>Broker上的FilterServer列表，用于类模式消息过滤<h3 id="路由信息的注册与发现"><a href="#路由信息的注册与发现" class="headerlink" title="路由信息的注册与发现"></a>路由信息的注册与发现</h3></li>
+<li>Broker启动时向集群中所有的NameServer发送心跳语句，每隔30s向集群中所有NameServer发送心跳包，NameServer收到Broker心跳包时会更新brokerLiveTable缓存中BrokerLiveInfo的lastUpdate Timestamp，然后NameServer每隔10s扫描brokerLiveTable，如果连续120s没有收到心跳包，NameServer将移除该Broker的路由信息同时关闭Socket连接。<br><img src="https://upload-images.jianshu.io/upload_images/13349286-2d1f7207646cd39d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NameServer流程"></li>
+</ul>
+<h2 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h2><ul>
+<li>消息代理，负责存储消息，处理生产者，消费者的各种请求的代理。</li>
+<li>实现主从架构</li>
+</ul>
+<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><h3 id="消息的基础属性"><a href="#消息的基础属性" class="headerlink" title="消息的基础属性"></a>消息的基础属性</h3><ul>
+<li>tag 消息TAG，用于消息过滤</li>
+<li>delayTimeLevel：消息延迟级别，用于定时消息或消息重试。</li>
+<li>key Message索引键，多个用空格隔开，RocketMQ可以根据这些key快速检索到消息</li>
+<li>waitStoreMsgOK：消息发送时是否等消息存储完成后再返回<h3 id="消息的发送流程"><a href="#消息的发送流程" class="headerlink" title="消息的发送流程"></a>消息的发送流程</h3><h4 id="验证消息："><a href="#验证消息：" class="headerlink" title="验证消息："></a>验证消息：</h4>验证消息的合法性，消息的最大长度不能超过4M</li>
+</ul>
+<h4 id="查找路由："><a href="#查找路由：" class="headerlink" title="查找路由："></a>查找路由：</h4><ul>
+<li>如果本地路由表中未缓存topic的路由信息，向Name-Server发送获取路由信息请求，更新本地路由信息表，如果未找到则会抛出异常。并且消息生产者每隔30s从Name-Server更新路由表。</li>
+</ul>
+<h4 id="消息发送（包含异常处理机制）"><a href="#消息发送（包含异常处理机制）" class="headerlink" title="消息发送（包含异常处理机制）"></a>消息发送（包含异常处理机制）</h4><p>消息发送高可用主要通过两个手段：重试与Broker规避。<strong>Broker规避就是在一次消息发送过程中发现错误，在某一时间段内，消息生产者不会选择该Broker（消息服务器）上的消息队列，提高发送消息的成功率</strong>。</p>
+<h2 id="消息消费"><a href="#消息消费" class="headerlink" title="消息消费"></a>消息消费</h2><h2 id="消费组"><a href="#消费组" class="headerlink" title="消费组"></a>消费组</h2><p>RocketMq的消费以消费组的模式展开，一个消费组可以订阅多个主题，一个消费组里面也有多个消费者</p>
+<h2 id="广播模式和集群模式"><a href="#广播模式和集群模式" class="headerlink" title="广播模式和集群模式"></a>广播模式和集群模式</h2><ul>
+<li>消费组之间有集群模式与广播模式两种消费模式。集群模式，主题下的同一条消息只允许被其中一个消费者消费。广播模式，主题下的同一条消息将被集群内的所有消费者消费一次。</li>
+<li>集群模式下：一个消息队列同一时间只允许被一个消费者消费，一个消费者可以消费多个消息队列。</li>
+</ul>
+<h2 id="消息的推和拉"><a href="#消息的推和拉" class="headerlink" title="消息的推和拉"></a>消息的推和拉</h2><p>消息服务器与消费者之间的消息传送也有两种方式：推模式、拉模式。所谓的拉模式，是消费端主动发起拉消息请求，而推模式是消息到达消息服务器后，推送给消息消费者。RocketMQ消息推模式的实现基于拉模式，在拉模式上包装一层，一个拉取任务完成后开始下一个拉取任务。</p>
+<h3 id="拉模式"><a href="#拉模式" class="headerlink" title="拉模式"></a>拉模式</h3><ul>
+<li>用户自行实现取消息的过程</li>
+<li>拉模式采用一个单独的线程负责消息的拉取</li>
+<li>每次默认从服务端拉取32条消息，存入消息队列处理队列，将消息提交到消费者消费线程池，使用线程池来消费消息，保证了消息拉取和消息消费的解耦。</li>
+<li>如果消息消费过慢产生消息堆积会触发消息消费拉取流控。</li>
+<li>广播消息消费进度存储在消费者端，集群消费进度存储在Broker<h3 id="推模式"><a href="#推模式" class="headerlink" title="推模式"></a>推模式</h3></li>
+<li>consumer把轮询过程封装了，并注册MessageListener监听器，取到消息后，唤醒MessageListener的consumeMessage()来消费，对用户而言，感觉消息是被推送（push）过来的。</li>
+</ul>
+<h2 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h2><p>RocketMQ是消费者首先向主服务器发起拉取消息请求，然后主服务器返回一批消息，然后会根据主服务器负载压力与主从同步情况，向从服务器建议下次消息拉取是从主服务器还是从从服务器拉取（如当前需要拉取的消息已经超出了常驻内存的大小，表示主服务器繁忙，此时才建议从从服务器拉取。）。</p>
+<h2 id="局部顺序消息消"><a href="#局部顺序消息消" class="headerlink" title="局部顺序消息消"></a>局部顺序消息消</h2><p>RocketMQ支持局部顺序消息消费，也就是保证同一个消息队列上的消息顺序消费。不支持消息全局顺序消费，如果要实现某一主题的全局顺序消息消费，可以将该主题的队列数设置为1，牺牲高可用性。</p>
+<h1 id="消息存储"><a href="#消息存储" class="headerlink" title="消息存储"></a>消息存储</h1><h2 id="文件过期删除"><a href="#文件过期删除" class="headerlink" title="文件过期删除"></a>文件过期删除</h2><ul>
+<li>RocketMQ不会永久存储消息文件、消息消费队列文件，而是启用文件过期机制并在磁盘空间不足或默认在凌晨4点删除过期文件，文件默认保存72小时并且在删除文件时并不会判断该消息文件上的消息是否被消费。</li>
+<li>所以如果长时间不消费可能消息丢失</li>
+</ul>
+<h1 id="同步复制、异步复制和同步刷盘、异步刷盘"><a href="#同步复制、异步复制和同步刷盘、异步刷盘" class="headerlink" title="同步复制、异步复制和同步刷盘、异步刷盘"></a>同步复制、异步复制和同步刷盘、异步刷盘</h1><h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><ul>
+<li>指的是不同Boker节点之间数据同步</li>
+<li>同步复制指的是生产者等待同步复制成功之后，才返回消息发送成功</li>
+<li>异步复制指的是写入Master Borker之后，立即返回成功，而不等待消息复制完成<h2 id="刷盘"><a href="#刷盘" class="headerlink" title="刷盘"></a>刷盘</h2></li>
+<li>指的是数据同步到内存后同步到磁盘的过程</li>
+<li>同步刷盘指的是生产者等待消息持久化之后才返回成功</li>
+<li>异步刷盘指的是只要消息写入缓存之中，就认为写入成功，立即返回成功，到达一定量之后再出发异步刷盘</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一般同步可靠性强，异步吞吐量强。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13349286-bebfb7296723f84a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="刷盘和复制"></p>
+<h1 id="消息的推和拉-1"><a href="#消息的推和拉-1" class="headerlink" title="消息的推和拉"></a>消息的推和拉</h1><ul>
+<li>消息的消费默认有两种模式，广播模式和集群模式。广播模式为消费者之间去消费对应订阅主题下面的消息。集群模式的话同一个消费组下面有多个消费者，同一个主题也有多个消费队列。</li>
+</ul>
+<h1 id="事务消息"><a href="#事务消息" class="headerlink" title="事务消息"></a>事务消息</h1><p><img src="https://upload-images.jianshu.io/upload_images/13349286-6cd82a4ba08d03de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<hr>
+<h5 id="rocketMq"><a href="#rocketMq" class="headerlink" title="rocketMq:"></a>rocketMq:</h5><p><img src="https://upload-images.jianshu.io/upload_images/13349286-16d72117c80a4a62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h5 id="事务消息发送步骤如下："><a href="#事务消息发送步骤如下：" class="headerlink" title="事务消息发送步骤如下："></a>事务消息发送步骤如下：</h5><ol>
+<li>发送方将半事务消息发送至消息队列 RocketMQ 版服务端。</li>
+<li>消息队列 RocketMQ 版服务端将消息持久化成功之后，向发送方返回 Ack 确认消息已经发送成功，此时消息为半事务消息。</li>
+<li>发送方开始执行本地事务逻辑。</li>
+<li>发送方根据本地事务执行结果向服务端提交二次确认（Commit 或是 Rollback），<br>服务端收到 Commit 状态则将半事务消息标记为可投递，订阅方最终将收到该消息；<br>服务端收到 Rollback 状态则删除半事务消息，订阅方将不会接受该消息。</li>
+</ol>
+<h5 id="事务消息回查步骤如下："><a href="#事务消息回查步骤如下：" class="headerlink" title="事务消息回查步骤如下："></a>事务消息回查步骤如下：</h5><p>  在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。<br>  发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。<br>发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。</p>
+<hr>
+<p>源：<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/43348.html?spm=5176.ons.0.0.513e176fgmrjdo">https://help.aliyun.com/document_detail/43348.html?spm=5176.ons.0.0.513e176fgmrjdo</a></p>
+<hr>
+<p>基于本地事务的消息<br><img src="https://upload-images.jianshu.io/upload_images/13349286-88dea15b08962d09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 
       
     </div>
@@ -915,7 +1313,7 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -928,7 +1326,7 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
