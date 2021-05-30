@@ -168,6 +168,819 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/04/13/es/es4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/13/es/es4/" class="post-title-link" itemprop="url">ES聚合</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-13T00:00:00+08:00">2021-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 14:16:25" itemprop="dateModified" datetime="2021-05-30T14:16:25+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es/" itemprop="url" rel="index"><span itemprop="name">es</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="集合分类"><a href="#集合分类" class="headerlink" title="集合分类"></a>集合分类</h1><table>
+<thead>
+<tr>
+<th>聚合类型</th>
+<th></th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Metric</td>
+<td>度量</td>
+<td>一些数学运算，可以对文档进行统计分析</td>
+</tr>
+<tr>
+<td>Bucket</td>
+<td>分组桶</td>
+<td>一些列满足特点条件的文档聚合</td>
+</tr>
+<tr>
+<td>Pipeline</td>
+<td>管道</td>
+<td>对其他聚合结果，进行二次聚合</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>矩阵</td>
+<td>支持对多个文档的操作并且提供一个结果矩阵</td>
+</tr>
+</tbody></table>
+<h1 id="度量聚合"><a href="#度量聚合" class="headerlink" title="度量聚合"></a>度量聚合</h1><ul>
+<li><p>度量聚合从文档中提c取出来值并进行计算。这些值通常从文档中的字段（使用数据字段）中提取出来，但也可以使用脚本进行计算。</p>
+</li>
+<li><p>数字型度量聚合是一种特殊类型的度量聚合，输出数字类型的值。</p>
+</li>
+<li><p>聚合输出一个数字指标（例如平均值聚合）称为单值数字型度量聚合，产生多个指标值（例如统计聚合）称为多值数字型度量聚合。</p>
+</li>
+<li><p>当这些聚合直接作为一些分组聚合的子聚合时，单值和多值数字型度量聚合的内容就会发挥巨大的作用，例如分组聚合可以对度量聚合后的返回的值进行排序。</p>
+<h2 id="求和-Sum"><a href="#求和-Sum" class="headerlink" title="求和 Sum"></a>求和 Sum</h2></li>
+<li><p>对聚合文档提取的数字进行求和</p>
+</li>
+<li><p>包括 <strong>简单字段求和</strong> 和 <strong>通过脚本提取</strong></p>
+</li>
+<li><p>可以使用missing参数设置不存在的值的默认统计值</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;price_sum&quot;: &#123;</span><br><span class="line">      &quot;sum&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;price&quot;,</span><br><span class="line">        &quot;missing&quot;: 10</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;price_sum_scr_field&quot;: &#123;</span><br><span class="line">      &quot;sum&quot;: &#123;</span><br><span class="line">       &quot;script&quot;: &quot;doc.price.value&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;price_sum_sct&quot;: &#123;</span><br><span class="line">      &quot;sum&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;price&quot;,</span><br><span class="line">        &quot;script&quot;: &#123;</span><br><span class="line">          &quot;lang&quot;:   &quot;expression&quot;,</span><br><span class="line">          &quot;source&quot;: &quot;_value * sp&quot;, </span><br><span class="line">          &quot;params&quot;: &#123;</span><br><span class="line">             &quot;sp&quot;: 0.5</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>上面包含三种查询，<br>第一个 通过field获取求和字段，并且设置不存在的值为统计时为10<br>第二个 通过脚本获取统计参数<br>第三个 通过field获取求和字段，通过脚本将获取的值乘 0.5 之后进行统计</p>
+</li>
+</ul>
+<h2 id="其他类似度量聚合"><a href="#其他类似度量聚合" class="headerlink" title="其他类似度量聚合"></a>其他类似度量聚合</h2><ul>
+<li>其他的一些统计的求和用法差不多<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>关键字</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>计数</td>
+<td>value_count</td>
+<td></td>
+</tr>
+<tr>
+<td>最大值</td>
+<td>max</td>
+<td></td>
+</tr>
+<tr>
+<td>最小值</td>
+<td>min</td>
+<td></td>
+</tr>
+<tr>
+<td>平均数</td>
+<td>avg</td>
+<td></td>
+</tr>
+<tr>
+<td>统计聚合</td>
+<td>stats</td>
+<td>一次将最大值，最小值，和，计数，平均数 返回</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="基数聚合"><a href="#基数聚合" class="headerlink" title="基数聚合"></a>基数聚合</h2><ul>
+<li><p>计算某个字段有多少个不同的值，类似于 count(DISTINCT  field )</p>
+</li>
+<li><p>基于  <a target="_blank" rel="noopener" href="http://static.googleusercontent.com/media/research.google.com/fr//pubs/archive/40671.pdf">HyperLogLog++</a> 实现的，所以其统计值并不一定是准确的值</p>
+</li>
+<li><p>支持脚本，不过使用脚本的时候，性能损失很大</p>
+</li>
+<li><p>通过参数 precision_threshold  可以设置准确性，使用内存来换取准确性。</p>
+<ul>
+<li>在大于这个值的时候结果比较模糊</li>
+<li>小于这个值的时候，接近于准确</li>
+<li>最大参数为40000，默认 3000<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&quot;aggs&quot;: &#123;</span><br><span class="line">  &quot;price_count&quot;: &#123;</span><br><span class="line">    &quot;cardinality&quot;: &#123;</span><br><span class="line">      &quot;field&quot;: &quot;price&quot;,</span><br><span class="line">      &quot;precision_threshold&quot;: 100,</span><br><span class="line">      &quot;missing&quot;: 1</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="百分位数统计"><a href="#百分位数统计" class="headerlink" title="百分位数统计"></a>百分位数统计</h2><h3 id="百分位数是什么"><a href="#百分位数是什么" class="headerlink" title="百分位数是什么"></a>百分位数是什么</h3>如果将一组数据从小到大排序，并计算相应的累计百分位，则某一百分位所对应数据的值就称为这一百分位的百分位数。可表示为：一组n个观测值按数值大小排列。如，处于p%位置的值称第p百分位数。<br>即如果有某个百分比的数据低于一个值，这个值便叫某个百分比的百分位数。<br>例如：你是班上 20个学生里身高第四的学生，80% 的学生比你矮，你身高是第 80个百分位数（百分等级是 80%）。如果你的身高是 1.85m，”1.85m” 是班上身高的 80% 百分数。<h3 id="如何计算"><a href="#如何计算" class="headerlink" title="如何计算"></a>如何计算</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">原数据：</span><br><span class="line"><span class="number">10</span> <span class="number">12</span> <span class="number">16</span> <span class="number">20</span> <span class="number">25</span> <span class="number">30</span> <span class="number">40</span> <span class="number">45</span> </span><br><span class="line"></span><br><span class="line">我们需要计算 50% 的 百分位数</span><br><span class="line"></span><br><span class="line">公式为 Location=（n+1）* percentile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">L = (8+1)* 50 /100 = 4.5 </span><br><span class="line"></span><br><span class="line">此时计算出的值为4.5，不是整数，那么还需要计算 4位置 和 5位置 直接的百分位数</span><br><span class="line">计算公式为：</span><br><span class="line"></span><br><span class="line">Location = Location(L/1)+ percentile * (L/1+1 - L/1) </span><br><span class="line"></span><br><span class="line">L 20 + 0.5 (35-20) = 22.5 </span><br><span class="line"></span><br><span class="line">此时说明，50%的数字的值都在 22.5 之下，比22.5小</span><br><span class="line"></span><br><span class="line">    &quot;price_count&quot; : &#123;</span><br><span class="line">      &quot;values&quot; : &#123;</span><br><span class="line">        &quot;1.0&quot; : 10.0,</span><br><span class="line">        &quot;5.0&quot; : 10.0,</span><br><span class="line">        &quot;25.0&quot; : 14.0,</span><br><span class="line">        &quot;50.0&quot; : 22.5,</span><br><span class="line">        &quot;75.0&quot; : 35.0,</span><br><span class="line">        &quot;95.0&quot; : 45.0,</span><br><span class="line">        &quot;99.0&quot; : 45.0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">  &quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;price_count&quot;: &#123;</span><br><span class="line">      &quot;percentiles&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;price&quot;,</span><br><span class="line">        &quot;percents&quot;: [</span><br><span class="line">          1,</span><br><span class="line">          5,</span><br><span class="line">          25,</span><br><span class="line">          50,</span><br><span class="line">          75,</span><br><span class="line">          95,</span><br><span class="line">          <span class="number">99</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">resp:</span><br><span class="line">  &quot;aggregations&quot; : &#123;</span><br><span class="line">    &quot;price_count&quot; : &#123;</span><br><span class="line">      &quot;values&quot; : &#123;</span><br><span class="line">        &quot;1.0&quot; : 10.0,</span><br><span class="line">        &quot;5.0&quot; : 10.0,</span><br><span class="line">        &quot;25.0&quot; : 14.0,</span><br><span class="line">        &quot;50.0&quot; : 22.5,</span><br><span class="line">        &quot;75.0&quot; : 35.0,</span><br><span class="line">        &quot;95.0&quot; : 45.0,</span><br><span class="line">        &quot;99.0&quot; : 45.0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="百分数-数值聚合"><a href="#百分数-数值聚合" class="headerlink" title="百分数 数值聚合"></a>百分数 数值聚合</h2></li>
+</ul>
+</li>
+<li><p>上面的百分位统计是统计<strong>每个百分位的值是多少</strong>，而这个统计是统计 <strong>当前值在文档的百分位中是多少</strong></p>
+</li>
+<li><p>是百分位统计的逆计算</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">  &quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;price_count&quot;: &#123;</span><br><span class="line">      &quot;percentile_ranks&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;price&quot;,</span><br><span class="line">        &quot;values&quot;: [14,22.5]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">resp:</span><br><span class="line">    &quot;price_count&quot; : &#123;</span><br><span class="line">      &quot;values&quot; : &#123;</span><br><span class="line">        &quot;14.0&quot; : 25.0,</span><br><span class="line">        &quot;22.5&quot; : 50.0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="脚本统计"><a href="#脚本统计" class="headerlink" title="脚本统计"></a>脚本统计</h2></li>
+<li><p>当es提供的统计不能满足我们的要求的时候，我们可以选择自己通过脚本实现统计</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&quot;aggs&quot;: &#123;</span><br><span class="line">  &quot;price_count&quot;: &#123;</span><br><span class="line">    &quot;scripted_metric&quot;: &#123;</span><br><span class="line">       &quot;init_script&quot;: &quot;state.transactions = []&quot;,</span><br><span class="line">       &quot;map_script&quot;: &quot;state.transactions.add(doc.price.value)&quot;,</span><br><span class="line">       &quot;combine_script&quot;: &quot;double profit = 0; for (t in state.transactions) &#123; profit += t &#125; return profit&quot;,</span><br><span class="line">       &quot;reduce_script&quot;: &quot;double profit = 0; for (a in states) &#123; profit += a &#125; return profit&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>脚本统计分为4个阶段</p>
+</li>
+</ul>
+<ol>
+<li>初始化脚本 (init_script) 在任何文档的收集之前执行。允许聚合设置任何初始化状态。</li>
+<li>映射脚本（map_script）,每个被采集的文档都会执行一次脚本。这是唯一必须的脚本。如果没有指定联合脚本，结果状态需要存储在一个名为_agg的对象中</li>
+<li>联合脚本（combine_script）,每个分片会在文档采集结束的时候执行一次脚本。允许聚合从每个分片中统一状态。如果没有提供联合脚本，联合阶段就会返回聚合变量。</li>
+<li>归纳脚本（reduce_script）。在所有分片返回结果之后，请求节点执行一次脚本。这个脚本用于访问_aggs变量，_aggs变量是每个分片执行联合脚本之后的结果数组。如果没有提供归纳脚本，归纳阶段会返回_aggs变量。</li>
+</ol>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/aggs1.png" alt="image.png"></p>
+<h2 id="地理边界聚合"><a href="#地理边界聚合" class="headerlink" title="地理边界聚合"></a>地理边界聚合</h2><ul>
+<li>为一个geo类型的字段计算包含所有点的边界框。</li>
+<li>返回左上 和 右下的点<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">    &quot;aggs&quot; : &#123;</span><br><span class="line">        &quot;viewport&quot; : &#123;</span><br><span class="line">            &quot;geo_bounds&quot; : &#123;</span><br><span class="line">                &quot;field&quot; : &quot;location&quot;, </span><br><span class="line">                &quot;wrap_longitude&quot; : true </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">wrap_longitude: 用于指定是否应允许边界框与国际日期线重叠</span><br><span class="line"></span><br><span class="line">resp:</span><br><span class="line">  &quot;aggregations&quot; : &#123;</span><br><span class="line">    &quot;viewport&quot; : &#123;</span><br><span class="line">      &quot;bounds&quot; : &#123;</span><br><span class="line">        &quot;top_left&quot; : &#123;</span><br><span class="line">          &quot;lat&quot; : 35.234553990885615,</span><br><span class="line">          &quot;lon&quot; : 107.80624595470726</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;bottom_right&quot; : &#123;</span><br><span class="line">          &quot;lat&quot; : 33.65711996331811,</span><br><span class="line">          &quot;lon&quot; : 110.34507296048105</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="地理中心聚合"><a href="#地理中心聚合" class="headerlink" title="地理中心聚合"></a>地理中心聚合</h2><ul>
+<li><p>为一个geo类型的字段计算包含所有点的中心点</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  &quot;aggs&quot; : &#123;</span><br><span class="line">      &quot;centroid&quot; : &#123;</span><br><span class="line">          &quot;geo_centroid&quot; : &#123;</span><br><span class="line">              &quot;field&quot; : &quot;location&quot; </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;aggregations&quot; : &#123;</span><br><span class="line">  &quot;centroid&quot; : &#123;</span><br><span class="line">    &quot;location&quot; : &#123;</span><br><span class="line">      &quot;lat&quot; : 34.5458007780835,</span><br><span class="line">      &quot;lon&quot; : 109.24376476183534</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;count&quot; : 5</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分组聚合-桶聚合"><a href="#分组聚合-桶聚合" class="headerlink" title="分组聚合 桶聚合"></a>分组聚合 桶聚合</h1></li>
+<li><p>分组聚合不像度量聚合那样直接通过字段聚合，而是根据字段的值，创建分组桶。</p>
+</li>
+<li><p>每个分组桶都和一个标准（取决于聚合类型）相关联，该标准确定当前上下文中的文档是否“落入”其中。换句话说，存储桶有效地定义了文档集。除了存储桶本身之外，<code>bucket</code>聚合还计算并返回“落入”每个存储桶的文档数量。</p>
+</li>
+<li><p>分组聚合还可以实现子聚合，这些子聚合可以针对父聚合的分组桶进行聚合。</p>
+</li>
+<li><p>可以定义单分组桶，多分组桶，动态创建分组桶，等</p>
+</li>
+<li><p>单个请求最多返回的分组桶受 search.max_buckets 参数影响，默认-1（不启用），但是这个时候最多返回10,000个分组</p>
+<h2 id="Terms-Aggregation"><a href="#Terms-Aggregation" class="headerlink" title="Terms Aggregation"></a>Terms Aggregation</h2></li>
+<li><p>按照某个字段中的值来分类，基于字段的值动态创建桶</p>
+</li>
+<li><p>字段需要打开fiel data 才能使用terms</p>
+<ul>
+<li>keyword 需要支持doc_value</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">  &quot;aggs&quot;: &#123;</span><br><span class="line">    &quot;type_terms&quot;: &#123;</span><br><span class="line">      &quot;terms&quot;: &#123;</span><br><span class="line">        &quot;field&quot;: &quot;type.keyword&quot;,</span><br><span class="line">        &quot;size&quot;: 10</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">resp:</span><br><span class="line"></span><br><span class="line">  &quot;aggregations&quot; : &#123;</span><br><span class="line">    &quot;type_terms&quot; : &#123;</span><br><span class="line">      &quot;doc_count_error_upper_bound&quot; : 0,</span><br><span class="line">      &quot;sum_other_doc_count&quot; : 0,</span><br><span class="line">      &quot;buckets&quot; : [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;key&quot;</span> : <span class="string">&quot;t1&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;doc_count&quot;</span> : <span class="number">3</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;key&quot;</span> : <span class="string">&quot;t4&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;doc_count&quot;</span> : <span class="number">3</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;key&quot;</span> : <span class="string">&quot;t2&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;doc_count&quot;</span> : <span class="number">1</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">&quot;key&quot;</span> : <span class="string">&quot;t3&quot;</span>,</span><br><span class="line">          <span class="attr">&quot;doc_count&quot;</span> : <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>doc_count_error_upper_bound: 每个索引文档的计数错误上限。</p>
+</li>
+<li><p>sum_other_doc_count: 没有被放在桶中的文档计数总和</p>
+<h3 id="Size"><a href="#Size" class="headerlink" title="Size"></a>Size</h3></li>
+<li><p>返回桶的数量</p>
+</li>
+<li><p>如果分组多于size，则返回的可能不是所有的数据，而且返回的可能不是前几个桶，有可能有偏差，数量也有可能有偏差</p>
+</li>
+<li><p>如果需要对聚合的结果进行分页，则应该使用composite 聚合，而不是把size设置为一个很大的值</p>
+</li>
+</ul>
+<h3 id="文件数数一个大概值"><a href="#文件数数一个大概值" class="headerlink" title="文件数数一个大概值"></a>文件数数一个大概值</h3><ul>
+<li>因为在聚合中，每个分片都提供了自己的视图，将他们组合在一起形成真正的视图</li>
+</ul>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/aggs2.png" alt="image.png"></p>
+<h3 id="在返回值的参数就是描述这个"><a href="#在返回值的参数就是描述这个" class="headerlink" title="在返回值的参数就是描述这个"></a>在返回值的参数就是描述这个</h3><ul>
+<li><p>doc_count_error_upper_bound </p>
+<ul>
+<li>表示没有在本次返回，但是可能存在的潜在聚合结果。被遗漏的可能的最大值。</li>
+<li>主聚合的值取的是每个分片取的数据的最小值相加</li>
+<li>各个桶取的是 通过将所有未返回该词条的分片返回的最后一个词的文档计数相加得出的，表示文档计数中最坏的情况。表示最坏少多少个元素</li>
+</ul>
+</li>
+<li><p>sum_other_doc_count：表示的是蓝框当中的部分，本次返回之外的聚合文档数</p>
+</li>
+<li><p>从代码上看，我们可以看到如果我们这个值应该取的是每个桶的最小的一个值累加</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">从源码看的话：</span><br><span class="line"></span><br><span class="line">    private long getDocCountError(A terms) &#123;</span><br><span class="line">        int size = terms.getBuckets().size();</span><br><span class="line">        if (size == 0 || size &lt; terms.getShardSize() || isKeyOrder(terms.getOrder())) &#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125; else if (InternalOrder.isCountDesc(terms.getOrder())) &#123;</span><br><span class="line">            if (terms.getDocCountError() &gt; 0) &#123;</span><br><span class="line">                <span class="comment">// If there is an existing docCountError for this agg then</span></span><br><span class="line">                <span class="comment">// use this as the error for this aggregation</span></span><br><span class="line">                return terms.getDocCountError();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                <span class="comment">// otherwise use the doc count of the last term in the</span></span><br><span class="line">                <span class="comment">// aggregation</span></span><br><span class="line">                return terms.getBuckets().stream().mapToLong(AbstractTermsBucket::getDocCount).min().getAsLong();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="shard-size"><a href="#shard-size" class="headerlink" title="shard_size"></a>shard_size</h3></li>
+<li><p>shard_size参数就是哪个红框返回分组数据量</p>
+</li>
+<li><p>默认的分组数为 <code>size``(size * 1.5 + 10)</code></p>
+</li>
+<li><p>当shard_size值越大的时候，返回的数据越准确，当上图我们把shard_size设置为8的时候，H也可以被统计进去，结果就不一样了。但是这样也会带来计算成本的增加</p>
+</li>
+<li><p>shard_size不能小于size，因为没有意义，即使设置，es也会重置为size</p>
+<h3 id="展示每个桶的错误"><a href="#展示每个桶的错误" class="headerlink" title="展示每个桶的错误"></a>展示每个桶的错误</h3></li>
+<li><p>show_term_doc_count_error 设置为true的时候，可以展示每个桶的可能错误值</p>
+</li>
+<li><p>各个桶取的是 通过将所有未返回该词条的分片返回的最后一个词的文档计数相加得出的，表示文档计数中最坏的情况。表示最坏少多少个元素</p>
+</li>
+<li><p>代码在  org.elasticsearch.search.aggregations.bucket.terms.AbstractInternalTerms#reduce</p>
+<h3 id="Execution-hint"><a href="#Execution-hint" class="headerlink" title="Execution hint"></a>Execution hint</h3></li>
+<li><p><code>map</code>, 直接使用该字段的字符串值来做聚合</p>
+</li>
+<li><p><code>global_ordinals</code>: 默认选项，</p>
+<h3 id="global-ordinals"><a href="#global-ordinals" class="headerlink" title="global_ordinals"></a>global_ordinals</h3></li>
+</ul>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/aggs3.png" alt="image.png"></p>
+<ul>
+<li><p>Global Ordinals 一个分片级别全局的映射字典，即用一个序号来代表一个唯一字符串，在进行terms统计的时候，直接为每一个序号生成一个桶，在获取文档的时候，就不用把字段值加载到内存中进行计算，只要加载字典的序号就可以，然后遍历映射到桶中，就可以很快的统计出每个桶的文档数</p>
+</li>
+<li><p>使用Global Ordinals的目的在于减少内存使用，加快聚合统计，这种计算方式主要开销在构建global ordinals和分配bucket上，如果索引包含的原始文档非常多，查询结果包含的文档也很多，那么默认的这种计算方式是内存消耗最小，速度最快的。</p>
+</li>
+<li><p><strong>问题</strong>：</p>
+<ul>
+<li> 这种方式是懒加载的，而且是在开始之前进行的，这样导致在字段种类特别大的情况下，即使过滤的文档很少，也会很慢</li>
+<li>关系在shard被触发refresh以后就会失效。下次使用的话就需要重新构建，</li>
+<li>而且这份数据常驻内存</li>
+</ul>
+</li>
+<li><p><strong>优化方法：</strong></p>
+<ul>
+<li>增加分片数量，即减少每个分片创建映射的时间</li>
+<li>延长refresh_interval的时间，但是数据的实时性就会打折扣</li>
+<li>修改execution_hint的值：当把值从 <code>global_ordinals</code>改为<code>map</code>，每次聚合的时候直接把值加载到内存中计算，减去了构建字典的耗时。当查询的结果集很小的情况下，可以使用map的模式不去构建字典。使用map还是global_ordinals的取决于构建字典的开销与加载原始字典的开销。当结果集大到一定程序，map的内存开销的代价可能抵消了构建字典的开销。<h3 id="收集模式"><a href="#收集模式" class="headerlink" title="收集模式"></a>收集模式</h3></li>
+</ul>
+</li>
+<li><p>depth_first 深度优先搜索，直接进行子聚合的计算</p>
+</li>
+<li><p>breadth_first 广度优先搜索，先计算出当前聚合的结果，针对这个结果在对子聚合进行计算</p>
+<ul>
+<li>会把上层的桶的文档集合存储起来，以供后续使用，会产生内存开销</li>
+<li>该内存开销与匹配文档的数量成线性关系<h3 id="参数Order"><a href="#参数Order" class="headerlink" title="参数Order"></a>参数Order</h3></li>
+</ul>
+</li>
+<li><p>指定了最后返回结果的排序方式，默认是按照doc_count降序排列。一般不建议按照升序排序，因为这样会增加文档计数的错误。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1. 升序排行</span><br><span class="line">&quot;aggs&quot; : &#123;</span><br><span class="line">        &quot;genres&quot; : &#123;</span><br><span class="line">            &quot;terms&quot; : &#123;</span><br><span class="line">                &quot;field&quot; : &quot;genre&quot;,</span><br><span class="line">                &quot;order&quot; : &#123; &quot;_count&quot; : &quot;asc&quot; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">2. 按照key排序</span><br><span class="line">    &quot;aggs&quot; : &#123;</span><br><span class="line">        &quot;genres&quot; : &#123;</span><br><span class="line">            &quot;terms&quot; : &#123;</span><br><span class="line">                &quot;field&quot; : &quot;genre&quot;,</span><br><span class="line">                &quot;order&quot; : &#123; &quot;_key&quot; : &quot;asc&quot; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="number">3.</span> </span><br></pre></td></tr></table></figure>
+<h3 id="min-doc-count"><a href="#min-doc-count" class="headerlink" title="min_doc_count"></a>min_doc_count</h3></li>
+<li><p>使用min_doc_count参数的时候，只会返回大于数值的的匹配分组桶</p>
+<h3 id="include-exclude"><a href="#include-exclude" class="headerlink" title="include exclude"></a>include exclude</h3></li>
+<li><p>包含 和 排除 的分组key</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;aggs&quot;: &#123;</span><br><span class="line">  &quot;heshen_terms&quot;: &#123;</span><br><span class="line">    &quot;terms&quot;: &#123;</span><br><span class="line">      &quot;field&quot;: &quot;type&quot;,</span><br><span class="line">      &quot;size&quot;: 5,</span><br><span class="line">      &quot;shard_size&quot;: 5, </span><br><span class="line">      &quot;show_term_doc_count_error&quot;: true,</span><br><span class="line">      &quot;include&quot;: [&quot;Product A&quot;,&quot;Product B&quot;],</span><br><span class="line">      &quot;exclude&quot;: [&quot;Product A&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Missing-value"><a href="#Missing-value" class="headerlink" title="Missing value"></a>Missing value</h3></li>
+<li><p>文档缺少值的时候的处理</p>
+</li>
+</ul>
+<h1 id="管道聚合"><a href="#管道聚合" class="headerlink" title="管道聚合"></a>管道聚合</h1><p>概念： 支持对聚合分析的结果，再一次进行聚合分析     </p>
+<p>管道聚合的结果会添加到返回当中，根据位置不同分为两类：  <br>**Sibling 同级    **<br>包括：max_bucket,min_bucket ,avg_bucket ,sum_bucket , stats_bucket , percentiles_bucket<br>**Parent 父级 **     <br>包括：derivative （求导） ，cumulative_sum （累计求和） ，moving_fn（滑动窗口） </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/04/12/es/es3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/12/es/es3/" class="post-title-link" itemprop="url">ES搜索</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-12 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-12T00:00:00+08:00">2021-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 14:16:13" itemprop="dateModified" datetime="2021-05-30T14:16:13+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es/" itemprop="url" rel="index"><span itemprop="name">es</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h1><h2 id="根据id查询"><a href="#根据id查询" class="headerlink" title="根据id查询"></a>根据id查询</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET heshen_test_v1/_doc/1</span><br></pre></td></tr></table></figure>
+<h2 id="MGET查询"><a href="#MGET查询" class="headerlink" title="MGET查询"></a>MGET查询</h2><ul>
+<li>可以查询不同索引的数据一同返回<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">GET _mget</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;docs&quot;</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;_index&quot;</span>:<span class="string">&quot;heshen_test_v1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>:<span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;_index&quot;</span>:<span class="string">&quot;heshen_test_v2&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>:<span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>可以返回不同字段的数据，<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET _mget</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;docs&quot;</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;_index&quot;</span>:<span class="string">&quot;heshen_test_v1&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>:<span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;_source&quot;</span>: [<span class="string">&quot;itemName&quot;</span>,<span class="string">&quot;id&quot;</span>]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;_index&quot;</span>:<span class="string">&quot;heshen_test_v2&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>:<span class="number">1</span>,</span><br><span class="line">      <span class="attr">&quot;_source&quot;</span>: [<span class="string">&quot;weight&quot;</span>,<span class="string">&quot;price&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Search-1"><a href="#Search-1" class="headerlink" title="Search"></a>Search</h1><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_search</td>
+<td>全部索引</td>
+</tr>
+<tr>
+<td>_all/_search</td>
+<td>全部索引</td>
+</tr>
+<tr>
+<td>heshen_test_v1/_search</td>
+<td>heshen_test_v1</td>
+</tr>
+<tr>
+<td>heshen_test_v1,heshen_test_v2/_search</td>
+<td>heshen_test_v1,heshen_test_v2</td>
+</tr>
+<tr>
+<td>heshen_test*/_search</td>
+<td>heshen_test开头的索引</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="Url查询-用的不多"><a href="#Url查询-用的不多" class="headerlink" title="Url查询(用的不多)"></a>Url查询(用的不多)</h2><ul>
+<li><p>使用q表示查询字符串</p>
+</li>
+<li><p>size 返回条数</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-uri-request.html">doc</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET heshen_test_v1/_search?q=weight:13&amp;&amp;size=10</span><br></pre></td></tr></table></figure>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a></h2><h2 id="Request-Body-查询"><a href="#Request-Body-查询" class="headerlink" title="Request Body 查询"></a>Request Body 查询</h2><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/search-request-body.html">doc</a></p>
+<h3 id="格式以及返回"><a href="#格式以及返回" class="headerlink" title="格式以及返回"></a>格式以及返回</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">req:</span><br><span class="line">GET heshen_test_v1/_search?search_type=query_then_fetch</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;from&quot;</span>: <span class="number">1</span>, </span><br><span class="line">  <span class="attr">&quot;size&quot;</span>: <span class="number">10</span>,</span><br><span class="line">  <span class="attr">&quot;timeout&quot;</span>: <span class="string">&quot;1s&quot;</span>, </span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;term&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;value&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">resp:</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;took&quot;</span> : <span class="number">1</span>, <span class="comment">//花费的时间</span></span><br><span class="line">  <span class="attr">&quot;timed_out&quot;</span> : <span class="literal">false</span>, <span class="comment">//是否超时</span></span><br><span class="line">  <span class="attr">&quot;_shards&quot;</span> : &#123;<span class="comment">//分片</span></span><br><span class="line">    <span class="attr">&quot;total&quot;</span> : <span class="number">3</span>,</span><br><span class="line">    <span class="attr">&quot;successful&quot;</span> : <span class="number">3</span>,</span><br><span class="line">    <span class="attr">&quot;skipped&quot;</span> : <span class="number">0</span>,</span><br><span class="line">    <span class="attr">&quot;failed&quot;</span> : <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;hits&quot;</span> : &#123;</span><br><span class="line">    <span class="attr">&quot;total&quot;</span> : <span class="number">1</span>,<span class="comment">//总文档数</span></span><br><span class="line">    <span class="attr">&quot;max_score&quot;</span> : <span class="number">1.0</span>,</span><br><span class="line">    <span class="attr">&quot;hits&quot;</span> : [<span class="comment">//结果集</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">&quot;_index&quot;</span> : <span class="string">&quot;heshen_test_v1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;_type&quot;</span> : <span class="string">&quot;_doc&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;_id&quot;</span> : <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;_score&quot;</span> : <span class="number">1.0</span>,</span><br><span class="line">        <span class="attr">&quot;_source&quot;</span> : &#123;</span><br><span class="line">          ...</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><h1 id="Query-DSL"><a href="#Query-DSL" class="headerlink" title="Query DSL"></a>Query DSL</h1><h2 id="Query-和-Filter"><a href="#Query-和-Filter" class="headerlink" title="Query 和 Filter"></a>Query 和 Filter</h2></li>
+<li><p>区别在于 filter 不计算相关性，只关心是否命中条件</p>
+</li>
+<li><p>计算相关性需要计算匹配分值，消耗性能。而且匹配的分值都是实时计算，没有缓存</p>
+</li>
+<li><p>es会自动缓存 filter ，以提高性能，所以应该尽量使用过滤查询以减少性能消耗</p>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123; </span><br><span class="line">    <span class="attr">&quot;bool&quot;</span>: &#123; </span><br><span class="line">      <span class="attr">&quot;must&quot;</span>: [</span><br><span class="line">        &#123; <span class="attr">&quot;match&quot;</span>: &#123; <span class="attr">&quot;title&quot;</span>:   <span class="string">&quot;Search&quot;</span>        &#125;&#125;, </span><br><span class="line">        &#123; <span class="attr">&quot;match&quot;</span>: &#123; <span class="attr">&quot;content&quot;</span>: <span class="string">&quot;Elasticsearch&quot;</span> &#125;&#125;  </span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;filter&quot;</span>: [ </span><br><span class="line">        &#123; <span class="attr">&quot;term&quot;</span>:  &#123; <span class="attr">&quot;status&quot;</span>: <span class="string">&quot;published&quot;</span> &#125;&#125;, </span><br><span class="line">        &#123; <span class="attr">&quot;range&quot;</span>: &#123; <span class="attr">&quot;publish_date&quot;</span>: &#123; <span class="attr">&quot;gte&quot;</span>: <span class="string">&quot;2015-01-01&quot;</span> &#125;&#125;&#125; </span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Full-text-query-全文搜索"><a href="#Full-text-query-全文搜索" class="headerlink" title="Full text query  全文搜索"></a>Full text query  全文搜索</h2><ul>
+<li>全文检索，被查询的字段需要被分析</li>
+<li>查询条件也会被分析</li>
+</ul>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/serch1.png" alt="image.png"></p>
+<h3 id="Match-Query"><a href="#Match-Query" class="headerlink" title="Match Query"></a>Match Query</h3><ul>
+<li><p>最基本的全文索引查询，支持单词查询，模糊查询，短语查询，近义词查询</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET heshen_text/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;match&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: <span class="string">&quot;中国&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Match-Pharse-Query"><a href="#Match-Pharse-Query" class="headerlink" title="Match Pharse Query"></a>Match Pharse Query</h3></li>
+<li><p>类似match，专门查询短语，可以指定短语的间隔</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET heshen_text/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;match_phrase&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;title&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;query&quot;</span>: <span class="string">&quot;这中国&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;slop&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Match-Phrase-Prefix-Query"><a href="#Match-Phrase-Prefix-Query" class="headerlink" title="Match Phrase Prefix Query"></a>Match Phrase Prefix Query</h3></li>
+<li><p>类似于短语的查询，但是最后一个单词是前缀匹配</p>
+</li>
+<li><p>不如 is t 可以命中 this  is a test </p>
+<h2 id="Term-query-结构化搜索"><a href="#Term-query-结构化搜索" class="headerlink" title="Term query  结构化搜索"></a>Term query  结构化搜索</h2></li>
+<li><p>精确匹配查询，查询条件不会被分析</p>
+</li>
+<li><p>通过用于结构化的数据，</p>
+</li>
+<li><p>对于被分析过的字段也可以使用，不过匹配的是分词之后的单词</p>
+</li>
+</ul>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/search2.png" alt="image.png"></p>
+<h3 id="Term-最常用"><a href="#Term-最常用" class="headerlink" title="Term (最常用)"></a>Term (最常用)</h3><ul>
+<li><p>单值等于匹配</p>
+</li>
+<li><p>类似于 = </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET _search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;term&quot;</span> : &#123; <span class="attr">&quot;user&quot;</span> : <span class="string">&quot;Kimchy&quot;</span> &#125; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Terms-最常用"><a href="#Terms-最常用" class="headerlink" title="Terms (最常用)"></a>Terms (最常用)</h3></li>
+<li><p>多值匹配</p>
+</li>
+<li><p>类似于 IN</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;terms&quot;</span> : &#123; <span class="attr">&quot;user&quot;</span> : [<span class="string">&quot;kimchy&quot;</span>, <span class="string">&quot;elasticsearch&quot;</span>]&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Terms-Set"><a href="#Terms-Set" class="headerlink" title="Terms Set"></a>Terms Set</h3></li>
+<li><p>可以指定最小匹配数量</p>
+<h3 id="Range-常用"><a href="#Range-常用" class="headerlink" title="Range (常用)"></a>Range (常用)</h3></li>
+<li><p>可以按照区间查询日期，数字，以及区间类型</p>
+</li>
+<li><p>类似于 between </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET _search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;range&quot;</span> : &#123;</span><br><span class="line">            <span class="attr">&quot;age&quot;</span> : &#123;</span><br><span class="line">                <span class="attr">&quot;gte&quot;</span> : <span class="number">10</span>,</span><br><span class="line">                <span class="attr">&quot;lte&quot;</span> : <span class="number">20</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Exists-常用"><a href="#Exists-常用" class="headerlink" title="Exists (常用)"></a>Exists (常用)</h3></li>
+<li><p>存在查询，返回字段不是 null  或者 [] 空数组的文档</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;exists&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;user&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>配合 bool 查询的must_not可以实现 不存在 条件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;bool&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;must_not&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;exists&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;field&quot;</span>: <span class="string">&quot;user&quot;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="模糊搜索"><a href="#模糊搜索" class="headerlink" title="模糊搜索"></a>模糊搜索</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wildcard</td>
+<td>根据占位符的内容进行匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>prefix</td>
+<td>前缀匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>fuzzy</td>
+<td>相似度匹配</td>
+<td></td>
+</tr>
+<tr>
+<td>regexp</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="wildcard-通配符查询"><a href="#wildcard-通配符查询" class="headerlink" title="wildcard  通配符查询"></a>wildcard  通配符查询</h4><ul>
+<li><p>通配符  *  ,类似于  wildcard like “X%”</p>
+</li>
+<li><p>匹配0个或者多个字符</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;user&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;X*&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>占位符  ? ,,类似于  wildcard like “X_”</p>
+</li>
+<li><p>匹配单个字符</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;wildcard&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;user&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;value&quot;</span>: <span class="string">&quot;X?&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="prefix-前缀匹配"><a href="#prefix-前缀匹配" class="headerlink" title="prefix 前缀匹配"></a>prefix 前缀匹配</h4></li>
+<li><p>查找指定字段包含以指定确切前缀开头的术语的文档</p>
+</li>
+<li><p>类似于  wildcard like “X%”</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">&#123; <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;wildcard&quot;</span> : &#123; <span class="attr">&quot;author&quot;</span>: <span class="string">&quot;X&quot;</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="fuzzy-误拼写模糊匹配"><a href="#fuzzy-误拼写模糊匹配" class="headerlink" title="fuzzy 误拼写模糊匹配"></a>fuzzy 误拼写模糊匹配</h4></li>
+<li><p>使用基于Levenshtein编辑距离实现的相似搜索</p>
+</li>
+<li><p>Levenshtein编辑距离是什么：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Levenshtein 距离，又称编辑距离，指的是两个字符串之间，由一个转换成另一个所需的最少编辑操作次数。</span><br><span class="line">许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。</span><br><span class="line">编辑距离的算法是首先由俄国科学家Levenshtein提出的，故又叫Levenshtein Distance</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;_search</span><br><span class="line">&#123;</span><br><span class="line">    &quot;query&quot;: &#123;</span><br><span class="line">        &quot;fuzzy&quot; : &#123;</span><br><span class="line">            &quot;user&quot; : &#123;</span><br><span class="line">                &quot;value&quot;: &quot;ki&quot;,</span><br><span class="line">                &quot;boost&quot;: 1.0,</span><br><span class="line">                &quot;fuzziness&quot;: 2,</span><br><span class="line">                &quot;prefix_length&quot;: 0,</span><br><span class="line">                &quot;max_expansions&quot;: 100</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fuzziness：最大编辑距离【一个字符串要与另一个字符串相同必须更改的一个字符数】。默认为AUTO。</span><br><span class="line"></span><br><span class="line">prefix_length：不会被“模糊化”的初始字符数。这有助于减少必须检查的术语数量。默认为0。</span><br><span class="line"></span><br><span class="line">max_expansions：fuzzy查询将扩展到的最大术语数。默认为50。</span><br><span class="line"></span><br><span class="line">transpositions：是否支持模糊转置（ab→ ba）。默认值为false。</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Compound-复合查询"><a href="#Compound-复合查询" class="headerlink" title="Compound  复合查询"></a>Compound  复合查询</h2><h3 id="Bool-最常用"><a href="#Bool-最常用" class="headerlink" title="Bool (最常用)"></a>Bool (最常用)</h3><ul>
+<li>最常用的组合查询，包含 must  ，should ，must_not ，filter ,可以嵌套</li>
+<li>bool.filter的分值计算, 在filter子句查询中，分值将会都返回0。分值会受特定的查询影响。<h4 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>must</td>
+<td>返回的文档必须满足must子句的条件，并且参与计算分值</td>
+</tr>
+<tr>
+<td>should</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<ol>
+<li>返回的文档可能满足should子句的条件。在一个Bool查询中，如果没有must或者filter，有一个或者多个should子句，那么只要满足一个就可以返回。minimum_should_match参数定义了至少满足几个子句</li>
+<li>如果一个查询既有filter又有should，那么至少包含一个should子句。<br>|<br>| must_not | 返回的文档必须不满足must_not定义的条件。&gt;<br>|<br>| filter | 返回的文档必须满足filter子句的条件。但是不会像Must一样，参与计算分值 |</li>
+</ol>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">POST _search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;bool&quot;</span> : &#123;</span><br><span class="line">      <span class="attr">&quot;must&quot;</span> : &#123;</span><br><span class="line">        <span class="attr">&quot;term&quot;</span> : &#123; <span class="attr">&quot;user&quot;</span> : <span class="string">&quot;kimchy&quot;</span> &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;filter&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;term&quot;</span> : &#123; <span class="attr">&quot;tag&quot;</span> : <span class="string">&quot;tech&quot;</span> &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;must_not&quot;</span> : &#123;</span><br><span class="line">        <span class="attr">&quot;range&quot;</span> : &#123;</span><br><span class="line">          <span class="attr">&quot;age&quot;</span> : &#123; <span class="attr">&quot;gte&quot;</span> : <span class="number">10</span>, <span class="attr">&quot;lte&quot;</span> : <span class="number">20</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;should&quot;</span> : [</span><br><span class="line">        &#123; <span class="attr">&quot;term&quot;</span> : &#123; <span class="attr">&quot;tag&quot;</span> : <span class="string">&quot;wow&quot;</span> &#125; &#125;,</span><br><span class="line">        &#123; <span class="attr">&quot;term&quot;</span> : &#123; <span class="attr">&quot;tag&quot;</span> : <span class="string">&quot;elasticsearch&quot;</span> &#125; &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">&quot;minimum_should_match&quot;</span> : <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="其他不重要的复合查询"><a href="#其他不重要的复合查询" class="headerlink" title="其他不重要的复合查询"></a>其他不重要的复合查询</h2><h3 id="constant-score-query"><a href="#constant-score-query" class="headerlink" title="constant_score query"></a>constant_score query</h3><ul>
+<li><p>不计算得分，可以指定一个指定的常量分值</p>
+<h3 id="dis-max-query"><a href="#dis-max-query" class="headerlink" title="dis_max query"></a>dis_max query</h3></li>
+<li><p>对多个自查询取最高的得分</p>
+</li>
+<li><p>如果自查询分值想近，还有加成的选项</p>
+<h3 id="function-score-query"><a href="#function-score-query" class="headerlink" title="function_score query"></a>function_score query</h3></li>
+<li><p>可以自定义评分的查询</p>
+<h3 id="boosting-query"><a href="#boosting-query" class="headerlink" title="boosting query"></a>boosting query</h3></li>
+<li><p>可以对子查询进行加分，和减分的操作</p>
+</li>
+</ul>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>排序是针对字段的原始内容进行的，倒排索引在排序中是没有用处的。<br>排序需要使用正排索引，通过文档id和字段快速得到原始的文档内容。<br> ES对于排序，有两种方式：  </p>
+<ul>
+<li>Field Data 支持 </li>
+<li>Doc Values (列式存储，对Text无效)     </li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/04/11/es/es2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/11/es/es2/" class="post-title-link" itemprop="url">ES索引操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-11T00:00:00+08:00">2021-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 14:16:14" itemprop="dateModified" datetime="2021-05-30T14:16:14+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/es/" itemprop="url" rel="index"><span itemprop="name">es</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="索引操作"><a href="#索引操作" class="headerlink" title="索引操作"></a>索引操作</h2><h3 id="创建索引-文档"><a href="#创建索引-文档" class="headerlink" title="创建索引 文档"></a>创建索引 <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-create-index.html">文档</a></h3><ul>
+<li>基本语法 <code> PUT twitter</code></li>
+<li>索引名称限制：<ul>
+<li>只能小写</li>
+<li>不能包括 <code>\</code>, <code>/</code>, <code>*</code>, <code>?</code>, <code>&quot;</code>, <code>&lt;</code>, <code>&gt;</code>, <code>|</code>, 空格 , <code>,</code>, <code>#</code></li>
+<li>不能包括冒号，7.0之前可以用，7.0之后不可以</li>
+<li>不能使用 + - 开头</li>
+<li>不能包括 . 或者 ..</li>
+<li>不能超过 255 个字节</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1</span><br><span class="line">&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="attr">&quot;settings&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span>:&#123;</span><br><span class="line">      <span class="attr">&quot;number_of_replicas&quot;</span>: <span class="number">2</span>, <span class="comment">//副本数2</span></span><br><span class="line">      <span class="attr">&quot;number_of_shards&quot;</span>: <span class="number">3</span>,<span class="comment">//分片3</span></span><br><span class="line">      <span class="attr">&quot;max_result_window&quot;</span>: <span class="number">1000000</span>, <span class="comment">//最大返回数据 1000000</span></span><br><span class="line">      <span class="attr">&quot;write&quot;</span> : &#123;</span><br><span class="line">          <span class="attr">&quot;wait_for_active_shards&quot;</span> : <span class="string">&quot;2&quot;</span> <span class="comment">//等待多少分片执行完成</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;mappings&quot;</span>: &#123; <span class="comment">//映射字段</span></span><br><span class="line">    <span class="attr">&quot;_doc&quot;</span>:&#123; <span class="comment">// 约定都使用_doc ,可以不实用_doc，但是不能使用_开头，</span></span><br><span class="line">        <span class="attr">&quot;properties&quot;</span>:&#123;</span><br><span class="line">           <span class="attr">&quot;itemName&quot;</span>:&#123;</span><br><span class="line">              <span class="attr">&quot;type&quot;</span> : <span class="string">&quot;text&quot;</span></span><br><span class="line">           &#125;,</span><br><span class="line">           <span class="attr">&quot;weight&quot;</span>:&#123;</span><br><span class="line">              <span class="attr">&quot;type&quot;</span> : <span class="string">&quot;scaled_float&quot;</span>,</span><br><span class="line">              <span class="attr">&quot;scaling_factor&quot;</span>: <span class="number">100</span></span><br><span class="line">           &#125;,</span><br><span class="line">           <span class="attr">&quot;price&quot;</span>:&#123;</span><br><span class="line">              <span class="attr">&quot;type&quot;</span> : <span class="string">&quot;long&quot;</span></span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;aliases&quot;</span>: &#123;<span class="comment">//别名，用处很多</span></span><br><span class="line">    <span class="attr">&quot;heshen_test&quot;</span>: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取索引"><a href="#获取索引" class="headerlink" title="获取索引"></a>获取索引</h3><ul>
+<li><p><code>GET heshen_test</code> 获取指定索引信息</p>
+</li>
+<li><p><code>GET * </code> 获取所有的索引信息</p>
+</li>
+<li><p><code>GET _all</code>  获取所有的索引信息</p>
+</li>
+<li><p><code>GET es_erp_purchase_*</code> 获取通配符匹配的索引信息</p>
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3></li>
+<li><p><code>DELETE heshen_test_v1</code></p>
+</li>
+<li><p>删除索引必须是索引名，不能通过别名删除索引 </p>
+<h3 id="是否存在"><a href="#是否存在" class="headerlink" title="是否存在"></a>是否存在</h3></li>
+<li><p><code>HEAD heshen_test</code> 索引是否存在</p>
+<h3 id="打开-关闭索引"><a href="#打开-关闭索引" class="headerlink" title="打开/关闭索引"></a>打开/关闭索引</h3></li>
+<li><p><code>POST heshen_test_v1/_close</code></p>
+</li>
+<li><p><code>POST heshen_test_v1/_open</code></p>
+</li>
+<li><p>被关闭的索引禁止读写,只能展示元信息</p>
+<h3 id="索引统计"><a href="#索引统计" class="headerlink" title="索引统计"></a>索引统计</h3></li>
+<li><p><code>GET`` ``/``_stats</code></p>
+</li>
+<li><p><code>GET /heshen_test_v1/_stats</code></p>
+<h3 id="索引别名"><a href="#索引别名" class="headerlink" title="索引别名"></a>索引别名</h3><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-aliases.html">文档</a></p>
+<h4 id="创建修改别名"><a href="#创建修改别名" class="headerlink" title="创建修改别名"></a>创建修改别名</h4></li>
+<li><p>带有过滤器的别名提供了创建相同索引的不同“视图”的简单方法。过滤器可以使用查询DSL定义，并应用于所有搜索、计数、按查询删除以及类似于此别名的操作。</p>
+</li>
+<li><p>在创建别名时可以指定路由值。</p>
+</li>
+<li><p>如果一个别名只映射了一个真实索引，则可以使用别名进行index api(即索引文档，写文档)，但如果一个别名同一时间映射了多个索引，默认是不能直接使用别名进行索引文档，因为ES不知道文档该发往哪个索引。可以使用is_write_index属性为一个别名下的其中一个索引指定为写索引，此时则可以直接使用别名进行index api的调用。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">POST _aliases</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;add&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;alias&quot;</span>: <span class="string">&quot;heshen&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;is_write_index&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">&quot;routing&quot;</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;filter&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;term&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;remarks&quot;</span>: <span class="string">&quot;测试&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;add&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v2&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;alias&quot;</span>: <span class="string">&quot;heshen&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="删除别名"><a href="#删除别名" class="headerlink" title="删除别名"></a>删除别名</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">POST _aliases</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;actions&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;remove&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v2&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;alias&quot;</span>: <span class="string">&quot;heshen&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;remove&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v1&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;alias&quot;</span>: <span class="string">&quot;heshen&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Reindex"><a href="#Reindex" class="headerlink" title="Reindex"></a>Reindex</h3><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docs-reindex.html">文档</a></p>
+</li>
+<li><p>es的索引一旦创建，分片，以及字段类型都不允许修改，所以一般只能创建新的索引，然后把数据导入</p>
+</li>
+<li><p>reindex支持把数据从一个索引拷贝到另一个索引中</p>
+</li>
+<li><p>reindex不会复制索引的设置，包括mapping ,settings</p>
+<h4 id="普通复制"><a href="#普通复制" class="headerlink" title="普通复制"></a>普通复制</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST _reindex</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;source&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;dest&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v2&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="其他参数"><a href="#其他参数" class="headerlink" title="其他参数"></a>其他参数</h4></li>
+<li><p>在dest中 添加 version_type (见下文类型介绍 ) 字段可以实现根据版本进行复制</p>
+</li>
+<li><p>默认情况下，version冲突会终止reindex进程，可以通过 conflicts 属性来设置不结束，只统计冲突数量</p>
+</li>
+<li><p>在dest中 op_type 可以设置操作类型，可以设置只复制不存在的数据</p>
+</li>
+<li><p>可以通过 query属性来设置那些数据被复制</p>
+</li>
+<li><p>source的index 可以是一个列表 ，来将多个索引的数据复制到一个索引</p>
+</li>
+<li><p>source的 _source 可以设置只复制部分字段</p>
+</li>
+<li><p>可以用过 script 来修改文档 </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">POST _reindex</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;size&quot;</span>: <span class="number">12</span>,<span class="comment">//只处理12条数据</span></span><br><span class="line">  <span class="attr">&quot;conflicts&quot;</span>: <span class="string">&quot;proceed&quot;</span>,<span class="comment">//冲突计数</span></span><br><span class="line">  <span class="attr">&quot;source&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v1&quot;</span>, <span class="comment">//也可以是  &quot;index&quot;:[ &quot;heshen_test_v1&quot;,&quot; &quot;heshen_test_v3&quot;]</span></span><br><span class="line">    <span class="attr">&quot;query&quot;</span>: &#123; <span class="comment">//设置源数据那些数据需要复制</span></span><br><span class="line">      <span class="attr">&quot;term&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;weight&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;value&quot;</span>: <span class="number">12</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">   <span class="attr">&quot;_source&quot;</span>: [<span class="string">&quot;weight&quot;</span>, <span class="string">&quot;itemName&quot;</span>],<span class="comment">//只复制部分字段</span></span><br><span class="line">   <span class="attr">&quot;sort&quot;</span>: &#123; <span class="attr">&quot;date&quot;</span>: <span class="string">&quot;desc&quot;</span> &#125;,<span class="comment">//设置处理数据排序</span></span><br><span class="line">   <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;inline&quot;</span>: <span class="string">&quot;if (ctx._source.foo == &#x27;bar&#x27;) &#123;ctx._version++; ctx._source.remove(&#x27;foo&#x27;)&#125;&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;painless&quot;</span></span><br><span class="line">   &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;dest&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span>: <span class="string">&quot;heshen_test_v2&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;version_type&quot;</span>: <span class="string">&quot;external&quot;</span>, <span class="comment">//版本复制</span></span><br><span class="line">    <span class="attr">&quot;op_type&quot;</span>:<span class="string">&quot;create&quot;</span> <span class="comment">//只会创建不存在的数据</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="索引模板"><a href="#索引模板" class="headerlink" title="索引模板"></a>索引模板</h2><h3 id="索引模板是什么"><a href="#索引模板是什么" class="headerlink" title="索引模板是什么"></a>索引模板是什么</h3></li>
+<li><p>索引模板是可以在创建一个新的索引的时候，自动应用的模板，包括设置和映射。</p>
+</li>
+<li><p>模板只在创建索引的时候使用，更改模板不会对现有索引产生影响</p>
+</li>
+<li><p>在创建的时候，自定义的设置，映射优先于 模板当中的。</p>
+<h3 id="创建索引模板"><a href="#创建索引模板" class="headerlink" title="创建索引模板"></a>创建索引模板</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">PUT _template/template_heshen</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;index_patterns&quot;</span>: [<span class="comment">//匹配模式</span></span><br><span class="line">    <span class="string">&quot;heshen*&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;order&quot;</span> : <span class="number">0</span>,<span class="comment">//优先级</span></span><br><span class="line">  <span class="attr">&quot;settings&quot;</span>: &#123;<span class="comment">//预定的设置</span></span><br><span class="line">    <span class="attr">&quot;index&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;number_of_replicas&quot;</span>: <span class="number">2</span>,</span><br><span class="line">      <span class="attr">&quot;number_of_shards&quot;</span>: <span class="number">3</span>,</span><br><span class="line">      <span class="attr">&quot;max_result_window&quot;</span>: <span class="number">1000000</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;mappings&quot;</span>: &#123;<span class="comment">//预定的mappings</span></span><br><span class="line">    <span class="attr">&quot;_doc&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;created_name&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;keyword&quot;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;version&quot;</span>: <span class="number">123</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除索引模板"><a href="#删除索引模板" class="headerlink" title="删除索引模板"></a>删除索引模板</h3></li>
+<li><p><code>DELETE`` ``/``_template/template_heshen</code></p>
+<h3 id="获取索引模板"><a href="#获取索引模板" class="headerlink" title="获取索引模板"></a>获取索引模板</h3></li>
+<li><p><code>GET /_template/template_heshen</code></p>
+<h3 id="模板是否存在"><a href="#模板是否存在" class="headerlink" title="模板是否存在"></a>模板是否存在</h3></li>
+<li><p><code>HEAD /_template/template_heshen</code></p>
+<h3 id="模板匹配"><a href="#模板匹配" class="headerlink" title="模板匹配"></a>模板匹配</h3></li>
+<li><p>多个模板可以匹配一个索引，多个相同的配置根据order字段来确定使用那个</p>
+</li>
+</ul>
+<h2 id="Mapping操作"><a href="#Mapping操作" class="headerlink" title="Mapping操作"></a>Mapping操作</h2><h3 id="更新Mapping"><a href="#更新Mapping" class="headerlink" title="更新Mapping"></a>更新Mapping</h3><ul>
+<li><p>映射已经创建后，一般不可以更改,除了更改子对象的字段，或者 ignore_above 属性</p>
+</li>
+<li><p>可以新增一个字段映射</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1/_mapping/_doc</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;properties&quot;</span>:&#123;</span><br><span class="line">     <span class="attr">&quot;img&quot;</span>:&#123;</span><br><span class="line">       <span class="attr">&quot;type&quot;</span>:<span class="string">&quot;keyword&quot;</span></span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>也可以批量添加字段映射</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /twitter-1,twitter-2/_mapping/_doc </span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;properties&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;user_name&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;text&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="获取Mapping"><a href="#获取Mapping" class="headerlink" title="获取Mapping"></a>获取Mapping</h3></li>
+<li><p><code>GET /heshen_test_v1/_mapping</code> 获取整个Mapping信息</p>
+</li>
+<li><p><code>GET /heshen_test_v1/_mapping/_doc</code></p>
+</li>
+<li><p><code>GET /heshen_test_v1/_mapping/field/img</code> 获取某个字段的映射</p>
+</li>
+</ul>
+<h2 id="Settings操作"><a href="#Settings操作" class="headerlink" title="Settings操作"></a>Settings操作</h2><h3 id="更新Settings-文档"><a href="#更新Settings-文档" class="headerlink" title="更新Settings 文档"></a>更新Settings <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/indices-update-settings.html">文档</a></h3><ul>
+<li><p>注意分片数不可以修改</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PUT /heshen_test_v1/_settings</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;index&quot;</span> : &#123;</span><br><span class="line">        <span class="attr">&quot;number_of_replicas&quot;</span> : <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="获取Settings"><a href="#获取Settings" class="headerlink" title="获取Settings"></a>获取Settings</h3></li>
+<li><p><code>GET heshen_test_v1/_settings</code></p>
+</li>
+</ul>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="文档-Document"><a href="#文档-Document" class="headerlink" title="文档 Document"></a>文档 Document</h2><h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><h4 id="指定id插入，如果存在则是更新"><a href="#指定id插入，如果存在则是更新" class="headerlink" title="指定id插入，如果存在则是更新"></a>指定id插入，如果存在则是更新</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1/_doc/2</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;itemName&quot;</span>: <span class="string">&quot;C货2&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;weight&quot;</span>: <span class="number">12</span>,</span><br><span class="line">  <span class="attr">&quot;price&quot;</span>:<span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="es自动生成id-（使用post代替put）"><a href="#es自动生成id-（使用post代替put）" class="headerlink" title="es自动生成id （使用post代替put）"></a>es自动生成id （使用post代替put）</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_doc/2</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="指定操作类型-指定类型为创建，如果id已经存在，就会返回失败"><a href="#指定操作类型-指定类型为创建，如果id已经存在，就会返回失败" class="headerlink" title="指定操作类型,指定类型为创建，如果id已经存在，就会返回失败"></a>指定操作类型,指定类型为创建，如果id已经存在，就会返回失败</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1/_doc/4/_create</span><br><span class="line">&#123;...&#125;</span><br><span class="line"></span><br><span class="line">PUT heshen_test_v1/_doc/4?op_type=create</span><br><span class="line">&#123;...&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="超时时间"><a href="#超时时间" class="headerlink" title="超时时间"></a>超时时间</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1/_doc/4?timeout=10ms</span><br><span class="line">&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="版本号-乐观锁更新"><a href="#版本号-乐观锁更新" class="headerlink" title="版本号-乐观锁更新"></a>版本号-乐观锁更新</h4><ul>
+<li>默认es采用内部版本控制，每一次更新版本号+1，我们可以使用version_type=external 来启用外部版本号功能。</li>
+<li>请求的版本号需要是非负正整数</li>
+<li>默认es的内部版本控制为一定要与当前版本号相同才能更新成功</li>
+<li>（启用之后，之后好像就不用在每次带version_type）<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">PUT heshen_test_v1/_doc/2?version=17</span><br><span class="line">&#123;...&#125;</span><br><span class="line">当文档version=17的时候保存成功</span><br><span class="line"></span><br><span class="line">PUT heshen_test_v1/_doc/2?version=17&amp;version_type=external_gte</span><br><span class="line">&#123;...&#125;</span><br><span class="line">当文档version&lt;=17的时候成功</span><br><span class="line"></span><br><span class="line">PUT heshen_test_v1/_doc/2?version=17&amp;version_type=external</span><br><span class="line">&#123;...&#125;</span><br><span class="line">当文档version&lt;17的时候成功</span><br></pre></td></tr></table></figure>
+<h4 id="version-type类型"><a href="#version-type类型" class="headerlink" title="version_type类型"></a>version_type类型</h4>internal ：完全相同才成功<br>external_gt || external :当请求的版本号大于的时候才成功<br>external_gte ：当请求的版本号大于等于的时候才成功</li>
+</ul>
+<h4 id="自动创建索引。"><a href="#自动创建索引。" class="headerlink" title="自动创建索引。"></a>自动创建索引。</h4><p>如果索引不存在，自动创建索引，并且应用索引模板，字段类型es会动态生成。可以通过action.auto_create_index 来控制。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;persistent&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;action.auto_create_index&quot;</span>: <span class="string">&quot;heshen*&quot;</span><span class="comment">//只允许某些索引创建 </span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;persistent&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;action.auto_create_index&quot;</span>: <span class="string">&quot;false&quot;</span> <span class="comment">//全部不允许</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PUT _cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;persistent&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;action.auto_create_index&quot;</span>: <span class="string">&quot;true&quot;</span> <span class="comment">//全部允许</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><h4 id="基于id部分字段更新"><a href="#基于id部分字段更新" class="headerlink" title="基于id部分字段更新"></a>基于id部分字段更新</h4><ul>
+<li><p>存在的字段会被更新</p>
+</li>
+<li><p>不存在的字段会添加，映射不存在的会自动添加映射</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_doc/1/_update</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">&quot;doc&quot;</span>: &#123;</span><br><span class="line">     <span class="attr">&quot;itemName&quot;</span>:<span class="string">&quot;C货112&quot;</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="基于脚本更新"><a href="#基于脚本更新" class="headerlink" title="基于脚本更新"></a>基于脚本更新</h4></li>
+<li><p>基于es的script脚本进行更新</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_doc/1/_update</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">     <span class="attr">&quot;source&quot;</span>:<span class="string">&quot;ctx._source.remarks=&#x27;和天下&#x27;&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST heshen_test_v1/_doc/1/_update</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;source&quot;</span>: <span class="string">&quot;ctx._source.weight=params.count&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;painless&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;params&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;count&quot;</span>: <span class="number">4</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Upsert"><a href="#Upsert" class="headerlink" title="Upsert"></a>Upsert</h4></li>
+<li><p>普通更新如果文档不存在，会报错</p>
+</li>
+<li><p>而加了upsert之后，如果文档不存在，会初始化文档</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_doc/6/_update</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;source&quot;</span>: <span class="string">&quot;ctx._source.weight=params.count&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;painless&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;params&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;count&quot;</span>: <span class="number">4</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;upsert&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;itemName&quot;</span>: <span class="string">&quot;C货2&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;weight&quot;</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="attr">&quot;price&quot;</span>: <span class="number">20</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="更新基于条件"><a href="#更新基于条件" class="headerlink" title="更新基于条件"></a>更新基于条件</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_update_by_query</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;source&quot;</span>: <span class="string">&quot;ctx._source.remarks=ctx._source.remarks+&#x27;*&#x27;&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;lang&quot;</span>: <span class="string">&quot;painless&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;terms&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1&quot;</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3></li>
+</ul>
+<h3 id="如何使用脚本"><a href="#如何使用脚本" class="headerlink" title="如何使用脚本"></a>如何使用脚本</h3><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/modules-scripting-using.html">链接</a></p>
+<h4 id="脚本构成"><a href="#脚本构成" class="headerlink" title="脚本构成"></a>脚本构成</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;script&quot;: &#123;</span><br><span class="line">  &quot;lang&quot;:   &quot;...&quot;,  //脚本使用的语言 默认为 painless </span><br><span class="line">  &quot;source&quot; | &quot;id&quot;: &quot;...&quot;, // </span><br><span class="line">  &quot;params&quot;: &#123; ... &#125; //参数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="搜索返回字段"><a href="#搜索返回字段" class="headerlink" title="搜索返回字段"></a>搜索返回字段</h4><ul>
+<li><p>es在第一次执行脚本的时候会把他缓存起来，所以如果脚本里有参数的话，一般是要使用参数字段，而不是硬编码</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">GET heshen_test_v1/_search</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;script_fields&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;weight_big&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;script&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;lang&quot;</span>:   <span class="string">&quot;expression&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;source&quot;</span>:<span class="string">&quot;doc[&#x27;weight&#x27;] * sp&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;params&quot;</span>: &#123;</span><br><span class="line">           <span class="attr">&quot;sp&quot;</span>: <span class="number">100</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="操作数据"><a href="#操作数据" class="headerlink" title="操作数据"></a>操作数据</h4></li>
+<li><p>在reindex 和 update_by_query 可以设置数据的属性，甚至删除数据</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">noop: 设置 ctx.op = “noop” 。如果你的脚本并没有对原来的doc做任何更改。这将导致 reindex 忽略该doc。这将在响应的 noop 中被展示。</span><br><span class="line"></span><br><span class="line">delete: 设置ctx.op = “delete”，如果你的脚本如此设定，target index中的该doc会被被删除。这将在响应的 deleted 中被展示。</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><h4 id="基于id进行删除"><a href="#基于id进行删除" class="headerlink" title="基于id进行删除"></a>基于id进行删除</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE heshen_test_v1/_doc/1</span><br></pre></td></tr></table></figure>
+<h4 id="基于条件删除"><a href="#基于条件删除" class="headerlink" title="基于条件删除"></a>基于条件删除</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">POST heshen_test_v1/_delete_by_query</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;query&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;terms&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;_id&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;1&quot;</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><h3 id="Bulk-批量增删改"><a href="#Bulk-批量增删改" class="headerlink" title="Bulk 批量增删改"></a>Bulk 批量增删改</h3></li>
+<li><p>bulk是es提供的一种批量增删改</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p>除delete操作意外，所有的操作必须是<code>一对JSON</code> ，而且每个JSON<code>不能换行</code>，<code>相邻JSON必须换行</code>，</p>
+</li>
+<li><p>格式：</p>
+</li>
+</ul>
+<p><code>POST _bulk</code><br><code>&#123; action: &#123; metadata &#125;&#125;</code><br><code>&#123; request body        &#125;</code><br><code>&#123; action: &#123; metadata &#125;&#125;</code><br><code>&#123; request body        &#125;</code></p>
+<h4 id="操作类型"><a href="#操作类型" class="headerlink" title="操作类型"></a>操作类型</h4><ul>
+<li><code>create</code> 如果文档不存在就创建，但如果文档存在就返回错误</li>
+<li><code>index</code> 如果文档不存在就创建，如果文档存在就更新</li>
+<li><code>update</code> 更新一个文档，如果文档不存在就返回错误</li>
+<li><code>delete</code> 删除一个文档，如果要删除的文档id不存在，就返回错误<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST _bulk</span><br><span class="line">&#123;<span class="attr">&quot;index&quot;</span>:&#123;<span class="attr">&quot;_index&quot;</span>:<span class="string">&quot;heshen_test_v1&quot;</span>,<span class="attr">&quot;_type&quot;</span>:<span class="string">&quot;_doc&quot;</span>,<span class="attr">&quot;_id&quot;</span>:<span class="string">&quot;4&quot;</span>&#125;&#125;</span><br><span class="line">&#123;<span class="attr">&quot;_doc&quot;</span>:&#123;<span class="attr">&quot;itemName&quot;</span>:<span class="string">&quot;C货3&quot;</span>,<span class="attr">&quot;weight&quot;</span>:<span class="number">12</span>,<span class="attr">&quot;price&quot;</span>:<span class="number">20</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">POST heshen_test_v1/_doc/_bulk </span><br><span class="line">&#123;<span class="attr">&quot;delete&quot;</span>: &#123;<span class="attr">&quot;_id&quot;</span>: <span class="number">5</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在json中可以不写出 index ,type</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/04/10/es/es1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -199,7 +1012,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 13:58:07" itemprop="dateModified" datetime="2021-05-30T13:58:07+08:00">2021-05-30</time>
+                <time title="修改时间：2021-05-30 14:16:20" itemprop="dateModified" datetime="2021-05-30T14:16:20+08:00">2021-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1338,260 +2151,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/13/mybatis/mybatis%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/13/mybatis/mybatis%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">mybatis插件机制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-13 00:00:00 / 修改时间：18:17:02" itemprop="dateCreated datePublished" datetime="2021-01-13T00:00:00+08:00">2021-01-13</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mybatis/" itemprop="url" rel="index"><span itemprop="name">mybatis</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="mybatis的执行过程"><a href="#mybatis的执行过程" class="headerlink" title="mybatis的执行过程"></a>mybatis的执行过程</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">SpringbootStart开发</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-14 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-14T00:00:00+08:00">2020-03-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-11 12:00:49" itemprop="dateModified" datetime="2021-03-11T12:00:49+08:00">2021-03-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>###建立工程<br>我们首先建一个maven工程，可以按照SpringBoot的规范取名为spring-boot-starter-XX</p>
-<ul>
-<li>依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &#x2F;&#x2F;这个类是为了自动装配 </span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;下面链接是官网对于这个以来的解释</span><br><span class="line">&#x2F;&#x2F;https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-boot&#x2F;docs&#x2F;2.1.0.RELEASE&#x2F;reference&#x2F;html&#x2F;configuration-metadata.html#configuration-metadata-annotation-processor</span><br><span class="line">&#x2F;&#x2F;这个依赖是为了读取配置文件</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-configuration-processor&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
-<li>项目结果<br><img src="https://upload-images.jianshu.io/upload_images/13349286-c2785f31fec651db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目结果.png"></li>
-<li>PhoneProperties（属性配置类）<br>使用@ConfigurationProperties读取配置文件中的参数，并且设置有默认值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix &#x3D; &quot;spring.phone&quot;)</span><br><span class="line">public class PhoneProperties &#123;</span><br><span class="line">    private String name &#x3D; &quot;小米&quot;;</span><br><span class="line">    private Integer storage &#x3D; 1024;</span><br><span class="line">    private String money &#x3D; &quot;1299rmb&quot;;</span><br><span class="line">    &#x2F;&#x2F;get set 方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><strong>PhoneAutoConfiguration(核心自动装配类)</strong><br>@Configuration<br>@EnableConfigurationProperties  转载配置类<br>@ConditionalOnClass ​ 如果此class不存在</li>
-</ul>
-<p><strong><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/128bd6a5244a">@Conditional是什么</a></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableConfigurationProperties(PhoneProperties.class)</span><br><span class="line">@ConditionalOnClass(PhoneService.class)</span><br><span class="line">@ConditionalOnProperty(prefix &#x3D; &quot;spring.phone&quot;,value &#x3D; &quot;enable&quot;, matchIfMissing &#x3D; true)</span><br><span class="line">public class PhoneAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    PhoneProperties phoneProperties;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean(PhoneService.class)</span><br><span class="line">    public PhoneService getPhoneService()&#123;</span><br><span class="line">        return new PhoneService(phoneProperties);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>PhoneService(具体服务类)<br>服务类为具体需要注入的服务。</li>
-<li>spring.factories<br>spring的一种扩展手段，通过加载的时候SpringFactoriesLoader读取spring.factories文件中的EnableAutoConfiguration数据对应的配置项通过反射（Java Refletion）实例化为对应的标注了@Configuration的JavaConfig形式的IoC容器配置类，然后汇总为一个bean加载到IoC容器。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;</span><br><span class="line"> com.example.springbootstarterphone.config.PhoneAutoConfiguration</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Conditional/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/12/spring/Conditional/" class="post-title-link" itemprop="url">Conditional</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-12T00:00:00+08:00">2020-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-11 11:59:26" itemprop="dateModified" datetime="2021-03-11T11:59:26+08:00">2021-03-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Conditional的使用"><a href="#Conditional的使用" class="headerlink" title="@Conditional的使用"></a>@Conditional的使用</h3><ul>
-<li><strong>作用：</strong>根据条件，决定类是否加载到Spring Ioc容器中，在SpringBoot中有大量的运用</li>
-<li><strong>应用场景</strong>：在一些需要条件满足才是实例化的类中，使用此注解，我曾经在项目中需要根据不同的场景使用不同的mq中间件的时候使用过，在mq的实例化bean上，加上此注解，根据配置文件的不同，来决定这个bean是否加载至ioc容器中。</li>
-</ul>
-<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><ol>
-<li><p>实现Conditional接口, 实现matches方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MqExistsCondition</span> <span class="keyword">implements</span> <span class="title">Condition</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context,AnnotatedTypeMetadata metadata)</span>     </span>&#123;</span><br><span class="line">		Environment environment = context.getEnvironment();</span><br><span class="line">		<span class="comment">//从这里获取配置文件中 active 的值，根据当前的active值决定是否加载类</span></span><br><span class="line">        String[] activeProfiles = environment.getActiveProfiles();</span><br><span class="line">		<span class="keyword">for</span> (String active : activeProfiles) &#123;</span><br><span class="line">			<span class="keyword">if</span>(active.equals(ActiveEnum.open_active.getActive().toString()))&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>在需要判断条件的bean上，加上**@Conditional(TestExistsCondition.class) **即可在满足条件的时候加载对应的类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">   <span class="meta">@Conditional(TestMqExistsCondition.class)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> TestBean <span class="title">getTestBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	TestBean testBean = <span class="keyword">new</span> TestBean();</span><br><span class="line">   	<span class="keyword">return</span> testBean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="其他派生的的conditional"><a href="#其他派生的的conditional" class="headerlink" title="其他派生的的conditional"></a>其他派生的的conditional</h3></li>
-</ol>
-<h4 id="ConditionalOnClass"><a href="#ConditionalOnClass" class="headerlink" title="@ConditionalOnClass"></a>@ConditionalOnClass</h4><p>​    如果此class不存在</p>
-<h4 id="ConditionalOnMissingBean"><a href="#ConditionalOnMissingBean" class="headerlink" title="@ConditionalOnMissingBean"></a>@ConditionalOnMissingBean</h4><p>​    只有对应的ban在系统中都没有被创建，它修饰的初始化代码块才会执行，<strong>用户自己手动创建的bean优先</strong></p>
-<p><strong>@ConditionalOnBean</strong></p>
-<p>仅仅在当前上下文中存在某个对象时，才会实例化一个Bean。</p>
-<p><strong>@ConditionalOnClass</strong></p>
-<p>​       某个class位于类路径上，才会实例化一个Bean</p>
-<p><strong>@ConditionalOnExpression</strong></p>
-<p>​       当表达式为true的时候，才会实例化一个Bean。</p>
-<p>比如：</p>
-<p>@ConditionalOnExpression(“true”)</p>
-<p>@ConditionalOnExpression(“${my.controller.enabled:false}”)</p>
-<p><strong>@ConditionalOnMissingBean</strong></p>
-<p>​       仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean</p>
-<p><strong>@ConditionalOnMissingClass</strong></p>
-<p>某个class类路径上不存在的时候，才会实例化一个Bean</p>
-<p><strong>@ConditionalOnNotWebApplication</strong></p>
-<p>​       不是web应用</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1663,7 +2222,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -168,6 +168,260 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/13/mybatis/mybatis%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/13/mybatis/mybatis%E6%8F%92%E4%BB%B6%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">mybatis插件机制</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-13 00:00:00 / 修改时间：18:17:02" itemprop="dateCreated datePublished" datetime="2021-01-13T00:00:00+08:00">2021-01-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis/" itemprop="url" rel="index"><span itemprop="name">mybatis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="mybatis的执行过程"><a href="#mybatis的执行过程" class="headerlink" title="mybatis的执行过程"></a>mybatis的执行过程</h2>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">SpringbootStart开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-14 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-14T00:00:00+08:00">2020-03-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-11 12:00:49" itemprop="dateModified" datetime="2021-03-11T12:00:49+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>###建立工程<br>我们首先建一个maven工程，可以按照SpringBoot的规范取名为spring-boot-starter-XX</p>
+<ul>
+<li>依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &#x2F;&#x2F;这个类是为了自动装配 </span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;下面链接是官网对于这个以来的解释</span><br><span class="line">&#x2F;&#x2F;https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-boot&#x2F;docs&#x2F;2.1.0.RELEASE&#x2F;reference&#x2F;html&#x2F;configuration-metadata.html#configuration-metadata-annotation-processor</span><br><span class="line">&#x2F;&#x2F;这个依赖是为了读取配置文件</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-configuration-processor&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li>项目结果<br><img src="https://upload-images.jianshu.io/upload_images/13349286-c2785f31fec651db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目结果.png"></li>
+<li>PhoneProperties（属性配置类）<br>使用@ConfigurationProperties读取配置文件中的参数，并且设置有默认值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix &#x3D; &quot;spring.phone&quot;)</span><br><span class="line">public class PhoneProperties &#123;</span><br><span class="line">    private String name &#x3D; &quot;小米&quot;;</span><br><span class="line">    private Integer storage &#x3D; 1024;</span><br><span class="line">    private String money &#x3D; &quot;1299rmb&quot;;</span><br><span class="line">    &#x2F;&#x2F;get set 方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>PhoneAutoConfiguration(核心自动装配类)</strong><br>@Configuration<br>@EnableConfigurationProperties  转载配置类<br>@ConditionalOnClass ​ 如果此class不存在</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/128bd6a5244a">@Conditional是什么</a></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableConfigurationProperties(PhoneProperties.class)</span><br><span class="line">@ConditionalOnClass(PhoneService.class)</span><br><span class="line">@ConditionalOnProperty(prefix &#x3D; &quot;spring.phone&quot;,value &#x3D; &quot;enable&quot;, matchIfMissing &#x3D; true)</span><br><span class="line">public class PhoneAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    PhoneProperties phoneProperties;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean(PhoneService.class)</span><br><span class="line">    public PhoneService getPhoneService()&#123;</span><br><span class="line">        return new PhoneService(phoneProperties);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>PhoneService(具体服务类)<br>服务类为具体需要注入的服务。</li>
+<li>spring.factories<br>spring的一种扩展手段，通过加载的时候SpringFactoriesLoader读取spring.factories文件中的EnableAutoConfiguration数据对应的配置项通过反射（Java Refletion）实例化为对应的标注了@Configuration的JavaConfig形式的IoC容器配置类，然后汇总为一个bean加载到IoC容器。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;</span><br><span class="line"> com.example.springbootstarterphone.config.PhoneAutoConfiguration</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Conditional/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/12/spring/Conditional/" class="post-title-link" itemprop="url">Conditional</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-12T00:00:00+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-11 11:59:26" itemprop="dateModified" datetime="2021-03-11T11:59:26+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="Conditional的使用"><a href="#Conditional的使用" class="headerlink" title="@Conditional的使用"></a>@Conditional的使用</h3><ul>
+<li><strong>作用：</strong>根据条件，决定类是否加载到Spring Ioc容器中，在SpringBoot中有大量的运用</li>
+<li><strong>应用场景</strong>：在一些需要条件满足才是实例化的类中，使用此注解，我曾经在项目中需要根据不同的场景使用不同的mq中间件的时候使用过，在mq的实例化bean上，加上此注解，根据配置文件的不同，来决定这个bean是否加载至ioc容器中。</li>
+</ul>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><ol>
+<li><p>实现Conditional接口, 实现matches方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MqExistsCondition</span> <span class="keyword">implements</span> <span class="title">Condition</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context,AnnotatedTypeMetadata metadata)</span>     </span>&#123;</span><br><span class="line">		Environment environment = context.getEnvironment();</span><br><span class="line">		<span class="comment">//从这里获取配置文件中 active 的值，根据当前的active值决定是否加载类</span></span><br><span class="line">        String[] activeProfiles = environment.getActiveProfiles();</span><br><span class="line">		<span class="keyword">for</span> (String active : activeProfiles) &#123;</span><br><span class="line">			<span class="keyword">if</span>(active.equals(ActiveEnum.open_active.getActive().toString()))&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>在需要判断条件的bean上，加上**@Conditional(TestExistsCondition.class) **即可在满足条件的时候加载对应的类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">   <span class="meta">@Conditional(TestMqExistsCondition.class)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> TestBean <span class="title">getTestBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	TestBean testBean = <span class="keyword">new</span> TestBean();</span><br><span class="line">   	<span class="keyword">return</span> testBean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其他派生的的conditional"><a href="#其他派生的的conditional" class="headerlink" title="其他派生的的conditional"></a>其他派生的的conditional</h3></li>
+</ol>
+<h4 id="ConditionalOnClass"><a href="#ConditionalOnClass" class="headerlink" title="@ConditionalOnClass"></a>@ConditionalOnClass</h4><p>​    如果此class不存在</p>
+<h4 id="ConditionalOnMissingBean"><a href="#ConditionalOnMissingBean" class="headerlink" title="@ConditionalOnMissingBean"></a>@ConditionalOnMissingBean</h4><p>​    只有对应的ban在系统中都没有被创建，它修饰的初始化代码块才会执行，<strong>用户自己手动创建的bean优先</strong></p>
+<p><strong>@ConditionalOnBean</strong></p>
+<p>仅仅在当前上下文中存在某个对象时，才会实例化一个Bean。</p>
+<p><strong>@ConditionalOnClass</strong></p>
+<p>​       某个class位于类路径上，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnExpression</strong></p>
+<p>​       当表达式为true的时候，才会实例化一个Bean。</p>
+<p>比如：</p>
+<p>@ConditionalOnExpression(“true”)</p>
+<p>@ConditionalOnExpression(“${my.controller.enabled:false}”)</p>
+<p><strong>@ConditionalOnMissingBean</strong></p>
+<p>​       仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnMissingClass</strong></p>
+<p>某个class类路径上不存在的时候，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnNotWebApplication</strong></p>
+<p>​       不是web应用</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Springboot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1080,345 +1334,6 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/10/other/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/10/other/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">maven插件的开发</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-10T00:00:00+08:00">2020-02-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-11 11:53:36" itemprop="dateModified" datetime="2021-03-11T11:53:36+08:00">2021-03-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">maven插件的开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>如果你想要了解某个事物，你必须要成为其中的一员。想要理解maven插件，我们就尝试来开发一个maven插件</p>
-<p>官方文档位置：<a target="_blank" rel="noopener" href="http://maven.apache.org/guides/introduction/introduction-to-plugins.html">http://maven.apache.org/guides/introduction/introduction-to-plugins.html</a></p>
-<h2 id="什么是mavne插件"><a href="#什么是mavne插件" class="headerlink" title="什么是mavne插件"></a>什么是mavne插件</h2><p>Maven 实际上是一个依赖插件执行的框架，每个任务实际上是由插件完成。换句话说，插件是执行大部分实际操作的地方，插件用来：创建jar文件，创建war文件，编译代码，单元测试代码，创建项目文档等等操作。您可以想到在项目上执行的几乎所有操作均作为Maven插件实现。</p>
-<p>插件是Maven的核心功能，它允许在多个项目中重用通用的构建逻辑。他们通过在项目pom文件的上下文中执行“操作”（即创建WAR文件或编译单元测试）来实现操作，插件同时也是可以定义参数等等。</p>
-<h2 id="插件的命名规范"><a href="#插件的命名规范" class="headerlink" title="插件的命名规范"></a>插件的命名规范</h2><ul>
-<li>一般插件是使用 ** &lt;你的插件名称&gt;+ -maven-plugin** 来命名</li>
-<li>千万不要使用 **  maven-&lt;你的插件名称&gt;-plugin** ，这样是对Apache Maven商标的侵犯😓</li>
-</ul>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="1-创建一个Maven工程"><a href="#1-创建一个Maven工程" class="headerlink" title="1. 创建一个Maven工程"></a>1. 创建一个Maven工程</h3><ul>
-<li>pom配置：增加打包方式      <packaging>maven-plugin</packaging></li>
-<li> 需要引入3个依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--plugin插件api--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-plugin-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;2.0&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line"> &lt;!--加入此包就可以使用@Mojo注解--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven.plugin-tools&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-plugin-annotations&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;3.1&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;!--用户获取运行插件的Maven工程信息--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-project&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;3.0-alpha-2&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="2-HelloWord插件（Mojo）编写"><a href="#2-HelloWord插件（Mojo）编写" class="headerlink" title="2. HelloWord插件（Mojo）编写"></a>2. HelloWord插件（Mojo）编写</h3></li>
-<li>处理类需要继承 AbstractMojo ，实现 execute() 方法，execute() 就是我们实际执行的操作</li>
-<li>还需要增加@Mojo注解 ，来标示其为一个Mojo类</li>
-<li>@Paramete 注解用来直接从pom文件中获取值，其本质就是我们插件的参数，也可以使用表达式来获取参数，像下面的${project} 就是调用MavenSession.getCurrentProject()来获取当前工程</li>
-<li>@Paramete的表达式类型 <a target="_blank" rel="noopener" href="http://maven.apache.org/ref/3.6.3/maven-core/apidocs/org/apache/maven/plugin/PluginParameterExpressionEvaluator.html">http://maven.apache.org/ref/3.6.3/maven-core/apidocs/org/apache/maven/plugin/PluginParameterExpressionEvaluator.html</a></li>
-<li>MavenProject当前工程的信息，这里就是通过MavenProject获得当前工程的所有文件，然后将java文件和依赖 输出</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">@Mojo(name &#x3D; &quot;hello&quot;,requiresDependencyResolution &#x3D; ResolutionScope.COMPILE)</span><br><span class="line">public class HelloMojo extends AbstractMojo &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * The greeting to display.</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Parameter( property &#x3D; &quot;greeting&quot;, defaultValue &#x3D; &quot;Hello World!&quot; )</span><br><span class="line">    private String greeting;</span><br><span class="line"></span><br><span class="line">    @Parameter( defaultValue &#x3D; &quot;$&#123;project&#125;&quot;)</span><br><span class="line">    private MavenProject mavenProject;</span><br><span class="line"></span><br><span class="line">    public void execute() throws MojoExecutionException, MojoFailureException &#123;</span><br><span class="line">        Class&lt;? extends HelloMojo&gt; aClass &#x3D; getClass();</span><br><span class="line"></span><br><span class="line">        System.out.println(aClass);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        getLog().info(&quot;&lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;河神说: Hello Mojo start&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&quot;+greeting);</span><br><span class="line"></span><br><span class="line">        List dependencies &#x3D; mavenProject.getDependencies();</span><br><span class="line">        getLog().info(&quot;[dependencies]&quot;);</span><br><span class="line">        for (Object dependency : dependencies) &#123;</span><br><span class="line">            getLog().info(dependency.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        getLog().info(&quot;[basedir]&quot;);</span><br><span class="line">        File basedir &#x3D; mavenProject.getBasedir();</span><br><span class="line"></span><br><span class="line">        List&lt;File&gt; files &#x3D; searchFiles(basedir, &quot;java&quot;);</span><br><span class="line"></span><br><span class="line">        for (File file : files) &#123;</span><br><span class="line">            long l &#x3D; file.lastModified();</span><br><span class="line">            Date date &#x3D; new Date(l);</span><br><span class="line"></span><br><span class="line">            DateFormat dateFormat &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">            String format &#x3D; dateFormat.format(date);</span><br><span class="line">            getLog().info(file.getName()+&quot;[lastModified]&quot;+format);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        getLog().info(&quot;&lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;河神说: Hello Mojo end&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&quot;+greeting);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static List&lt;File&gt; searchFiles(File folder, final String keyword) &#123;</span><br><span class="line">        List&lt;File&gt; result &#x3D; new ArrayList&lt;File&gt;();</span><br><span class="line">        if (folder.isFile())&#123;</span><br><span class="line">            result.add(folder);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        File[] subFolders &#x3D; folder.listFiles(new FileFilter() &#123;</span><br><span class="line">            public boolean accept(File file) &#123;</span><br><span class="line">                if (file.isDirectory()) &#123;</span><br><span class="line">                    return true;</span><br><span class="line">                &#125;</span><br><span class="line">                return file.getName().toLowerCase().endsWith(keyword);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        if (subFolders !&#x3D; null) &#123;</span><br><span class="line">            for (File file : subFolders) &#123;</span><br><span class="line">                if (file.isFile()) &#123;</span><br><span class="line">                    &#x2F;&#x2F; 如果是文件则将文件添加到结果列表中</span><br><span class="line">                    result.add(file);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    &#x2F;&#x2F; 如果是文件夹，则递归调用本方法，然后把所有的文件加到结果列表中</span><br><span class="line">                    result.addAll(searchFiles(file, keyword));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li> 使用：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;com.heshen&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;api-check-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.0-SNAPSHOT&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;greeting&gt;设置的参数&lt;&#x2F;greeting&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;phase&gt;install&lt;&#x2F;phase&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;hello&lt;&#x2F;goal&gt;</span><br><span class="line">                    &lt;&#x2F;goals&gt;</span><br><span class="line">                &lt;&#x2F;execution&gt;</span><br><span class="line">            &lt;&#x2F;executions&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">    &lt;&#x2F;plugins&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br></pre></td></tr></table></figure></li>
-<li>首先需要在<build>/ <plugins>下面增加一个新的 plugin</li>
-<li>然后之后就是我们自己定义的groupId/artifactId/version</li>
-<li>然后&lt; configuration&gt;就是配置我们之前设置的参数</li>
-<li>executions标示我们的插件是在什么时候执行，phase代表声明周期，goal为插件的名称，也就是@Mojo的name,像我们图中配置的，就是在我们install的时候执行的</li>
-</ul>
-<h3 id="3-直接运行"><a href="#3-直接运行" class="headerlink" title="3. 直接运行"></a>3. 直接运行</h3><ul>
-<li>mvnDebug groupID:artifactID:version:goal</li>
-<li>或者在settings.xml配置 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;pluginGroups&gt;</span><br><span class="line">  &lt;pluginGroup&gt;  groupID &lt;&#x2F; pluginGroup&gt;</span><br><span class="line">&lt;&#x2F; pluginGroups&gt;</span><br></pre></td></tr></table></figure>
-就可以直接使用  mvnDebug  goal 来执行</li>
-</ul>
-<hr>
-<p>桃花坞里桃花庵，桃花庵下桃花仙;<br>桃花仙人种桃树，又摘桃花卖酒钱。</p>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/09/java/RockeqMq/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/09/java/RockeqMq/" class="post-title-link" itemprop="url">RockeqMQ</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-09 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-09T00:00:00+08:00">2020-02-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-18 16:48:38" itemprop="dateModified" datetime="2021-02-18T16:48:38+08:00">2021-02-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="架构组成"><a href="#架构组成" class="headerlink" title="架构组成"></a>架构组成</h1><h2 id="NameServer"><a href="#NameServer" class="headerlink" title="NameServer"></a>NameServer</h2><ul>
-<li>无状态的元数据管理</li>
-<li>元数据（Border的信息，包含名称，地址，集群，以及心跳时间）</li>
-<li>无主从概念，多个NameServer可以组成一个集群<h3 id="路由信息"><a href="#路由信息" class="headerlink" title="路由信息"></a>路由信息</h3></li>
-<li>Topic消息队列路由信息，消息发送时根据路由表进行负载均衡。</li>
-<li>Broker基础信息，包含brokerName、所属集群名称、主备Broker地址。</li>
-<li>Broker集群信息，存储集群中所有Broker名称。</li>
-<li>Broker状态信息。NameServer每次收到心跳包时会替换该信息。</li>
-<li>Broker上的FilterServer列表，用于类模式消息过滤<h3 id="路由信息的注册与发现"><a href="#路由信息的注册与发现" class="headerlink" title="路由信息的注册与发现"></a>路由信息的注册与发现</h3></li>
-<li>Broker启动时向集群中所有的NameServer发送心跳语句，每隔30s向集群中所有NameServer发送心跳包，NameServer收到Broker心跳包时会更新brokerLiveTable缓存中BrokerLiveInfo的lastUpdate Timestamp，然后NameServer每隔10s扫描brokerLiveTable，如果连续120s没有收到心跳包，NameServer将移除该Broker的路由信息同时关闭Socket连接。<br><img src="https://upload-images.jianshu.io/upload_images/13349286-2d1f7207646cd39d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="NameServer流程"></li>
-</ul>
-<h2 id="Broker"><a href="#Broker" class="headerlink" title="Broker"></a>Broker</h2><ul>
-<li>消息代理，负责存储消息，处理生产者，消费者的各种请求的代理。</li>
-<li>实现主从架构</li>
-</ul>
-<h2 id="消息发送"><a href="#消息发送" class="headerlink" title="消息发送"></a>消息发送</h2><h3 id="消息的基础属性"><a href="#消息的基础属性" class="headerlink" title="消息的基础属性"></a>消息的基础属性</h3><ul>
-<li>tag 消息TAG，用于消息过滤</li>
-<li>delayTimeLevel：消息延迟级别，用于定时消息或消息重试。</li>
-<li>key Message索引键，多个用空格隔开，RocketMQ可以根据这些key快速检索到消息</li>
-<li>waitStoreMsgOK：消息发送时是否等消息存储完成后再返回<h3 id="消息的发送流程"><a href="#消息的发送流程" class="headerlink" title="消息的发送流程"></a>消息的发送流程</h3><h4 id="验证消息："><a href="#验证消息：" class="headerlink" title="验证消息："></a>验证消息：</h4>验证消息的合法性，消息的最大长度不能超过4M</li>
-</ul>
-<h4 id="查找路由："><a href="#查找路由：" class="headerlink" title="查找路由："></a>查找路由：</h4><ul>
-<li>如果本地路由表中未缓存topic的路由信息，向Name-Server发送获取路由信息请求，更新本地路由信息表，如果未找到则会抛出异常。并且消息生产者每隔30s从Name-Server更新路由表。</li>
-</ul>
-<h4 id="消息发送（包含异常处理机制）"><a href="#消息发送（包含异常处理机制）" class="headerlink" title="消息发送（包含异常处理机制）"></a>消息发送（包含异常处理机制）</h4><p>消息发送高可用主要通过两个手段：重试与Broker规避。<strong>Broker规避就是在一次消息发送过程中发现错误，在某一时间段内，消息生产者不会选择该Broker（消息服务器）上的消息队列，提高发送消息的成功率</strong>。</p>
-<h2 id="消息消费"><a href="#消息消费" class="headerlink" title="消息消费"></a>消息消费</h2><h2 id="消费组"><a href="#消费组" class="headerlink" title="消费组"></a>消费组</h2><p>RocketMq的消费以消费组的模式展开，一个消费组可以订阅多个主题，一个消费组里面也有多个消费者</p>
-<h2 id="广播模式和集群模式"><a href="#广播模式和集群模式" class="headerlink" title="广播模式和集群模式"></a>广播模式和集群模式</h2><ul>
-<li>消费组之间有集群模式与广播模式两种消费模式。集群模式，主题下的同一条消息只允许被其中一个消费者消费。广播模式，主题下的同一条消息将被集群内的所有消费者消费一次。</li>
-<li>集群模式下：一个消息队列同一时间只允许被一个消费者消费，一个消费者可以消费多个消息队列。</li>
-</ul>
-<h2 id="消息的推和拉"><a href="#消息的推和拉" class="headerlink" title="消息的推和拉"></a>消息的推和拉</h2><p>消息服务器与消费者之间的消息传送也有两种方式：推模式、拉模式。所谓的拉模式，是消费端主动发起拉消息请求，而推模式是消息到达消息服务器后，推送给消息消费者。RocketMQ消息推模式的实现基于拉模式，在拉模式上包装一层，一个拉取任务完成后开始下一个拉取任务。</p>
-<h3 id="拉模式"><a href="#拉模式" class="headerlink" title="拉模式"></a>拉模式</h3><ul>
-<li>用户自行实现取消息的过程</li>
-<li>拉模式采用一个单独的线程负责消息的拉取</li>
-<li>每次默认从服务端拉取32条消息，存入消息队列处理队列，将消息提交到消费者消费线程池，使用线程池来消费消息，保证了消息拉取和消息消费的解耦。</li>
-<li>如果消息消费过慢产生消息堆积会触发消息消费拉取流控。</li>
-<li>广播消息消费进度存储在消费者端，集群消费进度存储在Broker<h3 id="推模式"><a href="#推模式" class="headerlink" title="推模式"></a>推模式</h3></li>
-<li>consumer把轮询过程封装了，并注册MessageListener监听器，取到消息后，唤醒MessageListener的consumeMessage()来消费，对用户而言，感觉消息是被推送（push）过来的。</li>
-</ul>
-<h2 id="读写分离"><a href="#读写分离" class="headerlink" title="读写分离"></a>读写分离</h2><p>RocketMQ是消费者首先向主服务器发起拉取消息请求，然后主服务器返回一批消息，然后会根据主服务器负载压力与主从同步情况，向从服务器建议下次消息拉取是从主服务器还是从从服务器拉取（如当前需要拉取的消息已经超出了常驻内存的大小，表示主服务器繁忙，此时才建议从从服务器拉取。）。</p>
-<h2 id="局部顺序消息消"><a href="#局部顺序消息消" class="headerlink" title="局部顺序消息消"></a>局部顺序消息消</h2><p>RocketMQ支持局部顺序消息消费，也就是保证同一个消息队列上的消息顺序消费。不支持消息全局顺序消费，如果要实现某一主题的全局顺序消息消费，可以将该主题的队列数设置为1，牺牲高可用性。</p>
-<h1 id="消息存储"><a href="#消息存储" class="headerlink" title="消息存储"></a>消息存储</h1><h2 id="文件过期删除"><a href="#文件过期删除" class="headerlink" title="文件过期删除"></a>文件过期删除</h2><ul>
-<li>RocketMQ不会永久存储消息文件、消息消费队列文件，而是启用文件过期机制并在磁盘空间不足或默认在凌晨4点删除过期文件，文件默认保存72小时并且在删除文件时并不会判断该消息文件上的消息是否被消费。</li>
-<li>所以如果长时间不消费可能消息丢失</li>
-</ul>
-<h1 id="同步复制、异步复制和同步刷盘、异步刷盘"><a href="#同步复制、异步复制和同步刷盘、异步刷盘" class="headerlink" title="同步复制、异步复制和同步刷盘、异步刷盘"></a>同步复制、异步复制和同步刷盘、异步刷盘</h1><h2 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h2><ul>
-<li>指的是不同Boker节点之间数据同步</li>
-<li>同步复制指的是生产者等待同步复制成功之后，才返回消息发送成功</li>
-<li>异步复制指的是写入Master Borker之后，立即返回成功，而不等待消息复制完成<h2 id="刷盘"><a href="#刷盘" class="headerlink" title="刷盘"></a>刷盘</h2></li>
-<li>指的是数据同步到内存后同步到磁盘的过程</li>
-<li>同步刷盘指的是生产者等待消息持久化之后才返回成功</li>
-<li>异步刷盘指的是只要消息写入缓存之中，就认为写入成功，立即返回成功，到达一定量之后再出发异步刷盘</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>一般同步可靠性强，异步吞吐量强。</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/13349286-bebfb7296723f84a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="刷盘和复制"></p>
-<h1 id="消息的推和拉-1"><a href="#消息的推和拉-1" class="headerlink" title="消息的推和拉"></a>消息的推和拉</h1><ul>
-<li>消息的消费默认有两种模式，广播模式和集群模式。广播模式为消费者之间去消费对应订阅主题下面的消息。集群模式的话同一个消费组下面有多个消费者，同一个主题也有多个消费队列。</li>
-</ul>
-<h1 id="事务消息"><a href="#事务消息" class="headerlink" title="事务消息"></a>事务消息</h1><p><img src="https://upload-images.jianshu.io/upload_images/13349286-6cd82a4ba08d03de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<hr>
-<h5 id="rocketMq"><a href="#rocketMq" class="headerlink" title="rocketMq:"></a>rocketMq:</h5><p><img src="https://upload-images.jianshu.io/upload_images/13349286-16d72117c80a4a62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h5 id="事务消息发送步骤如下："><a href="#事务消息发送步骤如下：" class="headerlink" title="事务消息发送步骤如下："></a>事务消息发送步骤如下：</h5><ol>
-<li>发送方将半事务消息发送至消息队列 RocketMQ 版服务端。</li>
-<li>消息队列 RocketMQ 版服务端将消息持久化成功之后，向发送方返回 Ack 确认消息已经发送成功，此时消息为半事务消息。</li>
-<li>发送方开始执行本地事务逻辑。</li>
-<li>发送方根据本地事务执行结果向服务端提交二次确认（Commit 或是 Rollback），<br>服务端收到 Commit 状态则将半事务消息标记为可投递，订阅方最终将收到该消息；<br>服务端收到 Rollback 状态则删除半事务消息，订阅方将不会接受该消息。</li>
-</ol>
-<h5 id="事务消息回查步骤如下："><a href="#事务消息回查步骤如下：" class="headerlink" title="事务消息回查步骤如下："></a>事务消息回查步骤如下：</h5><p>  在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。<br>  发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。<br>发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。</p>
-<hr>
-<p>源：<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/43348.html?spm=5176.ons.0.0.513e176fgmrjdo">https://help.aliyun.com/document_detail/43348.html?spm=5176.ons.0.0.513e176fgmrjdo</a></p>
-<hr>
-<p>基于本地事务的消息<br><img src="https://upload-images.jianshu.io/upload_images/13349286-88dea15b08962d09.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/01/30/java/%E8%B7%B3%E8%B7%83%E8%A1%A8%E5%92%8CConcurrentSkipListMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/30/java/%E8%B7%B3%E8%B7%83%E8%A1%A8%E5%92%8CConcurrentSkipListMap/" class="post-title-link" itemprop="url">跳跃表和ConcurrentSkipListMap</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-30 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-30T00:00:00+08:00">2020-01-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-12 22:19:21" itemprop="dateModified" datetime="2021-01-12T22:19:21+08:00">2021-01-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="跳跃表"><a href="#跳跃表" class="headerlink" title="跳跃表"></a>跳跃表</h3><h5 id="跳跃表是什么"><a href="#跳跃表是什么" class="headerlink" title="跳跃表是什么"></a>跳跃表是什么</h5><ol>
-<li> 跳跃表是一种有序的数据结构，通过每个节点维持指向多个其他节点的指针，来达到快速访问节点，</li>
-<li>查找复杂度： 平均O(log n) 最坏 O(n) ，在大部分情况下，效率与平衡树相差不大，</li>
-<li> 跳跃表就通过在一个 有序数组中 ，随机找出一半的索引，而在这一半的索引里面又随机抽出一半的索引，这样每次查找数据，就不需要没有都便利整个列表，只需要跟着跳跃表一步一步的找，</li>
-<li>每一次的添加，都会从最底层开始抛硬币，来决定这个节点是否为需要提拔为索引</li>
-<li>跳跃表在redis中也有应用，redis中的有序集合的实现方式之一是跳跃表，当一个有序集合包含元素多，或者元素的成员为比较长的字符串的时候，redis就会使用跳跃表来作为底层数据结果实现，redis中另一个使用是集群节点作为内部数据结构（待了解）</li>
-</ol>
-<h3 id="ConcurrentSkipListMap"><a href="#ConcurrentSkipListMap" class="headerlink" title="ConcurrentSkipListMap"></a>ConcurrentSkipListMap</h3><h4 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h4><p>  存取数据量大，增删改查频繁，且对数据没有强一致性要求的高并发场景</p>
-<h4 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h4><ol>
-<li>基于跳跃表实现，具有弱一致性</li>
-<li>key 不能为null</li>
-<li>主要实现包含  HeadIndex  Index Node 三个类。通过HeadIndex来维护索引层次，通过index从上往下，一直到最底层Node节点的时候，就只需要比较比较少的一部分数据。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">*</span><br><span class="line">* Head nodes          Index nodes</span><br><span class="line">* +-+    right        +-+                      +-+</span><br><span class="line">* |2|----------------&gt;| |---------------------&gt;| |-&gt;null</span><br><span class="line">* +-+                 +-+                      +-+</span><br><span class="line">*  | down              |                        |</span><br><span class="line">*  v                   v                        v</span><br><span class="line">* +-+            +-+  +-+       +-+            +-+       +-+</span><br><span class="line">* |1|-----------&gt;| |-&gt;| |------&gt;| |-----------&gt;| |------&gt;| |-&gt;null</span><br><span class="line">* +-+            +-+  +-+       +-+            +-+       +-+</span><br><span class="line">*  v              |    |         |              |         |</span><br><span class="line">* Nodes  next     v    v         v              v         v</span><br><span class="line">* +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+</span><br><span class="line">* | |-&gt;|A|-&gt;|B|-&gt;|C|-&gt;|D|-&gt;|E|-&gt;|F|-&gt;|G|-&gt;|H|-&gt;|I|-&gt;|J|-&gt;|K|-&gt;null</span><br><span class="line">* +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+  +-+</span><br></pre></td></tr></table></figure>
-<h2 id="put方法"><a href="#put方法" class="headerlink" title="put方法"></a>put方法</h2>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1490,7 +1405,7 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
