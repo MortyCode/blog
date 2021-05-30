@@ -20,25 +20,20 @@
     var CONFIG = {"hostname":"www.rcode.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#abc","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="核心概念Node - 节点 即节点。节点是组成Elasticsearch集群的基本服务单元，集群中的每个运行中的Elasticsearch服务器都可称之为节点。 每个节点默认都可以参加master选举，可以禁止（比如配置比较低的机器） 每个节点都保存了集群的状态，但是只有master才可以修改 集群状态：  所有节点的信息。   2.所有的索引以及其相关的mapping和setting的信息  分">
+  <meta name="description" content="核心概念">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES基础知识">
 <meta property="og:url" content="http://www.rcode.top/2021/04/10/es/es1/index.html">
 <meta property="og:site_name" content="Rick-Code">
-<meta property="og:description" content="核心概念Node - 节点 即节点。节点是组成Elasticsearch集群的基本服务单元，集群中的每个运行中的Elasticsearch服务器都可称之为节点。 每个节点默认都可以参加master选举，可以禁止（比如配置比较低的机器） 每个节点都保存了集群的状态，但是只有master才可以修改 集群状态：  所有节点的信息。   2.所有的索引以及其相关的mapping和setting的信息  分">
+<meta property="og:description" content="核心概念">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595037904-33f6387d-52d3-4f92-9052-a9addbc06417.png#height=335&id=PJAee&margin=%5Bobject%20Object%5D&name=image.png&originHeight=670&originWidth=1456&originalType=binary&size=63182&status=done&style=none&width=728">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595647616-4219e5a6-4b68-4700-bacb-f93f462abebd.png#height=396&id=BY1KQ&margin=%5Bobject%20Object%5D&name=image.png&originHeight=792&originWidth=1078&originalType=binary&size=58706&status=done&style=stroke&width=539">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938611827-60ce77da-b8d6-459a-83a6-9ea4fa647e8f.png#height=367&id=ibMFw&margin=%5Bobject%20Object%5D&name=image.png&originHeight=734&originWidth=1066&originalType=binary&size=119613&status=done&style=none&width=533">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938625710-1990a4e9-57c9-45a8-910b-e276644948e5.png#height=373&id=puQA3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=746&originWidth=1110&originalType=binary&size=116595&status=done&style=none&width=555">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938649479-87cb9b71-a8ee-4c9a-9f4d-d7297d0ee8db.png#height=409&id=eJ2m7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=818&originWidth=1140&originalType=binary&size=136189&status=done&style=none&width=570">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616949301751-0ffb46e5-6430-451b-9f86-4151d5a485c4.png#height=270&id=ZuVS5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=1400&originalType=binary&size=21330&status=done&style=none&width=1400">
+<meta property="og:image" content="http://www.rcode.top/2021/04/10/es/es1/Elastic%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86.jpg">
 <meta property="article:published_time" content="2021-04-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-30T04:48:42.368Z">
+<meta property="article:modified_time" content="2021-05-30T05:35:16.228Z">
 <meta property="article:author" content="河神">
 <meta property="article:tag" content="es">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595037904-33f6387d-52d3-4f92-9052-a9addbc06417.png#height=335&id=PJAee&margin=%5Bobject%20Object%5D&name=image.png&originHeight=670&originWidth=1456&originalType=binary&size=63182&status=done&style=none&width=728">
+<meta name="twitter:image" content="http://www.rcode.top/2021/04/10/es/es1/Elastic%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86.jpg">
 
 <link rel="canonical" href="http://www.rcode.top/2021/04/10/es/es1/">
 
@@ -208,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 12:48:42" itemprop="dateModified" datetime="2021-05-30T12:48:42+08:00">2021-05-30</time>
+                <time title="修改时间：2021-05-30 13:35:16" itemprop="dateModified" datetime="2021-05-30T13:35:16+08:00">2021-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,239 +226,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595037904-33f6387d-52d3-4f92-9052-a9addbc06417.png#height=335&id=PJAee&margin=%5Bobject%20Object%5D&name=image.png&originHeight=670&originWidth=1456&originalType=binary&size=63182&status=done&style=none&width=728" alt="image.png"></h3><h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node - 节点"></a>Node - 节点</h3><ul>
-<li>即节点。节点是组成Elasticsearch集群的基本服务单元，集群中的每个运行中的Elasticsearch服务器都可称之为节点。</li>
-<li>每个节点默认都可以参加master选举，可以禁止（比如配置比较低的机器）</li>
-<li>每个节点都保存了集群的状态，但是只有master才可以修改<ul>
-<li>集群状态：<ul>
-<li><ol>
-<li>所有节点的信息。</li>
-</ol>
-</li>
-<li>2.所有的索引以及其相关的mapping和setting的信息</li>
-<li><ol start="3">
-<li>分片的路由信息</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>节点的类型：<ul>
-<li>data :数据节点，可以存储数据</li>
-<li>coordinating : 协调节点，接受客户端请求，每个节点默认都可以作为协调节点</li>
-<li>Ingest: 预处理节点</li>
-<li>hot/warm: 冷热节点</li>
-</ul>
-</li>
-</ul>
-<h3 id="Cluster-集群"><a href="#Cluster-集群" class="headerlink" title="Cluster - 集群"></a>Cluster - 集群</h3><ul>
-<li>集群。Elasticsearch的集群是由具有相同cluster.name （默认值为elasticsearch）的一个或多个Elasticsearch节点组成的，各个节点协同工作，共享数据。同一个集群内节点的名字不能重复，但集群名称一定要相同。</li>
-<li>在实际使用Elasticsearch集群时一般使用自定义集群名称，可以防止错误加入集群</li>
-<li>集群状态： <ul>
-<li>绿色 表示节点运行状态为健康状态。所有的主分片和副本分片都可以正常工作，集群100%健康。</li>
-<li>黄色 表示节点的运行状态为预警状态。所有的主分片都可以正常工作，但至少有一个副本分片是不能正常工作的。此时集群依然可以正常工作，但集群的高可用性在某种程度上被弱化。</li>
-<li>红色 表示集群无法正常使用。此时，集群中至少有一个分片的主分片及它的全部副本分片都不可正常工作。虽然集群的查询操作还可以进行，但是也只能返回部分数据（其他正常分片的数据可以返回），而分配到这个有问题分片上的写入请求将会报错，最终导致数据丢失。</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595647616-4219e5a6-4b68-4700-bacb-f93f462abebd.png#height=396&id=BY1KQ&margin=%5Bobject%20Object%5D&name=image.png&originHeight=792&originWidth=1078&originalType=binary&size=58706&status=done&style=stroke&width=539" alt="image.png"></p>
-<h3 id="Shards-分片"><a href="#Shards-分片" class="headerlink" title="Shards - 分片"></a>Shards - 分片</h3><ul>
-<li>对于同一个索引进行水平拆分，拆分后的每一个数据部分被称为一个分片，一般来说，会将每个分片放入不同的节点上</li>
-<li>感觉和mysql的分表有点像，不同部分的数据存放到不同的数据片段中，所以也是，如果数量发生变化，自然需要把数据重新移动，所以es不允许修改分片数</li>
-<li>索引创建的时候指定分片数量，分片的数量一旦确定就不能更改。</li>
-<li>写入数据的时候，是通过路由来确定具体写入哪个分片中的</li>
-<li>在Elasticsearch中，默认为一个索引创建5个主分片，并分别为每个主分片创建一个副本</li>
-<li>一个分片就是一个 lucene 索引</li>
-<li>分片越多搜索越慢</li>
-</ul>
-<h3 id="Replicas-副本-备份"><a href="#Replicas-副本-备份" class="headerlink" title="Replicas - 副本 备份"></a>Replicas - 副本 备份</h3><ul>
-<li>副本是对主分片的备份，每个主分片可以有零个或多个副本，主分片和备份分片都可以对外提供数据查询服务</li>
-<li>写入： 首先在主分片上完成数据的索引，然后数据会从主分片分发到备份分片上进行索引。</li>
-<li>主分片不可用时，Elasticsearch会在备份分片中选举出一个分片作为主分片，从而避免数据丢失。</li>
-<li>优点：增加集群可用性 ，缺点：如果分片过多，写操作时会增加数据同步的负担</li>
-</ul>
-<h3 id="Index-索引"><a href="#Index-索引" class="headerlink" title="Index - 索引"></a>Index - 索引</h3><ul>
-<li><p>在Elasticsearch中，索引由一个和多个分片组成。在使用索引时，需要通过索引名称在集群内进行唯一标识。</p>
-<h3 id="Mapping-映射"><a href="#Mapping-映射" class="headerlink" title="Mapping - 映射"></a>Mapping - 映射</h3></li>
-<li><p>Mapping表示中保存了定义索引中字段（Field）的存储类型、分词方式、是否存储等信息，有点类似于关系数据库（如MySQL）中的表结构信息。</p>
-</li>
-<li><p>一个索引的Mapping一旦创建，若已经存储了数据，就不可修改了，但是我们可以增加一个新的Mapping </p>
-<h3 id="Settings-配置"><a href="#Settings-配置" class="headerlink" title="Settings - 配置"></a>Settings - 配置</h3></li>
-<li><p>Settings是对集群中索引的定义信息，比如一个索引默认的分片数、副本数等。</p>
-<h3 id="Analyzer-分词"><a href="#Analyzer-分词" class="headerlink" title="Analyzer - 分词"></a>Analyzer - 分词</h3></li>
-<li><p> Analyzer表示的是字段分词方式的定义</p>
-<h3 id="Type-类型-（6-2中只能包含1个type-7移除了-type的概念）"><a href="#Type-类型-（6-2中只能包含1个type-7移除了-type的概念）" class="headerlink" title="~~Type - 类型 ~~（6.2中只能包含1个type ,7移除了 type的概念）"></a>~~Type - 类型 ~~（6.2中只能包含1个type ,7移除了 type的概念）</h3></li>
-<li><p>type就是在一个索引可以创建多个Mapping，在老的版本有把索引比喻成数据库，type比喻成表的说法。</p>
-<h4 id="为什么要移除Type呢"><a href="#为什么要移除Type呢" class="headerlink" title="为什么要移除Type呢?"></a>为什么要移除Type呢?</h4></li>
-<li><p>不同类型的“记录”存储在同一个index中，会影响lucene的压缩性能，简单说，影响效率</p>
-<h3 id="Document-文档"><a href="#Document-文档" class="headerlink" title="Document  - 文档"></a>Document  - 文档</h3></li>
-<li><p>索引中的每一条数据叫作一个文档，与关系数据库的使用方法类似，一条文档数据通过_id在Type内进行唯一标识。</p>
-</li>
-</ul>
-<hr>
-<h2 id="Elasticsearch的架构设计"><a href="#Elasticsearch的架构设计" class="headerlink" title="Elasticsearch的架构设计"></a>Elasticsearch的架构设计</h2><h3 id="服务发现以及选主"><a href="#服务发现以及选主" class="headerlink" title="服务发现以及选主"></a><strong>服务发现以及选主</strong></h3><ul>
-<li><p>在集群中配置一个相同的集群名称（即cluster.name），就能将不同的节点连接到同一个集群</p>
-</li>
-<li><p>有四种方式的实现，默认ZenDiscovery，一般有两种方式加入，多播和单播</p>
-<ul>
-<li>多播：当节点并非集群的一部分时(比如节点只是刚刚启动或者重启 )，它会发送一个多播的ping请求到网段中，该请求只是用来通知所有能连接到节点和集群它已经准备好加入到集群中。</li>
-<li>单播: 关闭多播，就可以安全地使用单播。当节点不是集群的一部分时(比如节点重启，启动或者由于某些错误从集群中断开)，节点会发送一个ping请求到事先设置好的地址中，来通知集群它已经准备好加入到集群中了。</li>
-</ul>
-</li>
-<li><p>多播是自行到网段中寻找，单播是在指定地址中寻找</p>
-</li>
-<li><p>它会对所有可以成为master的节点（node.master: true）根据节点Id的字典排序，取第一个，暂且认为它是master节点。如果对某个节点的投票数达到一定的值（可以成为master节点数n/2+1  discovery.zen.minimum_master_nodes ）并且该节点自己也选举自己，那这个节点就是master。否则重新选举一直到满足上述条件。</p>
-</li>
-<li><p>如果只有一个本地节点，则主节点就是它自己。</p>
-</li>
-<li><p><strong>ES是如何避免脑裂现象的：</strong>可以通过discovery.zen.minimum_master_nodes这个参数的设置来避免脑裂，设置为(N/2)+1。</p>
-</li>
-<li><p><strong>ES的集群只有一个节点的话可以有副本吗？</strong>Elasticsearch 禁止同一个分片的主分片和副本分片在同一个节点上，所以如果是一个节点的集群是不能有副本的。其实在一个节点也就没有了副本的意义</p>
-<h3 id="分片和路由"><a href="#分片和路由" class="headerlink" title="分片和路由"></a>分片和路由</h3></li>
-<li><p>分片一旦确定，不能修改</p>
-</li>
-<li><p>对于并发的数据冲突，es采用乐观锁的方式来解决数据冲突，对于一些以最新数据为准的数据，可以采用自定义版本号的方式解决数据写入冲突。默认还可以设置乐观锁重试次数。</p>
-</li>
-<li><p>routing字段的取值默认是id字段或者是parent字段，采用routing字段在Hash后之后再与有分片的数量取模。这个值可以更改</p>
-</li>
-<li><p>shard_num = hash(_routing) % num_primary_shards</p>
-</li>
-<li><p>在做数据检索时，Elasticsearch默认会搜索所有分片上的数据，最后在主节点上汇总各个分片数据并进行排序处理后，返回最终的结果数据</p>
-</li>
-<li><p>通过路由的方式，还可以实现冷热数据架构 </p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/mapping-routing-field.html">路由官方文档</a></p>
-<h3 id="数据写入过程"><a href="#数据写入过程" class="headerlink" title="数据写入过程"></a>数据写入过程</h3><h4 id="1-分段存储"><a href="#1-分段存储" class="headerlink" title="1. 分段存储"></a>1. 分段存储</h4></li>
-<li><p>使用原因： 索引是不可变的，为了实现数据的更新，需要通过增加新的补充索引来反映新近的修改，而不是直接重写整个倒排索引。</p>
-</li>
-<li><p>lucene 索引再次分割的最小单位</p>
-</li>
-<li><p>分段一经创建，便不会被修改</p>
-</li>
-<li><p>新增数据：新增一个数据段</p>
-</li>
-<li><p>删除数据：增加.del文件，被标记的可以查询到，但是在返回的时候会被移除</p>
-</li>
-<li><p>修改数据：先删除，然后新增新的数据段</p>
-</li>
-<li><p>优势： 不需要锁，从而提升Elasticsearch的读写性能，</p>
-</li>
-<li><p>缺点： 1. 分段越多 搜索越慢，因为需要过滤删除的数据 2. 在删除和更新数据时，存储空间会浪费</p>
-<h4 id="2-延迟写策略"><a href="#2-延迟写策略" class="headerlink" title="2. 延迟写策略"></a>2. 延迟写策略</h4><p>  索引写入磁盘的过程是异步的</p>
-<h5 id="基本方式"><a href="#基本方式" class="headerlink" title="基本方式"></a>基本方式</h5></li>
-<li><p>每当有新的数据产生的时候，会将数据先写入内存当中，当数据到达一定程度的时候，或者到达刷新时间，会触发一次刷新（Refresh）操作。刷新操作将内存中的数据生成到一个新的分段上并缓存到文件缓存系统，稍后再被刷新到磁盘中并生成提交点。</p>
-</li>
-<li><p>当数据写入内存的时候，内存的数据并不是用段来存储的，因此不能提供检索功能。只有当数据由内存刷新到文件缓存系统的时候，并生成一个新的段的时候，才能被搜索到，而不用等刷新到磁盘</p>
-</li>
-<li><p>在es中，写入和打开一个新的段，叫做刷新。在默认情况下，每个分片会每秒自动刷新一次。这就是Elasticsearch能做到近实时搜索的原因，因为文档的变化并不是立即对搜索可见的，但会在一秒之内变为可见。也可以手动刷新。</p>
-</li>
-<li><p>可以通过 refresh_interval 来调整刷新频率， 当为-1的时候，表示关闭自动刷新</p>
-</li>
-</ul>
-<ul>
-<li>因为文件系统缓存有数据丢失的风险，所以引入了 Translog （事务日志）,所以最终的写入过程是这样的<ol>
-<li>新文档被索引之后，先被写入内存中。为了防止数据丢失，Elasticsearch会追加一份数据到事务日志中。此时的新数据还不能被检索和查询。</li>
-<li>当达到默认的刷新时间或内存中的数据达到一定量后，Elasticsearch会触发一次刷新，将内存中的数据以一个新段形式刷新到文件缓存系统中并清空内存。这时新段虽未被提交到磁盘，但已经可以对外提供文档的检索功能且不被修改。</li>
-<li>随着新文档索引不断被写入，当日志数据大小超过某个值（如512MB），或者超过一定时间（如30 min）时，Elasticsearch会触发一次Flush，提交到硬盘。</li>
-<li>生成提交点。日志文件被删除，创建一个空的新日志。</li>
-</ol>
-</li>
-</ul>
-<ol>
-<li>新文档先被放入内存中，此时数据不能被检索</li>
-</ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938611827-60ce77da-b8d6-459a-83a6-9ea4fa647e8f.png#height=367&id=ibMFw&margin=%5Bobject%20Object%5D&name=image.png&originHeight=734&originWidth=1066&originalType=binary&size=119613&status=done&style=none&width=533" alt="image.png"></p>
-<ol start="2">
-<li>默认刷新时间（1秒钟）到达，或者数据到达一定量的时候，会把内存中的数据创建一个新的段，此时数据可以被检索，但是此时数据还在内存。</li>
-</ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938625710-1990a4e9-57c9-45a8-910b-e276644948e5.png#height=373&id=puQA3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=746&originWidth=1110&originalType=binary&size=116595&status=done&style=none&width=555" alt="image.png"></p>
-<ol start="3">
-<li>translog太大，或者默认_flush时间_（30分钟），进行_flush。段_数据被提交到硬盘当中，并且 translog 被清空</li>
-</ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938649479-87cb9b71-a8ee-4c9a-9f4d-d7297d0ee8db.png#height=409&id=eJ2m7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=818&originWidth=1140&originalType=binary&size=136189&status=done&style=none&width=570" alt="image.png"></p>
-<h4 id="3-段合并"><a href="#3-段合并" class="headerlink" title="3. 段合并"></a>3. 段合并</h4><ul>
-<li><p>因为分段的特点，es在增写删所以必然会产生很多的分段，对资源的消耗会剧增。而且这样的分段在查询出来数据之后，还需要与del，进行合并，这样的话，段越多，搜索越慢。所以就需要进行段合并。</p>
-</li>
-<li><p>段合并机制在后台定期进行，从而小的段被合并到大的段，然后这些大的段再被合并到更大的段。</p>
-</li>
-<li><p>段合并过程中，Elasticsearch会将那些旧的已删除文档从文件系统中清除。被删除的文档不会被拷贝到新的大段中，当然，在合并的过程中不会中断索引和搜索。</p>
-</li>
-<li><p>合并结束后，老的段会被删除，新的段被Flush到磁盘，同时写入一个包含新段且排除旧的和较小的段的新提交点。打开新的段之后，可以用来搜索。</p>
-</li>
-<li><p>默认情况下会对合并流程进行资源限制，防止影响搜索性能。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/index-modules-merge.html">官方文档</a></p>
-<h3 id="WAL技术"><a href="#WAL技术" class="headerlink" title="WAL技术"></a>WAL技术</h3><h3 id="主副分片数据一致性"><a href="#主副分片数据一致性" class="headerlink" title="主副分片数据一致性"></a>主副分片数据一致性</h3></li>
-<li><p>这个 不太确定</p>
-</li>
-<li><p>看有2.3的版本有说，后面的版本没有找到</p>
-</li>
-<li><p>同步：主分片处理完毕，然后同步进行数据同步到所有副本</p>
-</li>
-<li><p>异步：主分片处理完毕直接返回，副本 异步同步，会造成服务器压力过大</p>
-</li>
-</ul>
-<h3 id="自动管理索引生命周期（ILM）"><a href="#自动管理索引生命周期（ILM）" class="headerlink" title="自动管理索引生命周期（ILM）"></a>自动管理索引生命周期（ILM）</h3><ul>
-<li>把一个索引的生命周期定义为4个部分</li>
-</ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616949301751-0ffb46e5-6430-451b-9f86-4151d5a485c4.png#height=270&id=ZuVS5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=1400&originalType=binary&size=21330&status=done&style=none&width=1400" alt="image.png"></p>
-<ul>
-<li><strong>Hot</strong>：索引可写入，也可查询。</li>
-<li><strong>Warm</strong>：索引不可写入，但可查询。</li>
-<li><strong>Cold</strong>：索引不可写入，但很少被查询，查询的慢点也可接受。</li>
-<li><strong>Delete</strong>：索引可被安全的删除</li>
-<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/ilm-policy-definition.html">文档</a></li>
-<li>策略：<ul>
-<li>rollover：滚动存储，建立新索引，数据新增引入新索引</li>
-<li>delete： 自动删除</li>
-<li>shrink:   缩减分片，读的时候分片少可以减少内存消耗，写的时候分片多可以提速</li>
-<li>readonly: 设置为只读</li>
-<li>focemerge : 强行合并分段到一个很小的规模</li>
-<li>freeze: 把索引关闭，不占用内存，只占用磁盘，不可以检索</li>
-<li>allocate: 分片感知，可以用来冷热分离</li>
-</ul>
-</li>
-</ul>
-<ol>
-<li>完整的策略配置：<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/_full_policy.html#_full_policy">完整策略</a><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">PUT _ilm/policy/full_policy</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;policy&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;phases&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;hot&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;rollover&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;max_age&quot;</span>: <span class="string">&quot;7d&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;max_size&quot;</span>: <span class="string">&quot;50G&quot;</span></span><br><span class="line">          &#125;<span class="comment">//当数量到达500g，或者存储时间超过7天的时候，就会进行滚动存储</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;warm&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;30d&quot;</span>,<span class="comment">//进入这个阶段的条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;forcemerge&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;max_num_segments&quot;</span>: <span class="number">1</span> <span class="comment">//强行合并分段</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">&quot;shrink&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;number_of_shards&quot;</span>: <span class="number">1</span> <span class="comment">//分片缩减到1个</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">&quot;allocate&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;number_of_replicas&quot;</span>: <span class="number">2</span> <span class="comment">//增加两个副本</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;cold&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;60d&quot;</span>,<span class="comment">//进入冷阶段条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;allocate&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;require&quot;</span>: &#123;<span class="comment">//将索引分配给 冷数据节点</span></span><br><span class="line">              <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;cold&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;delete&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;90d&quot;</span>,<span class="comment">//进行删除的条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;delete&quot;</span>: &#123;&#125;<span class="comment">//删除索引</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</li>
-</ol>
+        <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p><img src="Elastic%E7%B3%BB%E7%BB%9F%E7%9F%A5%E8%AF%86.jpg" alt="image.png"></p>
 
     </div>
 
@@ -545,7 +308,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-%E8%8A%82%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">Node - 节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-%E9%9B%86%E7%BE%A4"><span class="nav-number">1.3.</span> <span class="nav-text">Cluster - 集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shards-%E5%88%86%E7%89%87"><span class="nav-number">1.4.</span> <span class="nav-text">Shards - 分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Replicas-%E5%89%AF%E6%9C%AC-%E5%A4%87%E4%BB%BD"><span class="nav-number">1.5.</span> <span class="nav-text">Replicas - 副本 备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index-%E7%B4%A2%E5%BC%95"><span class="nav-number">1.6.</span> <span class="nav-text">Index - 索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapping-%E6%98%A0%E5%B0%84"><span class="nav-number">1.7.</span> <span class="nav-text">Mapping - 映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Settings-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.8.</span> <span class="nav-text">Settings - 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Analyzer-%E5%88%86%E8%AF%8D"><span class="nav-number">1.9.</span> <span class="nav-text">Analyzer - 分词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-%E7%B1%BB%E5%9E%8B-%EF%BC%886-2%E4%B8%AD%E5%8F%AA%E8%83%BD%E5%8C%85%E5%90%AB1%E4%B8%AAtype-7%E7%A7%BB%E9%99%A4%E4%BA%86-type%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%89"><span class="nav-number">1.10.</span> <span class="nav-text">~~Type - 类型 ~~（6.2中只能包含1个type ,7移除了 type的概念）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%A7%BB%E9%99%A4Type%E5%91%A2"><span class="nav-number">1.10.1.</span> <span class="nav-text">为什么要移除Type呢?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Document-%E6%96%87%E6%A1%A3"><span class="nav-number">1.11.</span> <span class="nav-text">Document  - 文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch%E7%9A%84%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">Elasticsearch的架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E4%BB%A5%E5%8F%8A%E9%80%89%E4%B8%BB"><span class="nav-number">2.1.</span> <span class="nav-text">服务发现以及选主</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%89%87%E5%92%8C%E8%B7%AF%E7%94%B1"><span class="nav-number">2.2.</span> <span class="nav-text">分片和路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%86%99%E5%85%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">数据写入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 分段存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BB%B6%E8%BF%9F%E5%86%99%E7%AD%96%E7%95%A5"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 延迟写策略</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">基本方式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%AE%B5%E5%90%88%E5%B9%B6"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 段合并</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WAL%E6%8A%80%E6%9C%AF"><span class="nav-number">2.4.</span> <span class="nav-text">WAL技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E5%89%AF%E5%88%86%E7%89%87%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">主副分片数据一致性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86%E7%B4%A2%E5%BC%95%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88ILM%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">自动管理索引生命周期（ILM）</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">核心概念</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
