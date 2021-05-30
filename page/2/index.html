@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/13/jvm/JVMgc%E6%94%B6%E9%9B%86%E5%99%A8/">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Springboot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
@@ -182,7 +182,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/02/13/jvm/JVMgc%E6%94%B6%E9%9B%86%E5%99%A8/" class="post-title-link" itemprop="url">JVMgc收集器</a>
+            <a href="/2020/03/12/spring/Springboot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/" class="post-title-link" itemprop="url">Springboot自动装配</a>
         </h2>
 
         <div class="post-meta">
@@ -192,14 +192,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-02-13 19:49:31" itemprop="dateCreated datePublished" datetime="2020-02-13T19:49:31+08:00">2020-02-13</time>
+              <time title="创建时间：2020-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-12T00:00:00+08:00">2020-03-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-14 13:08:13" itemprop="dateModified" datetime="2021-01-14T13:08:13+08:00">2021-01-14</time>
+                <time title="修改时间：2021-01-18 09:27:44" itemprop="dateModified" datetime="2021-01-18T09:27:44+08:00">2021-01-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,7 +207,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
                 </span>
             </span>
 
@@ -222,7 +222,93 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="gc选择"><a href="#gc选择" class="headerlink" title="gc选择"></a>gc选择</h3><h3 id="gc收集器"><a href="#gc收集器" class="headerlink" title="gc收集器"></a>gc收集器</h3>
+          <ol>
+<li>Spring Boot在启动时扫描项目所依赖的JAR包，寻找包含spring.factories文件的JAR包，</li>
+<li>然后读取spring.factories文件获取配置的自动配置类AutoConfiguration，</li>
+<li>然后将自动配置类下满足条件(@ConditionalOnXxx)的@Bean放入到Spring容器中(Spring Context)</li>
+<li>因为在其中有properties配置，所以可以实现</li>
+<li>这样使用者就可以直接用来注入，因为该类已经在容器中了</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/11/spring/Autowired%20%E4%B8%8EResource%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/11/spring/Autowired%20%E4%B8%8EResource%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">Autowired 与 Resource的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-11 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-11T00:00:00+08:00">2020-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-11 11:59:34" itemprop="dateModified" datetime="2021-03-11T11:59:34+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="http://lib.csdn.net/base/javaee" title="Java EE知识库">spring</a>不但支持自己定义的@Autowired注解，还支持几个由JSR-250规范定义的注解，它们分别是@Resource、@PostConstruct以及@PreDestroy。<br>　　@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，而@Resource默认按 byName自动注入罢了。@Resource有两个属性是比较重要的，分是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。<br>　　@Resource装配顺序<br>　　1. 如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常<br>　　2. 如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常<br>　　3. 如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常<br>　　4. 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配；</p>
+<p>源头：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40423597/article/details/80643990">https://blog.csdn.net/weixin_40423597/article/details/80643990</a></p>
+<p>参考博文：</p>
+<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/happyyang/articles/3553687.html">http://www.cnblogs.com/happyyang/articles/3553687.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/revent/article/details/49203619">http://blog.csdn.net/revent/article/details/49203619</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/ad921012/article/details/49679745">http://blog.csdn.net/ad921012/article/details/49679745</a></p>
+
       
     </div>
 
@@ -358,6 +444,79 @@
 <p>– <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sxdcgaq8080/p/11089841.html">https://www.cnblogs.com/sxdcgaq8080/p/11089841.html</a></p>
 <p>参考:<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a4ad53179df3">https://www.jianshu.com/p/a4ad53179df3</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000010648021">https://segmentfault.com/a/1190000010648021</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sxdcgaq8080/p/11089841.html">https://www.cnblogs.com/sxdcgaq8080/p/11089841.html</a></p>
 
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/13/jvm/JVMgc%E6%94%B6%E9%9B%86%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/13/jvm/JVMgc%E6%94%B6%E9%9B%86%E5%99%A8/" class="post-title-link" itemprop="url">JVMgc收集器</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-13 19:49:31" itemprop="dateCreated datePublished" datetime="2020-02-13T19:49:31+08:00">2020-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-14 13:08:13" itemprop="dateModified" datetime="2021-01-14T13:08:13+08:00">2021-01-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="gc选择"><a href="#gc选择" class="headerlink" title="gc选择"></a>gc选择</h3><h3 id="gc收集器"><a href="#gc收集器" class="headerlink" title="gc收集器"></a>gc收集器</h3>
       
     </div>
 
@@ -746,7 +905,7 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-18 16:45:23" itemprop="dateModified" datetime="2021-02-18T16:45:23+08:00">2021-02-18</time>
+                <time title="修改时间：2021-05-30 12:54:28" itemprop="dateModified" datetime="2021-05-30T12:54:28+08:00">2021-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -906,6 +1065,113 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350033901">https://zhuanlan.zhihu.com/p/350033901</a><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html">https://tech.meituan.com/2017/12/22/ddd-in-practice.html</a></p>
 </blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/10/other/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/10/other/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">maven插件的开发</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-10T00:00:00+08:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-11 11:53:36" itemprop="dateModified" datetime="2021-03-11T11:53:36+08:00">2021-03-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">maven插件的开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如果你想要了解某个事物，你必须要成为其中的一员。想要理解maven插件，我们就尝试来开发一个maven插件</p>
+<p>官方文档位置：<a target="_blank" rel="noopener" href="http://maven.apache.org/guides/introduction/introduction-to-plugins.html">http://maven.apache.org/guides/introduction/introduction-to-plugins.html</a></p>
+<h2 id="什么是mavne插件"><a href="#什么是mavne插件" class="headerlink" title="什么是mavne插件"></a>什么是mavne插件</h2><p>Maven 实际上是一个依赖插件执行的框架，每个任务实际上是由插件完成。换句话说，插件是执行大部分实际操作的地方，插件用来：创建jar文件，创建war文件，编译代码，单元测试代码，创建项目文档等等操作。您可以想到在项目上执行的几乎所有操作均作为Maven插件实现。</p>
+<p>插件是Maven的核心功能，它允许在多个项目中重用通用的构建逻辑。他们通过在项目pom文件的上下文中执行“操作”（即创建WAR文件或编译单元测试）来实现操作，插件同时也是可以定义参数等等。</p>
+<h2 id="插件的命名规范"><a href="#插件的命名规范" class="headerlink" title="插件的命名规范"></a>插件的命名规范</h2><ul>
+<li>一般插件是使用 ** &lt;你的插件名称&gt;+ -maven-plugin** 来命名</li>
+<li>千万不要使用 **  maven-&lt;你的插件名称&gt;-plugin** ，这样是对Apache Maven商标的侵犯😓</li>
+</ul>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="1-创建一个Maven工程"><a href="#1-创建一个Maven工程" class="headerlink" title="1. 创建一个Maven工程"></a>1. 创建一个Maven工程</h3><ul>
+<li>pom配置：增加打包方式      <packaging>maven-plugin</packaging></li>
+<li> 需要引入3个依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--plugin插件api--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-plugin-api&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;2.0&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line"> &lt;!--加入此包就可以使用@Mojo注解--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven.plugin-tools&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-plugin-annotations&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;3.1&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;!--用户获取运行插件的Maven工程信息--&gt;</span><br><span class="line"> &lt;dependency&gt;</span><br><span class="line">     &lt;groupId&gt;org.apache.maven&lt;&#x2F;groupId&gt;</span><br><span class="line">     &lt;artifactId&gt;maven-project&lt;&#x2F;artifactId&gt;</span><br><span class="line">     &lt;version&gt;3.0-alpha-2&lt;&#x2F;version&gt;</span><br><span class="line"> &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-HelloWord插件（Mojo）编写"><a href="#2-HelloWord插件（Mojo）编写" class="headerlink" title="2. HelloWord插件（Mojo）编写"></a>2. HelloWord插件（Mojo）编写</h3></li>
+<li>处理类需要继承 AbstractMojo ，实现 execute() 方法，execute() 就是我们实际执行的操作</li>
+<li>还需要增加@Mojo注解 ，来标示其为一个Mojo类</li>
+<li>@Paramete 注解用来直接从pom文件中获取值，其本质就是我们插件的参数，也可以使用表达式来获取参数，像下面的${project} 就是调用MavenSession.getCurrentProject()来获取当前工程</li>
+<li>@Paramete的表达式类型 <a target="_blank" rel="noopener" href="http://maven.apache.org/ref/3.6.3/maven-core/apidocs/org/apache/maven/plugin/PluginParameterExpressionEvaluator.html">http://maven.apache.org/ref/3.6.3/maven-core/apidocs/org/apache/maven/plugin/PluginParameterExpressionEvaluator.html</a></li>
+<li>MavenProject当前工程的信息，这里就是通过MavenProject获得当前工程的所有文件，然后将java文件和依赖 输出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">@Mojo(name &#x3D; &quot;hello&quot;,requiresDependencyResolution &#x3D; ResolutionScope.COMPILE)</span><br><span class="line">public class HelloMojo extends AbstractMojo &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;**</span><br><span class="line">     * The greeting to display.</span><br><span class="line">     *&#x2F;</span><br><span class="line">    @Parameter( property &#x3D; &quot;greeting&quot;, defaultValue &#x3D; &quot;Hello World!&quot; )</span><br><span class="line">    private String greeting;</span><br><span class="line"></span><br><span class="line">    @Parameter( defaultValue &#x3D; &quot;$&#123;project&#125;&quot;)</span><br><span class="line">    private MavenProject mavenProject;</span><br><span class="line"></span><br><span class="line">    public void execute() throws MojoExecutionException, MojoFailureException &#123;</span><br><span class="line">        Class&lt;? extends HelloMojo&gt; aClass &#x3D; getClass();</span><br><span class="line"></span><br><span class="line">        System.out.println(aClass);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        getLog().info(&quot;&lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;河神说: Hello Mojo start&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&quot;+greeting);</span><br><span class="line"></span><br><span class="line">        List dependencies &#x3D; mavenProject.getDependencies();</span><br><span class="line">        getLog().info(&quot;[dependencies]&quot;);</span><br><span class="line">        for (Object dependency : dependencies) &#123;</span><br><span class="line">            getLog().info(dependency.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        getLog().info(&quot;[basedir]&quot;);</span><br><span class="line">        File basedir &#x3D; mavenProject.getBasedir();</span><br><span class="line"></span><br><span class="line">        List&lt;File&gt; files &#x3D; searchFiles(basedir, &quot;java&quot;);</span><br><span class="line"></span><br><span class="line">        for (File file : files) &#123;</span><br><span class="line">            long l &#x3D; file.lastModified();</span><br><span class="line">            Date date &#x3D; new Date(l);</span><br><span class="line"></span><br><span class="line">            DateFormat dateFormat &#x3D; new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span><br><span class="line">            String format &#x3D; dateFormat.format(date);</span><br><span class="line">            getLog().info(file.getName()+&quot;[lastModified]&quot;+format);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        getLog().info(&quot;&lt;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;河神说: Hello Mojo end&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&gt;&quot;+greeting);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static List&lt;File&gt; searchFiles(File folder, final String keyword) &#123;</span><br><span class="line">        List&lt;File&gt; result &#x3D; new ArrayList&lt;File&gt;();</span><br><span class="line">        if (folder.isFile())&#123;</span><br><span class="line">            result.add(folder);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        File[] subFolders &#x3D; folder.listFiles(new FileFilter() &#123;</span><br><span class="line">            public boolean accept(File file) &#123;</span><br><span class="line">                if (file.isDirectory()) &#123;</span><br><span class="line">                    return true;</span><br><span class="line">                &#125;</span><br><span class="line">                return file.getName().toLowerCase().endsWith(keyword);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        if (subFolders !&#x3D; null) &#123;</span><br><span class="line">            for (File file : subFolders) &#123;</span><br><span class="line">                if (file.isFile()) &#123;</span><br><span class="line">                    &#x2F;&#x2F; 如果是文件则将文件添加到结果列表中</span><br><span class="line">                    result.add(file);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    &#x2F;&#x2F; 如果是文件夹，则递归调用本方法，然后把所有的文件加到结果列表中</span><br><span class="line">                    result.addAll(searchFiles(file, keyword));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li> 使用：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">    &lt;plugins&gt;</span><br><span class="line">        &lt;plugin&gt;</span><br><span class="line">            &lt;groupId&gt;com.heshen&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;api-check-plugin&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;1.0-SNAPSHOT&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;configuration&gt;</span><br><span class="line">                &lt;greeting&gt;设置的参数&lt;&#x2F;greeting&gt;</span><br><span class="line">            &lt;&#x2F;configuration&gt;</span><br><span class="line">            &lt;executions&gt;</span><br><span class="line">                &lt;execution&gt;</span><br><span class="line">                    &lt;phase&gt;install&lt;&#x2F;phase&gt;</span><br><span class="line">                    &lt;goals&gt;</span><br><span class="line">                        &lt;goal&gt;hello&lt;&#x2F;goal&gt;</span><br><span class="line">                    &lt;&#x2F;goals&gt;</span><br><span class="line">                &lt;&#x2F;execution&gt;</span><br><span class="line">            &lt;&#x2F;executions&gt;</span><br><span class="line">        &lt;&#x2F;plugin&gt;</span><br><span class="line">    &lt;&#x2F;plugins&gt;</span><br><span class="line">&lt;&#x2F;build&gt;</span><br></pre></td></tr></table></figure></li>
+<li>首先需要在<build>/ <plugins>下面增加一个新的 plugin</li>
+<li>然后之后就是我们自己定义的groupId/artifactId/version</li>
+<li>然后&lt; configuration&gt;就是配置我们之前设置的参数</li>
+<li>executions标示我们的插件是在什么时候执行，phase代表声明周期，goal为插件的名称，也就是@Mojo的name,像我们图中配置的，就是在我们install的时候执行的</li>
+</ul>
+<h3 id="3-直接运行"><a href="#3-直接运行" class="headerlink" title="3. 直接运行"></a>3. 直接运行</h3><ul>
+<li>mvnDebug groupID:artifactID:version:goal</li>
+<li>或者在settings.xml配置 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;pluginGroups&gt;</span><br><span class="line">  &lt;pluginGroup&gt;  groupID &lt;&#x2F; pluginGroup&gt;</span><br><span class="line">&lt;&#x2F; pluginGroups&gt;</span><br></pre></td></tr></table></figure>
+就可以直接使用  mvnDebug  goal 来执行</li>
+</ul>
+<hr>
+<p>桃花坞里桃花庵，桃花庵下桃花仙;<br>桃花仙人种桃树，又摘桃花卖酒钱。</p>
+<hr>
 
       
     </div>
@@ -1153,99 +1419,10 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/01/12/docker/Docker%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/12/docker/Docker%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">Docker基础操作</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-12 14:39:31" itemprop="dateCreated datePublished" datetime="2020-01-12T14:39:31+08:00">2020-01-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-16 14:38:48" itemprop="dateModified" datetime="2021-01-16T14:38:48+08:00">2021-01-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%BF%90%E7%BB%B4%E7%B1%BB/" itemprop="url" rel="index"><span itemprop="name">运维类</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>安装<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-io –y</span><br><span class="line">systemctl start docker</span><br><span class="line">docker info</span><br></pre></td></tr></table></figure></li>
-<li>命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker [run|start|stop|restart|kill|rm|pause|unpause]             </span><br><span class="line">#容器生命周期管理</span><br><span class="line">docker [ps|inspect|top|attach|events|logs|wait|export|port]       </span><br><span class="line">#容器操作运维</span><br><span class="line">docker [commit|cp|diff]                                           </span><br><span class="line">#容器rootfs命令</span><br><span class="line">docker [login|pull|push|search]</span><br><span class="line">#镜像仓库</span><br><span class="line">docker [images|rmi|tag|build|history|save|import]</span><br><span class="line">#查看镜像详情</span><br><span class="line">docker inspect : 获取容器&#x2F;镜像的元数据</span><br><span class="line">#本地镜像管理</span><br><span class="line">docker exec -ti $1 &#x2F;bin&#x2F;bash</span><br><span class="line">#进入docker容器内部</span><br></pre></td></tr></table></figure></li>
-<li>简单使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">docker search 镜像名称</span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line">docker pull image_name</span><br><span class="line">docker pull image_name:tag</span><br><span class="line">#image_name：表示镜像的仓库源名称,TAG：镜像的标签 如果不指定tag 那么默认用最新的</span><br><span class="line"></span><br><span class="line">docker rmi 镜像名称&#x2F;镜像ID</span><br><span class="line">docker rmi -f 镜像名称&#x2F;镜像ID</span><br><span class="line">#强制删除 如果镜像有容器在运行 那么就需要强制删除 增加 -f 参数</span><br><span class="line"></span><br><span class="line">docker run -d --name &quot;xiaoxiao&quot; -p 5672:5672 -p 15672:15672 -v &#x2F;home&#x2F;dock&#x2F;Downloads:&#x2F;usr&#x2F;Downloads:ro  rabbitmq:management</span><br><span class="line">            #-d 后台运行</span><br><span class="line">            #-p 端口映射 （可以有多个 因为该镜像可能存在多个端口）</span><br><span class="line">            #通过-v参数，冒号前为宿主机目录，必须为绝对路径，冒号后为镜像内挂载的路径。默认挂载的路径权限为读写。如果指定为只读可以用：ro</span><br><span class="line">            #rabbitmq:management  (格式 REPOSITORY:TAG)，如果不指定tag，默认使用最新的</span><br><span class="line">            #--name  给该容器取个名字</span><br><span class="line">  </span><br><span class="line">  </span><br></pre></td></tr></table></figure></li>
-<li>数据卷<blockquote>
-<p>Docker管理宿主机文件系统的一部分，默认位于 /var/lib/docker/volumes 目录中；</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker volume create edc-nginx-vol &#x2F;&#x2F; 创建一个自定义容器卷</span><br><span class="line">docker volume ls &#x2F;&#x2F; 查看所有容器卷</span><br><span class="line">docker volume inspect edc-nginx-vol &#x2F;&#x2F; 查看指定容器卷详情信息</span><br><span class="line"></span><br><span class="line">#使用 -v edc-nginx-vol:&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html 在run容器的时候就可以把数据卷挂载 </span><br><span class="line"></span><br><span class="line">docker stop edc-nginx &#x2F;&#x2F; 暂停容器实例</span><br><span class="line">docker rm edc-nginx &#x2F;&#x2F; 移除容器实例</span><br><span class="line">docker volume rm edc-nginx-vol &#x2F;&#x2F; 删除自定义数据卷 </span><br></pre></td></tr></table></figure></li>
-<li>tag <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker commit -m &#39;测试&#39; -a &#39;heShen&#39; 35f2d8da9f3a heshentest:v1</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 其中，-m 来指定提交的说明信息，跟我们使用的版本控制工具一样；-a 可以指定更新的用户信息；</span><br><span class="line">&#x2F;&#x2F;之后是用来创建镜像的容器的 ID；最后指定目标镜像的仓库名和 tag 信息。创建成功后会返回这个镜像的 ID 信息。</span><br><span class="line">&#x2F;&#x2F;使用 docker images 来查看新创建的镜像。</span><br></pre></td></tr></table></figure></li>
-<li>保存镜像为文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;保存镜像为文件</span><br><span class="line">docker save -o 要保存的文件名  要保存的镜像</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;从文件载入镜像</span><br><span class="line">docker load --input 文件</span><br><span class="line">docker load &lt; 文件名</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>Dockerfile使用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 新建 Dockerfile 文件</span><br><span class="line">2. 添加</span><br><span class="line">    FROM nginx</span><br><span class="line">    #FROM：定制的镜像都是基于 FROM 的镜像，这里的 nginx 就是定制需要的基础镜像。后续的操作都是基于 nginx</span><br><span class="line">    RUN echo &#39;这是一个本地构建的nginx镜像&#39; &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br><span class="line">    #RUN：用于执行后面跟着的命令行命令</span><br><span class="line">3. docker build -t nginx:test .</span><br><span class="line">    # 构建镜像，最后的 . 代表本次执行的上下文路径，</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>RUN使用：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RUN &lt;命令行命令&gt;</span><br><span class="line"> &lt;命令行命令&gt; 等同于，在终端操作的 shell 命令。</span><br><span class="line">RUN [&quot;可执行文件&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</span><br><span class="line"> 例如：</span><br><span class="line"> RUN [&quot;.&#x2F;test.php&quot;, &quot;dev&quot;, &quot;offline&quot;] 等价于 RUN .&#x2F;test.php dev offline</span><br></pre></td></tr></table></figure></li>
-<li>上下文路径<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">上下文路径，是指 docker 在构建镜像，有时候想要使用到本机的文件（比如复制），docker build 命令得知这个路径后，会将路径下的所有内容打包。</span><br><span class="line"></span><br><span class="line">解析：由于 docker 的运行模式是 C&#x2F;S。我们本机是 C，docker 引擎是 S。</span><br><span class="line">实际的构建过程是在 docker 引擎下完成的，所以这个时候无法用到我们本机的文件。这就需要把我们本机的指定目录下的文件一起打包提供给 docker 引擎使用。</span><br><span class="line"></span><br><span class="line">如果未说明最后一个参数，那么默认上下文路径就是 Dockerfile 所在的位置。</span><br><span class="line"></span><br><span class="line">注意：上下文路径下不要放无用的文件，因为会一起打包发送给 docker 引擎，如果文件过多会造成过程缓慢。</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1313,20 +1490,20 @@ export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

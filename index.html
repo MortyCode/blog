@@ -168,7 +168,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/31/data/HotSpot%E5%8F%8AGC/">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/04/10/es/es1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
@@ -182,7 +182,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/01/31/data/HotSpot%E5%8F%8AGC/" class="post-title-link" itemprop="url">HotSpot</a>
+            <a href="/2021/04/10/es/es1/" class="post-title-link" itemprop="url">ES基础知识</a>
         </h2>
 
         <div class="post-meta">
@@ -191,17 +191,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-31 00:00:00 / 修改时间：17:13:15" itemprop="dateCreated datePublished" datetime="2021-01-31T00:00:00+08:00">2021-01-31</time>
+              <time title="创建时间：2021-04-10 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-10T00:00:00+08:00">2021-04-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 12:48:42" itemprop="dateModified" datetime="2021-05-30T12:48:42+08:00">2021-05-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                  <a href="/categories/es/" itemprop="url" rel="index"><span itemprop="name">es</span></a>
                 </span>
             </span>
 
@@ -216,7 +222,405 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+          <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595037904-33f6387d-52d3-4f92-9052-a9addbc06417.png#height=335&id=PJAee&margin=%5Bobject%20Object%5D&name=image.png&originHeight=670&originWidth=1456&originalType=binary&size=63182&status=done&style=none&width=728" alt="image.png"></h3><h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node - 节点"></a>Node - 节点</h3><ul>
+<li>即节点。节点是组成Elasticsearch集群的基本服务单元，集群中的每个运行中的Elasticsearch服务器都可称之为节点。</li>
+<li>每个节点默认都可以参加master选举，可以禁止（比如配置比较低的机器）</li>
+<li>每个节点都保存了集群的状态，但是只有master才可以修改<ul>
+<li>集群状态：<ul>
+<li><ol>
+<li>所有节点的信息。</li>
+</ol>
+</li>
+<li>2.所有的索引以及其相关的mapping和setting的信息</li>
+<li><ol start="3">
+<li>分片的路由信息</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>节点的类型：<ul>
+<li>data :数据节点，可以存储数据</li>
+<li>coordinating : 协调节点，接受客户端请求，每个节点默认都可以作为协调节点</li>
+<li>Ingest: 预处理节点</li>
+<li>hot/warm: 冷热节点</li>
+</ul>
+</li>
+</ul>
+<h3 id="Cluster-集群"><a href="#Cluster-集群" class="headerlink" title="Cluster - 集群"></a>Cluster - 集群</h3><ul>
+<li>集群。Elasticsearch的集群是由具有相同cluster.name （默认值为elasticsearch）的一个或多个Elasticsearch节点组成的，各个节点协同工作，共享数据。同一个集群内节点的名字不能重复，但集群名称一定要相同。</li>
+<li>在实际使用Elasticsearch集群时一般使用自定义集群名称，可以防止错误加入集群</li>
+<li>集群状态： <ul>
+<li>绿色 表示节点运行状态为健康状态。所有的主分片和副本分片都可以正常工作，集群100%健康。</li>
+<li>黄色 表示节点的运行状态为预警状态。所有的主分片都可以正常工作，但至少有一个副本分片是不能正常工作的。此时集群依然可以正常工作，但集群的高可用性在某种程度上被弱化。</li>
+<li>红色 表示集群无法正常使用。此时，集群中至少有一个分片的主分片及它的全部副本分片都不可正常工作。虽然集群的查询操作还可以进行，但是也只能返回部分数据（其他正常分片的数据可以返回），而分配到这个有问题分片上的写入请求将会报错，最终导致数据丢失。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1618595647616-4219e5a6-4b68-4700-bacb-f93f462abebd.png#height=396&id=BY1KQ&margin=%5Bobject%20Object%5D&name=image.png&originHeight=792&originWidth=1078&originalType=binary&size=58706&status=done&style=stroke&width=539" alt="image.png"></p>
+<h3 id="Shards-分片"><a href="#Shards-分片" class="headerlink" title="Shards - 分片"></a>Shards - 分片</h3><ul>
+<li>对于同一个索引进行水平拆分，拆分后的每一个数据部分被称为一个分片，一般来说，会将每个分片放入不同的节点上</li>
+<li>感觉和mysql的分表有点像，不同部分的数据存放到不同的数据片段中，所以也是，如果数量发生变化，自然需要把数据重新移动，所以es不允许修改分片数</li>
+<li>索引创建的时候指定分片数量，分片的数量一旦确定就不能更改。</li>
+<li>写入数据的时候，是通过路由来确定具体写入哪个分片中的</li>
+<li>在Elasticsearch中，默认为一个索引创建5个主分片，并分别为每个主分片创建一个副本</li>
+<li>一个分片就是一个 lucene 索引</li>
+<li>分片越多搜索越慢</li>
+</ul>
+<h3 id="Replicas-副本-备份"><a href="#Replicas-副本-备份" class="headerlink" title="Replicas - 副本 备份"></a>Replicas - 副本 备份</h3><ul>
+<li>副本是对主分片的备份，每个主分片可以有零个或多个副本，主分片和备份分片都可以对外提供数据查询服务</li>
+<li>写入： 首先在主分片上完成数据的索引，然后数据会从主分片分发到备份分片上进行索引。</li>
+<li>主分片不可用时，Elasticsearch会在备份分片中选举出一个分片作为主分片，从而避免数据丢失。</li>
+<li>优点：增加集群可用性 ，缺点：如果分片过多，写操作时会增加数据同步的负担</li>
+</ul>
+<h3 id="Index-索引"><a href="#Index-索引" class="headerlink" title="Index - 索引"></a>Index - 索引</h3><ul>
+<li><p>在Elasticsearch中，索引由一个和多个分片组成。在使用索引时，需要通过索引名称在集群内进行唯一标识。</p>
+<h3 id="Mapping-映射"><a href="#Mapping-映射" class="headerlink" title="Mapping - 映射"></a>Mapping - 映射</h3></li>
+<li><p>Mapping表示中保存了定义索引中字段（Field）的存储类型、分词方式、是否存储等信息，有点类似于关系数据库（如MySQL）中的表结构信息。</p>
+</li>
+<li><p>一个索引的Mapping一旦创建，若已经存储了数据，就不可修改了，但是我们可以增加一个新的Mapping </p>
+<h3 id="Settings-配置"><a href="#Settings-配置" class="headerlink" title="Settings - 配置"></a>Settings - 配置</h3></li>
+<li><p>Settings是对集群中索引的定义信息，比如一个索引默认的分片数、副本数等。</p>
+<h3 id="Analyzer-分词"><a href="#Analyzer-分词" class="headerlink" title="Analyzer - 分词"></a>Analyzer - 分词</h3></li>
+<li><p> Analyzer表示的是字段分词方式的定义</p>
+<h3 id="Type-类型-（6-2中只能包含1个type-7移除了-type的概念）"><a href="#Type-类型-（6-2中只能包含1个type-7移除了-type的概念）" class="headerlink" title="~~Type - 类型 ~~（6.2中只能包含1个type ,7移除了 type的概念）"></a>~~Type - 类型 ~~（6.2中只能包含1个type ,7移除了 type的概念）</h3></li>
+<li><p>type就是在一个索引可以创建多个Mapping，在老的版本有把索引比喻成数据库，type比喻成表的说法。</p>
+<h4 id="为什么要移除Type呢"><a href="#为什么要移除Type呢" class="headerlink" title="为什么要移除Type呢?"></a>为什么要移除Type呢?</h4></li>
+<li><p>不同类型的“记录”存储在同一个index中，会影响lucene的压缩性能，简单说，影响效率</p>
+<h3 id="Document-文档"><a href="#Document-文档" class="headerlink" title="Document  - 文档"></a>Document  - 文档</h3></li>
+<li><p>索引中的每一条数据叫作一个文档，与关系数据库的使用方法类似，一条文档数据通过_id在Type内进行唯一标识。</p>
+</li>
+</ul>
+<hr>
+<h2 id="Elasticsearch的架构设计"><a href="#Elasticsearch的架构设计" class="headerlink" title="Elasticsearch的架构设计"></a>Elasticsearch的架构设计</h2><h3 id="服务发现以及选主"><a href="#服务发现以及选主" class="headerlink" title="服务发现以及选主"></a><strong>服务发现以及选主</strong></h3><ul>
+<li><p>在集群中配置一个相同的集群名称（即cluster.name），就能将不同的节点连接到同一个集群</p>
+</li>
+<li><p>有四种方式的实现，默认ZenDiscovery，一般有两种方式加入，多播和单播</p>
+<ul>
+<li>多播：当节点并非集群的一部分时(比如节点只是刚刚启动或者重启 )，它会发送一个多播的ping请求到网段中，该请求只是用来通知所有能连接到节点和集群它已经准备好加入到集群中。</li>
+<li>单播: 关闭多播，就可以安全地使用单播。当节点不是集群的一部分时(比如节点重启，启动或者由于某些错误从集群中断开)，节点会发送一个ping请求到事先设置好的地址中，来通知集群它已经准备好加入到集群中了。</li>
+</ul>
+</li>
+<li><p>多播是自行到网段中寻找，单播是在指定地址中寻找</p>
+</li>
+<li><p>它会对所有可以成为master的节点（node.master: true）根据节点Id的字典排序，取第一个，暂且认为它是master节点。如果对某个节点的投票数达到一定的值（可以成为master节点数n/2+1  discovery.zen.minimum_master_nodes ）并且该节点自己也选举自己，那这个节点就是master。否则重新选举一直到满足上述条件。</p>
+</li>
+<li><p>如果只有一个本地节点，则主节点就是它自己。</p>
+</li>
+<li><p><strong>ES是如何避免脑裂现象的：</strong>可以通过discovery.zen.minimum_master_nodes这个参数的设置来避免脑裂，设置为(N/2)+1。</p>
+</li>
+<li><p><strong>ES的集群只有一个节点的话可以有副本吗？</strong>Elasticsearch 禁止同一个分片的主分片和副本分片在同一个节点上，所以如果是一个节点的集群是不能有副本的。其实在一个节点也就没有了副本的意义</p>
+<h3 id="分片和路由"><a href="#分片和路由" class="headerlink" title="分片和路由"></a>分片和路由</h3></li>
+<li><p>分片一旦确定，不能修改</p>
+</li>
+<li><p>对于并发的数据冲突，es采用乐观锁的方式来解决数据冲突，对于一些以最新数据为准的数据，可以采用自定义版本号的方式解决数据写入冲突。默认还可以设置乐观锁重试次数。</p>
+</li>
+<li><p>routing字段的取值默认是id字段或者是parent字段，采用routing字段在Hash后之后再与有分片的数量取模。这个值可以更改</p>
+</li>
+<li><p>shard_num = hash(_routing) % num_primary_shards</p>
+</li>
+<li><p>在做数据检索时，Elasticsearch默认会搜索所有分片上的数据，最后在主节点上汇总各个分片数据并进行排序处理后，返回最终的结果数据</p>
+</li>
+<li><p>通过路由的方式，还可以实现冷热数据架构 </p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/mapping-routing-field.html">路由官方文档</a></p>
+<h3 id="数据写入过程"><a href="#数据写入过程" class="headerlink" title="数据写入过程"></a>数据写入过程</h3><h4 id="1-分段存储"><a href="#1-分段存储" class="headerlink" title="1. 分段存储"></a>1. 分段存储</h4></li>
+<li><p>使用原因： 索引是不可变的，为了实现数据的更新，需要通过增加新的补充索引来反映新近的修改，而不是直接重写整个倒排索引。</p>
+</li>
+<li><p>lucene 索引再次分割的最小单位</p>
+</li>
+<li><p>分段一经创建，便不会被修改</p>
+</li>
+<li><p>新增数据：新增一个数据段</p>
+</li>
+<li><p>删除数据：增加.del文件，被标记的可以查询到，但是在返回的时候会被移除</p>
+</li>
+<li><p>修改数据：先删除，然后新增新的数据段</p>
+</li>
+<li><p>优势： 不需要锁，从而提升Elasticsearch的读写性能，</p>
+</li>
+<li><p>缺点： 1. 分段越多 搜索越慢，因为需要过滤删除的数据 2. 在删除和更新数据时，存储空间会浪费</p>
+<h4 id="2-延迟写策略"><a href="#2-延迟写策略" class="headerlink" title="2. 延迟写策略"></a>2. 延迟写策略</h4><p>  索引写入磁盘的过程是异步的</p>
+<h5 id="基本方式"><a href="#基本方式" class="headerlink" title="基本方式"></a>基本方式</h5></li>
+<li><p>每当有新的数据产生的时候，会将数据先写入内存当中，当数据到达一定程度的时候，或者到达刷新时间，会触发一次刷新（Refresh）操作。刷新操作将内存中的数据生成到一个新的分段上并缓存到文件缓存系统，稍后再被刷新到磁盘中并生成提交点。</p>
+</li>
+<li><p>当数据写入内存的时候，内存的数据并不是用段来存储的，因此不能提供检索功能。只有当数据由内存刷新到文件缓存系统的时候，并生成一个新的段的时候，才能被搜索到，而不用等刷新到磁盘</p>
+</li>
+<li><p>在es中，写入和打开一个新的段，叫做刷新。在默认情况下，每个分片会每秒自动刷新一次。这就是Elasticsearch能做到近实时搜索的原因，因为文档的变化并不是立即对搜索可见的，但会在一秒之内变为可见。也可以手动刷新。</p>
+</li>
+<li><p>可以通过 refresh_interval 来调整刷新频率， 当为-1的时候，表示关闭自动刷新</p>
+</li>
+</ul>
+<ul>
+<li>因为文件系统缓存有数据丢失的风险，所以引入了 Translog （事务日志）,所以最终的写入过程是这样的<ol>
+<li>新文档被索引之后，先被写入内存中。为了防止数据丢失，Elasticsearch会追加一份数据到事务日志中。此时的新数据还不能被检索和查询。</li>
+<li>当达到默认的刷新时间或内存中的数据达到一定量后，Elasticsearch会触发一次刷新，将内存中的数据以一个新段形式刷新到文件缓存系统中并清空内存。这时新段虽未被提交到磁盘，但已经可以对外提供文档的检索功能且不被修改。</li>
+<li>随着新文档索引不断被写入，当日志数据大小超过某个值（如512MB），或者超过一定时间（如30 min）时，Elasticsearch会触发一次Flush，提交到硬盘。</li>
+<li>生成提交点。日志文件被删除，创建一个空的新日志。</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>新文档先被放入内存中，此时数据不能被检索</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938611827-60ce77da-b8d6-459a-83a6-9ea4fa647e8f.png#height=367&id=ibMFw&margin=%5Bobject%20Object%5D&name=image.png&originHeight=734&originWidth=1066&originalType=binary&size=119613&status=done&style=none&width=533" alt="image.png"></p>
+<ol start="2">
+<li>默认刷新时间（1秒钟）到达，或者数据到达一定量的时候，会把内存中的数据创建一个新的段，此时数据可以被检索，但是此时数据还在内存。</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938625710-1990a4e9-57c9-45a8-910b-e276644948e5.png#height=373&id=puQA3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=746&originWidth=1110&originalType=binary&size=116595&status=done&style=none&width=555" alt="image.png"></p>
+<ol start="3">
+<li>translog太大，或者默认_flush时间_（30分钟），进行_flush。段_数据被提交到硬盘当中，并且 translog 被清空</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938649479-87cb9b71-a8ee-4c9a-9f4d-d7297d0ee8db.png#height=409&id=eJ2m7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=818&originWidth=1140&originalType=binary&size=136189&status=done&style=none&width=570" alt="image.png"></p>
+<h4 id="3-段合并"><a href="#3-段合并" class="headerlink" title="3. 段合并"></a>3. 段合并</h4><ul>
+<li><p>因为分段的特点，es在增写删所以必然会产生很多的分段，对资源的消耗会剧增。而且这样的分段在查询出来数据之后，还需要与del，进行合并，这样的话，段越多，搜索越慢。所以就需要进行段合并。</p>
+</li>
+<li><p>段合并机制在后台定期进行，从而小的段被合并到大的段，然后这些大的段再被合并到更大的段。</p>
+</li>
+<li><p>段合并过程中，Elasticsearch会将那些旧的已删除文档从文件系统中清除。被删除的文档不会被拷贝到新的大段中，当然，在合并的过程中不会中断索引和搜索。</p>
+</li>
+<li><p>合并结束后，老的段会被删除，新的段被Flush到磁盘，同时写入一个包含新段且排除旧的和较小的段的新提交点。打开新的段之后，可以用来搜索。</p>
+</li>
+<li><p>默认情况下会对合并流程进行资源限制，防止影响搜索性能。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/6.8/index-modules-merge.html">官方文档</a></p>
+<h3 id="WAL技术"><a href="#WAL技术" class="headerlink" title="WAL技术"></a>WAL技术</h3><h3 id="主副分片数据一致性"><a href="#主副分片数据一致性" class="headerlink" title="主副分片数据一致性"></a>主副分片数据一致性</h3></li>
+<li><p>这个 不太确定</p>
+</li>
+<li><p>看有2.3的版本有说，后面的版本没有找到</p>
+</li>
+<li><p>同步：主分片处理完毕，然后同步进行数据同步到所有副本</p>
+</li>
+<li><p>异步：主分片处理完毕直接返回，副本 异步同步，会造成服务器压力过大</p>
+</li>
+</ul>
+<h3 id="自动管理索引生命周期（ILM）"><a href="#自动管理索引生命周期（ILM）" class="headerlink" title="自动管理索引生命周期（ILM）"></a>自动管理索引生命周期（ILM）</h3><ul>
+<li>把一个索引的生命周期定义为4个部分</li>
+</ul>
+<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616949301751-0ffb46e5-6430-451b-9f86-4151d5a485c4.png#height=270&id=ZuVS5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=1400&originalType=binary&size=21330&status=done&style=none&width=1400" alt="image.png"></p>
+<ul>
+<li><strong>Hot</strong>：索引可写入，也可查询。</li>
+<li><strong>Warm</strong>：索引不可写入，但可查询。</li>
+<li><strong>Cold</strong>：索引不可写入，但很少被查询，查询的慢点也可接受。</li>
+<li><strong>Delete</strong>：索引可被安全的删除</li>
+<li><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/ilm-policy-definition.html">文档</a></li>
+<li>策略：<ul>
+<li>rollover：滚动存储，建立新索引，数据新增引入新索引</li>
+<li>delete： 自动删除</li>
+<li>shrink:   缩减分片，读的时候分片少可以减少内存消耗，写的时候分片多可以提速</li>
+<li>readonly: 设置为只读</li>
+<li>focemerge : 强行合并分段到一个很小的规模</li>
+<li>freeze: 把索引关闭，不占用内存，只占用磁盘，不可以检索</li>
+<li>allocate: 分片感知，可以用来冷热分离</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>完整的策略配置：<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.4/_full_policy.html#_full_policy">完整策略</a><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">PUT _ilm/policy/full_policy</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;policy&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;phases&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;hot&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;rollover&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;max_age&quot;</span>: <span class="string">&quot;7d&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;max_size&quot;</span>: <span class="string">&quot;50G&quot;</span></span><br><span class="line">          &#125;<span class="comment">//当数量到达500g，或者存储时间超过7天的时候，就会进行滚动存储</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;warm&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;30d&quot;</span>,<span class="comment">//进入这个阶段的条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;forcemerge&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;max_num_segments&quot;</span>: <span class="number">1</span> <span class="comment">//强行合并分段</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">&quot;shrink&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;number_of_shards&quot;</span>: <span class="number">1</span> <span class="comment">//分片缩减到1个</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">&quot;allocate&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;number_of_replicas&quot;</span>: <span class="number">2</span> <span class="comment">//增加两个副本</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;cold&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;60d&quot;</span>,<span class="comment">//进入冷阶段条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;allocate&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;require&quot;</span>: &#123;<span class="comment">//将索引分配给 冷数据节点</span></span><br><span class="line">              <span class="attr">&quot;type&quot;</span>: <span class="string">&quot;cold&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">&quot;delete&quot;</span>: &#123;</span><br><span class="line">        <span class="attr">&quot;min_age&quot;</span>: <span class="string">&quot;90d&quot;</span>,<span class="comment">//进行删除的条件</span></span><br><span class="line">        <span class="attr">&quot;actions&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">&quot;delete&quot;</span>: &#123;&#125;<span class="comment">//删除索引</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/02/16/data/jpa/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/16/data/jpa/" class="post-title-link" itemprop="url">jpa查询方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-16 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-16T00:00:00+08:00">2021-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 12:57:25" itemprop="dateModified" datetime="2021-05-30T12:57:25+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="jpa常用的查询方式"><a href="#jpa常用的查询方式" class="headerlink" title="jpa常用的查询方式"></a>jpa常用的查询方式</h1><p>jpa官方文档</p>
+<p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-data/jpa/docs/2.1.5.RELEASE/reference/html/#jpa.query-methods.query-creation">https://docs.spring.io/spring-data/jpa/docs/2.1.5.RELEASE/reference/html/#jpa.query-methods.query-creation</a></p>
+<p>项目地址：<br><a target="_blank" rel="noopener" href="https://github.com/haipengliang/jpaDemo">https://github.com/haipengliang/jpaDemo</a></p>
+<h4 id="1-通过方法名来创建查询"><a href="#1-通过方法名来创建查询" class="headerlink" title="1.通过方法名来创建查询"></a>1.通过方法名来创建查询</h4><ol>
+<li><p>使用字段的值进行条件查询，如Is,In,Like, Between等等。</p>
+</li>
+<li><p>使用and ,or 来进行条件拼接。</p>
+</li>
+<li><p>利用Pageable接口来进行分页，Sort 对象排序。</p>
+</li>
+<li><p>利用Distinct去重</p>
+</li>
+<li><p>利用OrderBy进行排序</p>
+</li>
+<li><p>利用 Top 和 First来获取限制数据</p>
+<p> 查询方法的结果可以通过使用first或top关键字来限制，可以互换使用。也可以附加一个可选的数值，top或者first指定要返回的最大结果大小。如果省略该数字，该数字默认为1。</p>
+</li>
+<li><p>流式查询结果。jpa可以使用Java 8 Stream<T>作为返回类型的方式处理查询结果。但是需要在只读事物环境下进行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Account&gt; readAllByAgeIs(int i);</span><br></pre></td></tr></table></figure></li>
+<li><p>异步查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Async</span><br><span class="line">Future&lt;User&gt; findByFirstname(String firstname);               </span><br><span class="line"></span><br><span class="line">@Async</span><br><span class="line">CompletableFuture&lt;User&gt; findOneByFirstname(String firstname); </span><br><span class="line"></span><br><span class="line">@Async</span><br><span class="line">ListenableFuture&lt;User&gt; findOneByLastname(String lastname);    </span><br></pre></td></tr></table></figure></li>
+<li><p>可以通过@Lock(LockModeType.READ)来设置jpa锁</p>
+<p> 乐观锁：<br> 1、OPTIMISTIC：它和READ锁模式相同，JPA 2.0仍然支持READ锁模式，但明确指出在新应用程序中推荐使用OPTIMISTIC。</p>
+<p> 2、OPTIMISTIC_FORCE_INCREMENT：它和WRITE锁模式相同，JPA 2.0仍然支持WRITE锁模式，但明确指出在新应用程序中推荐使用OPTIMISTIC_FORCE_INCREMENT。 </p>
+<p> 悲观锁模式：<br> 1、PESSIMISTIC_READ：只要事务读实体，实体管理器就锁定实体，直到事务完成锁才会解开，当你想使用重复读语义查询数据时使用这种锁模式，换句话说就是，当你想确保数据在连续读期间不被修改，这种锁模式不会阻碍其它事务读取数据。 </p>
+<p> 2、PESSIMISTIC_WRITE：只要事务更新实体，实体管理器就会锁定实体，这种锁模式强制尝试修改实体数据的事务串行化，当多个并发更新事务出现更新失败几率较高时使用这种锁模式。 </p>
+<p> 3、PESSIMISTIC_FORCE_INCREMENT：当事务读实体时，实体管理器就锁定实体，当事务结束时会增加实体的版本属性，即使实体没有修改。 </p>
+</li>
+</ol>
+<h4 id="2-Query"><a href="#2-Query" class="headerlink" title="2.@Query"></a>2.@Query</h4><ol>
+<li><p>@Query不仅仅可以查询，也可以进行增删改的操作</p>
+</li>
+<li><p>查询操作直接使用@Query就可以,增删改操作需要添加@Modifying以及在事务环境下运行，可以直接添加 @Transactional。</p>
+</li>
+<li><p>@Query查询同样可以使用Sort，Pageable对象进行分页排序</p>
+</li>
+<li><p>@Query可以使用 JPQL,原生sql,SpEL表达式</p>
+</li>
+<li><p><strong>JPQL</strong></p>
+<p> JPQL就是一种查询语言，具有与 SQL 相类似的特征， JPQL 是完全面向对象的，具备继承、多态和关联等特性，和hibernate HQL很相似。</p>
+<p> JPQL 语句支持两种方式的参数定义方式 : 命名参数和位置参数 。在同一个查询语句中只允许使用一种参数定义方式。</p>
+<p> 命令参数的格式为： : + 参数名 ,命令参数一般需要使用@Param来定义参数名</p>
+<p> 位置参数的格式为: ?+ 位置编号</p>
+</li>
+</ol>
+<ol start="4">
+<li><p><strong>原生sql</strong></p>
+<p> jpa也可以使用原生sql,但是需要在@Query 中添加nativeQuery = true的参数</p>
+<p> 而且，使用原声sql无法分页，所以需要添加如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Query(value &#x3D; &quot;SELECT * FROM USERS WHERE LASTNAME &#x3D; ?1&quot;,</span><br><span class="line">  countQuery &#x3D; &quot;SELECT count(*) FROM USERS WHERE LASTNAME &#x3D; ?1&quot;,</span><br><span class="line">  nativeQuery &#x3D; true)</span><br><span class="line">Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>SpEL表达式</strong></p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">5.1  从Spring Data JPA 1.4版本开始，支持在@Query定义的查询中使用SpEL模板表达式。在执行查询的时候，这些表达式通过一个事先定义好的变量集合求值。Spring Data JPA支持成为entityName的变量。它的用法是select x from #&#123;#entityName&#125; x。它会将域类型的entityName与给定repository关联起来。entityName按照如下方式处理：如果域类型在@Entity注解上设置了name属性，则使用该属性。否则直接使用域类型的类名。 </span><br><span class="line"></span><br><span class="line">5.2 一般使用是使用#&#123;#entityName&#125;代替实体名,这样你改动实体名，也不会对查询造成影响</span><br><span class="line"></span><br><span class="line">另一个#&#123;#entityName&#125;表达式的使用场景是如果你想定义一个通用的repository接口和一个用于具体域类型的指定repository接口。为了避免重复定义具体接口中的自定义查询方法，你可以在通用接口中使用实体名称表达式：</span><br><span class="line"></span><br><span class="line">我们系统来说，就可以使用这个定义一个关于sellerId 和 isdelete的通用查询接口。</span><br></pre></td></tr></table></figure>
+<h4 id="3-Example"><a href="#3-Example" class="headerlink" title="3.Example"></a>3.Example</h4><ol>
+<li><p>Example查询的组成</p>
+<p> Probe: 含有对应字段的实例对象。</p>
+<p> ExampleMatcher：ExampleMatcher携带有关如何匹配特定字段的详细信息，相当于匹配条件。设置包括 忽律，包含，为空，是否区分大小写,类型转换。</p>
+<p> Example：由Probe和ExampleMatcher组成，用于查询。</p>
+<p> 主要限制：<br>属性不支持嵌套或者分组约束，比如这样的查询 firstname = ?0 or (firstname = ?1 and lastname = ?2)<br>灵活匹配只支持字符串类型，其他类型只支持精确匹配，而且不支持in查询。</p>
+</li>
+<li><p>Example查询方式</p>
+<pre><code> 1.组成查询实体
+ Account account = new Account();
+ account.setAge(1);
+ account.setFirstName(&quot;li&quot;);
+ 2.组成匹配方式
+ ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher(&quot;firstName&quot;,e-&gt;e.contains());
+ 3.组合example
+ Example&lt;Account&gt; example = Example.of(account,exampleMatcher);
+ 4.如需要分页和排序，则创建分页和排序
+ Sort sort = new Sort(Sort.Direction.DESC,&quot;age&quot;);
+ PageRequest pageRequest = PageRequest.of(0,1,sort);
+ 5.查询
+ Page&lt;Account&gt; all1 = repository.findAll(example, pageRequest);</code></pre>
+</li>
+</ol>
+<h4 id="4-Specification"><a href="#4-Specification" class="headerlink" title="4.Specification"></a>4.Specification</h4><ol>
+<li><p><strong>简介</strong></p>
+<p> 由DDD之父 Eric Evans 和OO之父 Martin Fowler定义的Specification(规格模式)。Spring Data JPA已经帮助我们很大程度上简化了我们的查询操作，我们甚至只要写一个接口，然后单纯的写一些方法就可以完成各式各样的查询，但是对于我们程序设计人员而言，总希望所有的查询变得更加的简单方便，为了给程序人员进行再一次的封装，Spring Data JPA提供了Specification的方式进行查询。</p>
+</li>
+</ol>
+<h4 id="5-querydsl"><a href="#5-querydsl" class="headerlink" title="5.querydsl"></a>5.querydsl</h4><ol>
+<li><p><strong>简介</strong></p>
+<p>  如果说Hibernate等ORM是JPA的实现，而SpringDataJPA是对JPA使用的封装，那么QueryDSL可以是与SpringDataJPA有着同阶层的级别，它也是基于各种ORM之上的一个通用查询框架，使用它的API类库可以写出“Java代码的sql”，不用去手动接触sql语句，表达含义却如sql般准确。更重要的一点，它能够构建类型安全的查询，这比起JPA使用原生查询时有很大的不同，我们可以不必再对恶心的“Object[]”进行操作了。当然，我们可以SpringDataJPA +QueryDSL.JPA联合使用，它们之间有着完美的相互支持，以达到更高效的编码。</p>
+</li>
+<li><p>就是生成了一个Q实体，使用这个Q实体，可以轻松的组合成各种个样的查询条件。</p>
+</li>
+</ol>
+<h3 id="jpa使用实体做做参数"><a href="#jpa使用实体做做参数" class="headerlink" title="jpa使用实体做做参数"></a>jpa使用实体做做参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Modifying</span><br><span class="line">@Query(&quot;update CommunityEntity set status&#x3D; :#&#123;#entity.status&#125; ,statusGroup&#x3D; :#&#123;#entity.statusGroup&#125; where &quot; +</span><br><span class="line">&quot;communityId&#x3D; :#&#123;#entity.communityId&#125; and sellerId&#x3D; :#&#123;#entity.sellerId&#125;  and isDeleted&#x3D; :#&#123;#entity.isDeleted&#125;&quot;)</span><br><span class="line">int updateCommunityStatus(@Param(&quot;entity&quot;) CommunityEntity entity);</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
 
@@ -1006,7 +1410,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/17/spring/AutowiredAnnotationBeanPostProcessor/">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
@@ -1020,7 +1424,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/17/spring/AutowiredAnnotationBeanPostProcessor/" class="post-title-link" itemprop="url">Autowired 与 Resource的区别</a>
+            <a href="/2020/03/14/spring/SpringbootStart%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">SpringbootStart开发</a>
         </h2>
 
         <div class="post-meta">
@@ -1030,14 +1434,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-03-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-17T00:00:00+08:00">2020-03-17</time>
+              <time title="创建时间：2020-03-14 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-14T00:00:00+08:00">2020-03-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-17 16:58:11" itemprop="dateModified" datetime="2021-01-17T16:58:11+08:00">2021-01-17</time>
+                <time title="修改时间：2021-03-11 12:00:49" itemprop="dateModified" datetime="2021-03-11T12:00:49+08:00">2021-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1060,7 +1464,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>@Autowired 和 @Value 注解在这个类中进行处理<br>AutowiredAnnotationBeanPostProcessor</p>
+          <p>###建立工程<br>我们首先建一个maven工程，可以按照SpringBoot的规范取名为spring-boot-starter-XX</p>
+<ul>
+<li>依赖<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &#x2F;&#x2F;这个类是为了自动装配 </span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-autoconfigure&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;下面链接是官网对于这个以来的解释</span><br><span class="line">&#x2F;&#x2F;https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-boot&#x2F;docs&#x2F;2.1.0.RELEASE&#x2F;reference&#x2F;html&#x2F;configuration-metadata.html#configuration-metadata-annotation-processor</span><br><span class="line">&#x2F;&#x2F;这个依赖是为了读取配置文件</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-boot-configuration-processor&lt;&#x2F;artifactId&gt;</span><br><span class="line">            &lt;version&gt;2.1.0.RELEASE&lt;&#x2F;version&gt;</span><br><span class="line">            &lt;optional&gt;true&lt;&#x2F;optional&gt;</span><br><span class="line">        &lt;&#x2F;dependency&gt;</span><br></pre></td></tr></table></figure></li>
+<li>项目结果<br><img src="https://upload-images.jianshu.io/upload_images/13349286-c2785f31fec651db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="项目结果.png"></li>
+<li>PhoneProperties（属性配置类）<br>使用@ConfigurationProperties读取配置文件中的参数，并且设置有默认值<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix &#x3D; &quot;spring.phone&quot;)</span><br><span class="line">public class PhoneProperties &#123;</span><br><span class="line">    private String name &#x3D; &quot;小米&quot;;</span><br><span class="line">    private Integer storage &#x3D; 1024;</span><br><span class="line">    private String money &#x3D; &quot;1299rmb&quot;;</span><br><span class="line">    &#x2F;&#x2F;get set 方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>PhoneAutoConfiguration(核心自动装配类)</strong><br>@Configuration<br>@EnableConfigurationProperties  转载配置类<br>@ConditionalOnClass ​ 如果此class不存在</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/128bd6a5244a">@Conditional是什么</a></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@EnableConfigurationProperties(PhoneProperties.class)</span><br><span class="line">@ConditionalOnClass(PhoneService.class)</span><br><span class="line">@ConditionalOnProperty(prefix &#x3D; &quot;spring.phone&quot;,value &#x3D; &quot;enable&quot;, matchIfMissing &#x3D; true)</span><br><span class="line">public class PhoneAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    PhoneProperties phoneProperties;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    @ConditionalOnMissingBean(PhoneService.class)</span><br><span class="line">    public PhoneService getPhoneService()&#123;</span><br><span class="line">        return new PhoneService(phoneProperties);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>PhoneService(具体服务类)<br>服务类为具体需要注入的服务。</li>
+<li>spring.factories<br>spring的一种扩展手段，通过加载的时候SpringFactoriesLoader读取spring.factories文件中的EnableAutoConfiguration数据对应的配置项通过反射（Java Refletion）实例化为对应的标注了@Configuration的JavaConfig形式的IoC容器配置类，然后汇总为一个bean加载到IoC容器。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration&#x3D;</span><br><span class="line"> com.example.springbootstarterphone.config.PhoneAutoConfiguration</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -1080,7 +1496,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Springboot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/12/spring/Conditional/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
@@ -1094,7 +1510,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/03/12/spring/Springboot%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D/" class="post-title-link" itemprop="url">Springboot自动装配</a>
+            <a href="/2020/03/12/spring/Conditional/" class="post-title-link" itemprop="url">Conditional</a>
         </h2>
 
         <div class="post-meta">
@@ -1111,7 +1527,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-18 09:27:44" itemprop="dateModified" datetime="2021-01-18T09:27:44+08:00">2021-01-18</time>
+                <time title="修改时间：2021-03-11 11:59:26" itemprop="dateModified" datetime="2021-03-11T11:59:26+08:00">2021-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1134,92 +1550,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ol>
-<li>Spring Boot在启动时扫描项目所依赖的JAR包，寻找包含spring.factories文件的JAR包，</li>
-<li>然后读取spring.factories文件获取配置的自动配置类AutoConfiguration，</li>
-<li>然后将自动配置类下满足条件(@ConditionalOnXxx)的@Bean放入到Spring容器中(Spring Context)</li>
-<li>因为在其中有properties配置，所以可以实现</li>
-<li>这样使用者就可以直接用来注入，因为该类已经在容器中了</li>
+          <h3 id="Conditional的使用"><a href="#Conditional的使用" class="headerlink" title="@Conditional的使用"></a>@Conditional的使用</h3><ul>
+<li><strong>作用：</strong>根据条件，决定类是否加载到Spring Ioc容器中，在SpringBoot中有大量的运用</li>
+<li><strong>应用场景</strong>：在一些需要条件满足才是实例化的类中，使用此注解，我曾经在项目中需要根据不同的场景使用不同的mq中间件的时候使用过，在mq的实例化bean上，加上此注解，根据配置文件的不同，来决定这个bean是否加载至ioc容器中。</li>
+</ul>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><ol>
+<li><p>实现Conditional接口, 实现matches方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MqExistsCondition</span> <span class="keyword">implements</span> <span class="title">Condition</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(ConditionContext context,AnnotatedTypeMetadata metadata)</span>     </span>&#123;</span><br><span class="line">		Environment environment = context.getEnvironment();</span><br><span class="line">		<span class="comment">//从这里获取配置文件中 active 的值，根据当前的active值决定是否加载类</span></span><br><span class="line">        String[] activeProfiles = environment.getActiveProfiles();</span><br><span class="line">		<span class="keyword">for</span> (String active : activeProfiles) &#123;</span><br><span class="line">			<span class="keyword">if</span>(active.equals(ActiveEnum.open_active.getActive().toString()))&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>在需要判断条件的bean上，加上**@Conditional(TestExistsCondition.class) **即可在满足条件的时候加载对应的类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">   <span class="meta">@Conditional(TestMqExistsCondition.class)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> TestBean <span class="title">getTestBean</span><span class="params">()</span></span>&#123;</span><br><span class="line">   	TestBean testBean = <span class="keyword">new</span> TestBean();</span><br><span class="line">   	<span class="keyword">return</span> testBean;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其他派生的的conditional"><a href="#其他派生的的conditional" class="headerlink" title="其他派生的的conditional"></a>其他派生的的conditional</h3></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/03/11/spring/@Autowired%20%E4%B8%8E@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=349612960,4189726522&fm=26&gp=0.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/11/spring/@Autowired%20%E4%B8%8E@Resource%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">Autowired 与 Resource的区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-11 00:00:00" itemprop="dateCreated datePublished" datetime="2020-03-11T00:00:00+08:00">2020-03-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-18 09:27:44" itemprop="dateModified" datetime="2021-01-18T09:27:44+08:00">2021-01-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a target="_blank" rel="noopener" href="http://lib.csdn.net/base/javaee" title="Java EE知识库">spring</a>不但支持自己定义的@Autowired注解，还支持几个由JSR-250规范定义的注解，它们分别是@Resource、@PostConstruct以及@PreDestroy。<br>　　@Resource的作用相当于@Autowired，只不过@Autowired按byType自动注入，而@Resource默认按 byName自动注入罢了。@Resource有两个属性是比较重要的，分是name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。所以如果使用name属性，则使用byName的自动注入策略，而使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，这时将通过反射机制使用byName自动注入策略。<br>　　@Resource装配顺序<br>　　1. 如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则抛出异常<br>　　2. 如果指定了name，则从上下文中查找名称（id）匹配的bean进行装配，找不到则抛出异常<br>　　3. 如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常<br>　　4. 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配；</p>
-<p>源头：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40423597/article/details/80643990">https://blog.csdn.net/weixin_40423597/article/details/80643990</a></p>
-<p>参考博文：</p>
-<p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/happyyang/articles/3553687.html">http://www.cnblogs.com/happyyang/articles/3553687.html</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/revent/article/details/49203619">http://blog.csdn.net/revent/article/details/49203619</a></p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/ad921012/article/details/49679745">http://blog.csdn.net/ad921012/article/details/49679745</a></p>
+<h4 id="ConditionalOnClass"><a href="#ConditionalOnClass" class="headerlink" title="@ConditionalOnClass"></a>@ConditionalOnClass</h4><p>​    如果此class不存在</p>
+<h4 id="ConditionalOnMissingBean"><a href="#ConditionalOnMissingBean" class="headerlink" title="@ConditionalOnMissingBean"></a>@ConditionalOnMissingBean</h4><p>​    只有对应的ban在系统中都没有被创建，它修饰的初始化代码块才会执行，<strong>用户自己手动创建的bean优先</strong></p>
+<p><strong>@ConditionalOnBean</strong></p>
+<p>仅仅在当前上下文中存在某个对象时，才会实例化一个Bean。</p>
+<p><strong>@ConditionalOnClass</strong></p>
+<p>​       某个class位于类路径上，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnExpression</strong></p>
+<p>​       当表达式为true的时候，才会实例化一个Bean。</p>
+<p>比如：</p>
+<p>@ConditionalOnExpression(“true”)</p>
+<p>@ConditionalOnExpression(“${my.controller.enabled:false}”)</p>
+<p><strong>@ConditionalOnMissingBean</strong></p>
+<p>​       仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnMissingClass</strong></p>
+<p>某个class类路径上不存在的时候，才会实例化一个Bean</p>
+<p><strong>@ConditionalOnNotWebApplication</strong></p>
+<p>​       不是web应用</p>
 
       
     </div>
@@ -1238,7 +1596,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1306,20 +1664,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
