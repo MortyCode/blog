@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 13:41:11" itemprop="dateModified" datetime="2021-05-30T13:41:11+08:00">2021-05-30</time>
+                <time title="修改时间：2021-05-30 13:56:50" itemprop="dateModified" datetime="2021-05-30T13:56:50+08:00">2021-05-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="image1.png" alt="image.png"></h3><h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node - 节点"></a>Node - 节点</h3><ul>
+          <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/image1.png" alt="image.png"></h3><h3 id="Node-节点"><a href="#Node-节点" class="headerlink" title="Node - 节点"></a>Node - 节点</h3><ul>
 <li>即节点。节点是组成Elasticsearch集群的基本服务单元，集群中的每个运行中的Elasticsearch服务器都可称之为节点。</li>
 <li>每个节点默认都可以参加master选举，可以禁止（比如配置比较低的机器）</li>
 <li>每个节点都保存了集群的状态，但是只有master才可以修改<ul>
@@ -363,15 +363,15 @@
 <ol>
 <li>新文档先被放入内存中，此时数据不能被检索</li>
 </ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938611827-60ce77da-b8d6-459a-83a6-9ea4fa647e8f.png#height=367&id=ibMFw&margin=%5Bobject%20Object%5D&name=image.png&originHeight=734&originWidth=1066&originalType=binary&size=119613&status=done&style=none&width=533" alt="image.png"></p>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/image2.png" alt="image.png"></p>
 <ol start="2">
 <li>默认刷新时间（1秒钟）到达，或者数据到达一定量的时候，会把内存中的数据创建一个新的段，此时数据可以被检索，但是此时数据还在内存。</li>
 </ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938625710-1990a4e9-57c9-45a8-910b-e276644948e5.png#height=373&id=puQA3&margin=%5Bobject%20Object%5D&name=image.png&originHeight=746&originWidth=1110&originalType=binary&size=116595&status=done&style=none&width=555" alt="image.png"></p>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/image3.png" alt="image.png"></p>
 <ol start="3">
 <li>translog太大，或者默认_flush时间_（30分钟），进行_flush。段_数据被提交到硬盘当中，并且 translog 被清空</li>
 </ol>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616938649479-87cb9b71-a8ee-4c9a-9f4d-d7297d0ee8db.png#height=409&id=eJ2m7&margin=%5Bobject%20Object%5D&name=image.png&originHeight=818&originWidth=1140&originalType=binary&size=136189&status=done&style=none&width=570" alt="image.png"></p>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/image4.png" alt="image.png"></p>
 <h4 id="3-段合并"><a href="#3-段合并" class="headerlink" title="3. 段合并"></a>3. 段合并</h4><ul>
 <li><p>因为分段的特点，es在增写删所以必然会产生很多的分段，对资源的消耗会剧增。而且这样的分段在查询出来数据之后，还需要与del，进行合并，这样的话，段越多，搜索越慢。所以就需要进行段合并。</p>
 </li>
@@ -397,7 +397,7 @@
 <h3 id="自动管理索引生命周期（ILM）"><a href="#自动管理索引生命周期（ILM）" class="headerlink" title="自动管理索引生命周期（ILM）"></a>自动管理索引生命周期（ILM）</h3><ul>
 <li>把一个索引的生命周期定义为4个部分</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616949301751-0ffb46e5-6430-451b-9f86-4151d5a485c4.png#height=270&id=ZuVS5&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=1400&originalType=binary&size=21330&status=done&style=none&width=1400" alt="image.png"></p>
+<p><img src="https://heshen-1257140474.cos.ap-nanjing.myqcloud.com/image5.png" alt="image.png"></p>
 <ul>
 <li><strong>Hot</strong>：索引可写入，也可查询。</li>
 <li><strong>Warm</strong>：索引不可写入，但可查询。</li>
