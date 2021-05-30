@@ -1448,6 +1448,277 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/02/13/netty/netty/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/13/netty/netty/" class="post-title-link" itemprop="url">网络通信原理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-13 19:49:31" itemprop="dateCreated datePublished" datetime="2021-02-13T19:49:31+08:00">2021-02-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 17:14:36" itemprop="dateModified" datetime="2021-05-30T17:14:36+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/netty/" itemprop="url" rel="index"><span itemprop="name">netty</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <table>
+<thead>
+<tr>
+<th align="center">TCP/IP</th>
+<th align="center">TCP/IP</th>
+<th align="center">OSI</th>
+<th align="center">内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">应用层</td>
+<td align="center">应用层</td>
+<td align="center">应用层</td>
+<td align="center">HTTP/FTP/POP3 等等应用协议</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">表示层</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">会话层</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">传输层</td>
+<td align="center">传输层</td>
+<td align="center">传输层</td>
+<td align="center">TCP协议</td>
+</tr>
+<tr>
+<td align="center">网络层</td>
+<td align="center">网络层</td>
+<td align="center">网络层</td>
+<td align="center">IP协议</td>
+</tr>
+<tr>
+<td align="center">网络接口层</td>
+<td align="center">数据链路层</td>
+<td align="center">数据链路层</td>
+<td align="center">将0 1 信号进行组封装位数据包</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">物理层</td>
+<td align="center">物理层</td>
+<td align="center">基于电信号发送高低位信号</td>
+</tr>
+</tbody></table>
+<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p>客户端发起请求</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">client</th>
+<th align="center"></th>
+<th align="center">server</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">syn_send</td>
+<td align="center">SYN=1   seq = x</td>
+<td align="center">-&gt;</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">&lt;-</td>
+<td align="center">SYN = 1   ACK=1    seq=y ack= x+1</td>
+<td align="center">syn_recv</td>
+</tr>
+<tr>
+<td align="center">连接成功</td>
+<td align="center">ACK=1  ack = y+1</td>
+<td align="center">-&gt;</td>
+<td align="center"></td>
+<td align="center">连接成功</td>
+</tr>
+</tbody></table>
+<h2 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h2><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">写</th>
+<th align="center"></th>
+<th align="center">读</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"></td>
+<td align="center">seq=x+1 ack=y+1</td>
+<td align="center">-&gt;</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">&lt;-</td>
+<td align="center">ack = x+2</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p>任意一方发起</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">client</th>
+<th align="center"></th>
+<th align="center">server</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">fin_wait_1</td>
+<td align="center">FIN=1 seq=u</td>
+<td align="center">-&gt;</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">fin_wait_2</td>
+<td align="center"></td>
+<td align="center">&lt;-</td>
+<td align="center">ACK=1 ack=u+1  seq=v</td>
+<td align="center">close_wait</td>
+</tr>
+<tr>
+<td align="center">time_walt</td>
+<td align="center"></td>
+<td align="center">&lt;-</td>
+<td align="center">FIN =1 ACK=1 seq =w ack=u+1</td>
+<td align="center">last_ack</td>
+</tr>
+<tr>
+<td align="center">time_walt</td>
+<td align="center">ACK=1 seq=u+1 ack=w+1</td>
+<td align="center">-&gt;</td>
+<td align="center"></td>
+<td align="center">close()</td>
+</tr>
+</tbody></table>
+<ol>
+<li>客户端发起中断请求，FIN 请求，seq为(前面传送过来的最后一个数据字节+1)，意味着客户端没有数据发送了</li>
+<li>此时返回一个ACK确认，表示收到了，但是服务端如果有数据需要发送，还是可以继续发送，客户端也需要接受。并且服务端进行等待关闭。客户端接口之后，进入终止等待2状态</li>
+<li>当服务端的数据发送完成之后，服务端 发送FIN 请求，服务端进入最后确认状态</li>
+<li>当客户端收到最后确认之后，发送确认消息，服务端收到后立即 进入CLOSE 状态。但是客户端此时还没有关闭，必须等待（2MSL）2倍最长报文寿命的时候，才能进入CLOSE状态 ，（可以设置不等待，直接关闭）</li>
+</ol>
+<h2 id="IO是什么"><a href="#IO是什么" class="headerlink" title="IO是什么"></a>IO是什么</h2><ol>
+<li><p>对于Unix来说，一切皆文件，Socket,管道，FIFO,终端，都是文件，操作这些文件，就是IO操作</p>
+</li>
+<li><p> 文件描述符（FD）,文件描述符标识 文件流，让操作系统可以找到需要操作的流。</p>
+<h2 id="用户空间-内核空间"><a href="#用户空间-内核空间" class="headerlink" title="用户空间/内核空间"></a>用户空间/内核空间</h2></li>
+<li><p>内核空间存放的是内核代码 和 数据</p>
+<ol>
+<li>权限为0级</li>
+</ol>
+</li>
+<li><p>用户空间存放的是用户代码 和 数据 </p>
+<ol>
+<li>权限为3级</li>
+</ol>
+</li>
+</ol>
+<h3 id="一般的网络操作为："><a href="#一般的网络操作为：" class="headerlink" title="一般的网络操作为："></a>一般的网络操作为：</h3><ol>
+<li>等待数据到达网卡，然后将数据复制到内核缓冲区</li>
+<li>从内核缓冲区复制数据，然后拷贝到用户空间</li>
+</ol>
+<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ul>
+<li>IO模型一般分为两个步骤，1 等待 2.数据复制<table>
+<thead>
+<tr>
+<th>IO模型</th>
+<th>特点</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阻塞IO模型</td>
+<td>在IO执行的两个阶段，都会被阻塞</td>
+<td>1.阻塞进程不占用CPU</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>2.响应即时 | 1.需要为每一个请求分配一个线程，系统开销大，不适合大并发 |<br>| 非阻塞IO模型 | 第一阶段不阻塞，由阻塞变为不断的轮询<br>第二阶段阻塞 |  | 1.需要不断轮询，CPU消耗大，适合<br>2.需要为每一个请求分配一个线程，系统开销大，不适合大并发<br>3.响应不及时 |<br>| 多路复用IO模型 | 第一阶段，多个进程的I/O注册到一个复用器（Selector）上面，当没有数据的时候Selector阻塞，当有数据的时候，会返回数据。</p>
+<p>第二阶段阻塞 | 1.多个请求可以由一个线程进行管理，节省CPU 和 系统消耗。<br>2.适合高并发应用，性能好 | 开发难度大 |<br>| 信号驱动IO模型 | 第一阶段由系统通过注册的信号来通知用户进程，是非阻塞的</p>
+<p>第二阶段阻塞 | 应用场景少 |  |<br>| 异步IO模型 | 第一阶段 第二阶段 都不阻塞，一步完成后通知通知应用程序 | JAVA的aio就是这样 |  |</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/25/spring/spring%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2046,108 +2317,6 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/14/spring/Spring%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/14/spring/Spring%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">Spring注入方式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-01-14 14:39:31 / 修改时间：01:07:41" itemprop="dateCreated datePublished" datetime="2021-01-14T14:39:31+08:00">2021-01-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1-Set注入"><a href="#1-Set注入" class="headerlink" title="1. Set注入"></a>1. Set注入</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;notebook1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.spring.injection.domin.Notebook&quot;</span> <span class="attr">primary</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;cpu&quot;</span> <span class="attr">value</span>=<span class="string">&quot;因特尔&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;disk&quot;</span> <span class="attr">value</span>=<span class="string">&quot;2048&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;memory&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1024&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Bag <span class="title">bag2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Bag bag = <span class="keyword">new</span> Bag();</span><br><span class="line">    bag.setNotebook(notebook2);</span><br><span class="line">    <span class="keyword">return</span> bag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-构造器注入"><a href="#2-构造器注入" class="headerlink" title="2. 构造器注入"></a>2. 构造器注入</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;notebook2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.spring.injection.domin.Notebook&quot;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;联发科&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;2048&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;1024&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Bag <span class="title">bag</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Bag(notebook1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="3-BeanDefinition注入"><a href="#3-BeanDefinition注入" class="headerlink" title="3. BeanDefinition注入"></a>3. BeanDefinition注入</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    AnnotationConfigApplicationContext applicationContext = </span><br><span class="line">              <span class="keyword">new</span> AnnotationConfigApplicationContext();</span><br><span class="line"></span><br><span class="line">    XmlBeanDefinitionReader xmlBeanDefinitionReader = </span><br><span class="line">              <span class="keyword">new</span> XmlBeanDefinitionReader(applicationContext);</span><br><span class="line">    xmlBeanDefinitionReader.loadBeanDefinitions(<span class="string">&quot;classpath:meta-data/injection-bean.xml&quot;</span>);</span><br><span class="line"></span><br><span class="line">    BeanDefinitionBuilder definitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(Bag.class);</span><br><span class="line">    definitionBuilder.addPropertyReference(<span class="string">&quot;notebook&quot;</span>,<span class="string">&quot;notebook1&quot;</span>);</span><br><span class="line">    definitionBuilder.setScope(BeanDefinition.SCOPE_SINGLETON);</span><br><span class="line">    String benName = BeanDefinitionReaderUtils.generateBeanName(definitionBuilder.getBeanDefinition(),applicationContext);</span><br><span class="line">    applicationContext.registerBeanDefinition(benName,definitionBuilder.getBeanDefinition());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    BeanDefinitionBuilder definitionBuilder2 = BeanDefinitionBuilder.genericBeanDefinition(Bag.class);</span><br><span class="line">    definitionBuilder2.addConstructorArgReference(<span class="string">&quot;notebook2&quot;</span>);</span><br><span class="line">    definitionBuilder2.setScope(BeanDefinition.SCOPE_SINGLETON);</span><br><span class="line">    String benName2 = BeanDefinitionReaderUtils.generateBeanName(definitionBuilder2.getBeanDefinition(),applicationContext);</span><br><span class="line"></span><br><span class="line">    applicationContext.registerBeanDefinition(benName2,definitionBuilder2.getBeanDefinition());</span><br><span class="line"></span><br><span class="line">    applicationContext.refresh();</span><br><span class="line">    Map&lt;String, Bag&gt; beansOfType = applicationContext.getBeansOfType(Bag.class);</span><br><span class="line">    System.out.println(beansOfType);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="4-回调接口-Aware-注入"><a href="#4-回调接口-Aware-注入" class="headerlink" title="4. 回调接口 Aware 注入"></a>4. 回调接口 Aware 注入</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostUser</span> <span class="keyword">implements</span>   <span class="title">BeanNameAware</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String beanName;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PostUser</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        id = <span class="number">1</span>;</span><br><span class="line">        name = <span class="string">&quot;init&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;setBeanName: &quot;</span>+ name);</span><br><span class="line">        <span class="keyword">this</span>.beanName = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="5-外部配置注入"><a href="#5-外部配置注入" class="headerlink" title="5. 外部配置注入"></a>5. 外部配置注入</h4> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Value(&quot;$&#123;name:look&#125;&quot;)</span></span><br><span class="line"><span class="keyword">private</span> String name;</span><br></pre></td></tr></table></figure>
-<h4 id="6-字段注入-（使用-Autowired-Resource-Inject注入）"><a href="#6-字段注入-（使用-Autowired-Resource-Inject注入）" class="headerlink" title="6.字段注入 （使用 @Autowired @Resource @Inject注入）"></a>6.字段注入 （使用 @Autowired @Resource @Inject注入）</h4><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>默认</th>
-<th>指定name</th>
-<th>作用域</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>@Autowired</td>
-<td>默认根据类型注入</td>
-<td>@Qualifier,@Named(测试有效)</td>
-<td>变量、setter方法、构造函数</td>
-</tr>
-<tr>
-<td>@Resource</td>
-<td>默认根据name注入</td>
-<td>-</td>
-<td>变量、setter方法</td>
-</tr>
-<tr>
-<td>@Inject</td>
-<td>默认根据类型注入</td>
-<td>@Named,@Qualifier(测试有效)</td>
-<td>变量、setter方法、构造函数</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2219,20 +2388,20 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -165,6 +165,216 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/10/java/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/10/java/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">领域驱动设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-10 00:00:00" itemprop="dateCreated datePublished" datetime="2020-02-10T00:00:00+08:00">2020-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-30 12:54:28" itemprop="dateModified" datetime="2021-05-30T12:54:28+08:00">2021-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><blockquote>
+<p><strong>学习DDD看的书</strong></p>
+<ol>
+<li>《实现领域驱动设计》<br> 基础只是,概念</li>
+<li>《领域驱动设计：软件核心复杂性应对之道 》<br> 使用,流程,串联<br>千万不要先看 《领域驱动设计：软件核心复杂性应对之道 》，不然你会哭的，因为你看的和天书基本没啥区别，要先看 《实现领域驱动设计》，然后在去看 埃文斯的那本书。</li>
+</ol>
+</blockquote>
+<h3 id="领域模型"><a href="#领域模型" class="headerlink" title="领域模型"></a>领域模型</h3><p>领域模型是某个业务领域的软件模型，通常通过对象模型来实现。</p>
+<h3 id="贫血模型和充血模型"><a href="#贫血模型和充血模型" class="headerlink" title="贫血模型和充血模型"></a>贫血模型和充血模型</h3><ul>
+<li>在贫血模型中，对象中只有属性值和公有的get set 方法，几乎没有业务逻辑，完全就是一个数据集。</li>
+<li>在充血模型中，数据与对应的业务逻辑被封装在一个类中，这种模型满足面向对象的封装特性，是典型的面向对象编程。</li>
+<li>充血模型和贫血模型是领域对象和非领域对象的重要区别。<h3 id="失忆症"><a href="#失忆症" class="headerlink" title="失忆症"></a>失忆症</h3></li>
+<li>当业务逻辑出现多次变化的适合，直接散落在项目中的各个业务逻辑很可能忘记其本来的意图，而业务的迭代，可能会导致项目越来越复杂，这样就会出现，除作者以外，甚至作者，看这段代码的适合会蒙圈，这种一般称为贫血模型导致的失忆症。<h3 id="是充血模型的好处"><a href="#是充血模型的好处" class="headerlink" title="是充血模型的好处"></a>是充血模型的好处</h3></li>
+<li>复用程度高，表达能力强，适合复杂的业务逻辑处理</li>
+<li>业务逻辑的变动，很可能会导致领域模型的变动，但是，这个在传统的开发中也是不可避免的，但是充血模型将逻辑高内聚，反而不容易漏改逻辑<h3 id="举例-–-这个可以不看"><a href="#举例-–-这个可以不看" class="headerlink" title="举例 – 这个可以不看"></a>举例 – 这个可以不看</h3>一个简单的主子订单模型，加上付款操作<br>在传统模式下，可见我们的对象只是一个数据集合，除了传递数据，并没有做任何操作，这个只是一个简单的付款，如果之后，业务场景复杂后，很可能出现，这个一个业务逻辑，哪里一个业务逻辑<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">public class Order &#123;</span><br><span class="line">    private Long orderId;</span><br><span class="line">    private String orderNo;</span><br><span class="line">    private Long amount;</span><br><span class="line">    private Integer status;</span><br><span class="line">    ---get set 方法 --- </span><br><span class="line">&#125;</span><br><span class="line">public class OrderItem &#123;</span><br><span class="line">    private Long id;</span><br><span class="line">    private Long orderId;</span><br><span class="line">    private Long orderNo;</span><br><span class="line">    private String itemName;</span><br><span class="line">    private Long payAmount；</span><br><span class="line">  --- get set 方法--- </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">付款方法</span><br><span class="line">    public void pay(OrderReq orderReq)&#123;</span><br><span class="line">        Order order &#x3D;  dao1.query(orderReq);</span><br><span class="line">        List&lt;OrderItem&gt;  orderItems &#x3D; dao2.query(orderReq);</span><br><span class="line">        ---业务逻辑</span><br><span class="line">        order.setStatus(PAY);</span><br><span class="line">        for (OrderItem orderItem : orderItems) &#123;</span><br><span class="line">           ----业务逻辑</span><br><span class="line">            orderItem.setPayAmount(orderReq.getPayAmount());</span><br><span class="line">        &#125;</span><br><span class="line">        transaction.execute()&#123;</span><br><span class="line">            dao1.save(order);</span><br><span class="line">            dao2.save(orderItems);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">业务更新后，很可能 </span><br><span class="line">    public void pay(OrderReq orderReq)&#123;</span><br><span class="line">        Order order &#x3D;  dao1.query(orderReq);</span><br><span class="line">        List&lt;OrderItem&gt;  orderItems &#x3D; dao2.query(orderReq);</span><br><span class="line">        ---业务逻辑</span><br><span class="line">         order.setStatus(PAY);</span><br><span class="line">        if(会员)&#123;</span><br><span class="line">          order.setStatus(PAY1);</span><br><span class="line">        &#125;</span><br><span class="line">        if(优惠)&#123;</span><br><span class="line">         order.setStatus(PAY2);</span><br><span class="line">        &#125;</span><br><span class="line">        for (OrderItem orderItem : orderItems) &#123;</span><br><span class="line">           ----业务逻辑</span><br><span class="line">        if(优惠)&#123;</span><br><span class="line">         orderItem.setStatus(PAY2);</span><br><span class="line">        &#125;</span><br><span class="line">        if(会员)&#123;</span><br><span class="line">          orderItem.setStatus(PAY1);</span><br><span class="line">        &#125;</span><br><span class="line">            orderItem.setPayAmount(orderReq.getPayAmount());</span><br><span class="line">        &#125;</span><br><span class="line">        transaction.execute()&#123;</span><br><span class="line">            dao1.save(order);</span><br><span class="line">            dao2.save(orderItems);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="领域是什么"><a href="#领域是什么" class="headerlink" title="领域是什么"></a>领域是什么</h3>在实现领域驱动一书中这样解释<blockquote>
+<p>从广义上讲，领域（Domain）即是一个组织所做的事情以及其中所包含的一切。商业机构通常会确定一个市场，然后在这个市场中销售产品和服务。每个组织都有它自己的业务范围和做事方式。这个业务范围以及在其中所进行的活动便是领域。当你为某个组织开发软件时，你面对的便是这个组织的领域。这个领域对于你来说应该是明晰的，因为你在这个领域中工作。</p>
+</blockquote>
+</li>
+</ul>
+<p>在我看来，领域其实就是我们的业务模块，或者说是我们的实际业务就是领域。</p>
+<h3 id="子域"><a href="#子域" class="headerlink" title="子域"></a>子域</h3><p>对一个大的领域的问题进行根据业务职能的划分，例如在一个电商项目中，商品，订单，支付，履约，结算，库存，物流，发票，用户就是不同的子域。而在子域的划分中，也会产生不同的类型，<strong>核心子域</strong>，<strong>通用子域</strong>，<strong>支撑子域</strong>等等。</p>
+<h3 id="限界上下文"><a href="#限界上下文" class="headerlink" title="限界上下文"></a>限界上下文</h3><ul>
+<li>特定模型的限界应用。限界上下文使团队所有成员能够明确地知道什么必须保持一致，什么必须独立开发。</li>
+<li>限界上下文为业务流程在一个划定的界限，由一个或者多个子域组成。</li>
+<li>在基于某一个角度，将多个子域划分进一个限界上下文</li>
+<li>限界上下文即是一个特定的解决方案，在一个特定的限界上下文只使用一套通用语言，并且保证它的清晰性和简洁性。</li>
+</ul>
+<h3 id="问题空间和解决问题空间"><a href="#问题空间和解决问题空间" class="headerlink" title="问题空间和解决问题空间"></a>问题空间和解决问题空间</h3><ul>
+<li> 问题空间：是我们业务所遇到的挑战，问题空间是领域的一部分，对问题空间的开发将产生一个新的核心域，问题空间是核心域和其他子域的组合。</li>
+<li> 解决问题空间：如何实现软件以解决这些业务挑战，包括一个或多个限界上下文，即一组特定的软件模型来解决问题。</li>
+</ul>
+<h3 id="上下文映射图"><a href="#上下文映射图" class="headerlink" title="上下文映射图"></a>上下文映射图</h3><ul>
+<li>表示限界上下文和他们呢的集成关系，下面就是一个上下文映射图，<br><img src="https://upload-images.jianshu.io/upload_images/13349286-c5a36a8bffce5667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="U表示上游（Upstream），D表示下游（Downstream）"></li>
+</ul>
+<h2 id="领域驱动架构"><a href="#领域驱动架构" class="headerlink" title="领域驱动架构"></a>领域驱动架构</h2><h3 id="系统分层"><a href="#系统分层" class="headerlink" title="系统分层"></a>系统分层</h3><p><img src="https://upload-images.jianshu.io/upload_images/13349286-bee4108b66c4303a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="DDD所使用的传统分层架构"></p>
+<ul>
+<li>一般我们使用聚合或者工厂对复杂的聚合进行创建，而不是直接在应用层创建</li>
+<li>领域模型用于发布领域事件时，应用层可以将订阅方注册到任意数量的事件上，这样的好处是可以对事件进行存储和转发。同时，领域模型只需要关注自己的核心逻辑；领域事件发布器也可以保持轻量化，而不用依赖于消息机制的基础设施，可以使用Spring的event事件。</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/13349286-3b7db3017cb2ef78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h3 id="命令和查询职责分离——CQRS"><a href="#命令和查询职责分离——CQRS" class="headerlink" title="命令和查询职责分离——CQRS"></a>命令和查询职责分离——CQRS</h3><ol>
+<li>如果一个方法修改了对象的状态，该方法便是一个命令（Command），它不应该返回数据。在Java和C#中，这样的方法应该声明为void。</li>
+<li>如果一个方法返回了数据，该方法便是一个查询（Query），此时它不应该通过直接的或间接的手段修改对象的状态。在Java和C#中，这样的方法应该以其返回的数据类型进行声明。</li>
+</ol>
+<h3 id="防腐层"><a href="#防腐层" class="headerlink" title="防腐层"></a>防腐层</h3><ul>
+<li>当你的领域和其他领域存在数据交互时，你需要一个防腐层作为两个领域之间的纽带。这会给你带来很多“数据转换”的代码，但是对于业务多变的系统来讲，它能保护你的领域。</li>
+<li>在我们的微服务架构中，一般来说指当前服务与其他服务进行交互的适合，并不直接调用，而由一个中间层，来进行判断，处理，缓冲。</li>
+</ul>
+<h3 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h3><ul>
+<li>一种对象，它不是由属性来定义的，而是通过一连串的连续事件和标识定义的。</li>
+<li>实体应该具有唯一标示，如订单号，身份证号，用户id</li>
+<li>唯一标示可以有用户产生(如手机号)/系统产生（如uuid）/持久化机制生成（如mysql主键）</li>
+<li>实体的其他信息可以进行修改，但是无论如何修改，唯一标示是不变的，其还是一个相同的实体。</li>
+</ul>
+<h3 id="值对象"><a href="#值对象" class="headerlink" title="值对象"></a>值对象</h3><ul>
+<li>一种描述了某种特征或属性但没有概念标识的对象。</li>
+<li><strong>度量或描述</strong>,它度量或者描述了领域中的一件东西。</li>
+<li><strong>不变性</strong>,可以作为不变量，一个值对象创建了就不能改变了</li>
+<li><strong>概念整体</strong>，它将不同的相关的属性组合成一个概念整体。一个值对象可以只处理单个属性，也可以处理一组相关联的属性。在这组相关联的属性中，每一个属性都是整体属性所不可或缺的组成部分，这和简单地将一组属性组装在对象中是不同的。如果一组属性联合起来并不能表达一个整体上的概念，那么这种联合并无多大用处。<br>即他可以是单个属性，也可以是多个属性，但必须是有关联性的，而不是一堆属性的聚合。</li>
+<li><strong>可替换性</strong>，当度量和描述改变时，可以用另一个值对象予以替换。</li>
+<li><strong>值对象相等性</strong>，它可以和其他值对象进行相等性比较</li>
+<li><strong>无副作用行为</strong>，它不会对协作对象造成副作用<h4 id="最小化集成"><a href="#最小化集成" class="headerlink" title="最小化集成"></a>最小化集成</h4>在所有的DDD项目中，通常存在多个限界上下文，这意味着我们需要找到合适的方法对这些上下文进行集成。当模型概念从上游上下文流入下游上下文中时，尽量使用值对象来表示这些概念。这样的好处是可以达到最小化集成，即可以最小化下游模型中用于管理职责的属性数目。使用不变的值对象使得我们做更少的职责假设。</li>
+</ul>
+<p>这里我理解的最小化集成，就是我们的限界上下文直接的参数应该是值对象</p>
+<h3 id="领域服务"><a href="#领域服务" class="headerlink" title="领域服务"></a>领域服务</h3><ul>
+<li>领域中的服务表示一个无状态的操作，它用于实现特定于某个领域的任务</li>
+<li>慎重使用领域服务，能在聚合和实体中完成的操作，不要放在领域服务中，过度使用领域服务将会造成贫血领域模型。</li>
+<li>领域服务通常和领域内相关的聚合放在同一模块（目录）下。</li>
+</ul>
+<p><strong>什么是领域服务</strong></p>
+<ol>
+<li>执行一个显著的业务操作过程。</li>
+<li>对领域对象进行转换。</li>
+<li>以多个领域对象作为输入进行计算，结果产生一个值对象。</li>
+</ol>
+<h3 id="领域事件-Domain-Event"><a href="#领域事件-Domain-Event" class="headerlink" title="领域事件 Domain Event"></a>领域事件 Domain Event</h3><ul>
+<li>领域事件用于发布和捕捉发生在领域内的一些事情，领域事件通常是由某个聚合发出，在整个领域范围内订阅。某某方法执行完成、某某数据修改成功、某某接口调用结束等等都可以理解为领域内事件，这些事件结束后我们往往需要做一些进一步的操作，比如：订单领域完成下单操作后，物流领域需要开始物流。这是在两个领域之间具备先后关系的事件，问题在于完成下单之后怎么通知物流领域呢？直接调用吗？领域事件认为，在有需要时，当订单创建完成，应当对外发布一个携带了必要对象信息的订单创建完成事件（OrderCreatedEvent）消息，由订阅方订阅到该事件消息，进而完成后续业务。</li>
+<li>领域事件是对领域内发生的活动进行的建模</li>
+<li>我觉的领域事件就使用事务消息就比较好，别的书里说的感觉用处不大</li>
+</ul>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
+<li>可以理解为 package分包</li>
+<li>模块表示了一个命名的容器，用于存放领域中内聚在一起的类。</li>
+<li>将类放在不同模块中的目的在于达到松耦合性。</li>
+<li>由于DDD中的模块并不是一个通用的存储区域，因此对其进行适当的命名是重要的。</li>
+<li>事实上，模块名是通用语言的重要组成部分。</li>
+<li>模块应该包含一组具有高内聚性的概念集合，这样做的好处是可以在不同的模块之间实现松耦合</li>
+</ul>
+<p><strong>模块的命名规范</strong></p>
+<ul>
+<li> 通常模块名就是包名，一般来说是公司层面统一的</li>
+<li> 先考虑模块，再是限界上下文，因为模块的目的在于组织那些内聚在一起的领域对象<h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3></li>
+<li>将实体和值对象在一致性边界之内组成聚合（Aggregate）</li>
+<li>聚合就是一组相关对象的集合，我们把聚合作为数据修改的单元。外部对象只能引用聚合中的一个成员，我们把它称为根。在聚合的边界之内应用一组一致的规则。</li>
+</ul>
+<p><strong>聚合的原则</strong></p>
+<ol>
+<li>在一致性边界之内建模真正的不变条件:<br>不变条件是指某个业务规则，这个规则应该总是保持一致的。这里的一致通常是指事务一致性，因为聚合作为我们操作和读取数据的基本单元，这就要求我们在提交事务时，该聚合边界内的所有对象都应当保持一致。  <strong>即在一个事务中只修改一个聚合实例，需要保证事务一致性</strong></li>
+<li>设计小聚合<br>因为聚合需要保证在一个事务中只能修改一个聚合，所以聚合需要更加紧凑，逻辑更加一致，保证在单个聚合的事务一致性，多个聚合直接，需要实现最终一致性。</li>
+<li>通过唯一标识引用其他聚合<br>即聚合直接引用的适合使用唯一标示引用，而不是直接引用聚合对象。在java中，通俗标示，就是我们因为另一个聚合的唯一id，而不是直接引用对象，这样我们的聚合会更加轻量级，减少内存，对与java来说，对gc也有好处。</li>
+<li>在边界之外使用最终一致性<br>即多个聚合直接需要保持最终一致性，一般使用事件驱动来完成最终一致性</li>
+</ol>
+<h3 id="工厂-Factory"><a href="#工厂-Factory" class="headerlink" title="工厂 Factory"></a>工厂 Factory</h3><ul>
+<li>将创建复杂对象和聚合的职责分配给一个单独的对象，该对象本身并不承担领域模型中的职责，但是依然是领域设计的一部分。工厂应该提供一个创建对象的接口，该接口封装了所有创建对象的复杂操作过程，同时，它并不需要客户去引用那个实际被创建的对象。对于聚合来说，我们应该一次性地创建整个聚合，并且确保它的不变条件得到满足</li>
+<li>隐藏创建细节，方便调用</li>
+</ul>
+<h3 id="资源库-Repository"><a href="#资源库-Repository" class="headerlink" title="资源库 Repository"></a>资源库 Repository</h3><ul>
+<li>我理解的在我们的开发过程中，资源库就是我们的dao层，与数据存储进行交互的。一般资源库分为<strong>面向集合的资源库</strong>和<strong>面向持久化的资源库</strong></li>
+</ul>
+<ol>
+<li>面向集合的资源库</li>
+</ol>
+<p>面向集合的资源库是指资源库就像一个集合，在向一个Set集合中添加聚合时，如果重复添加是不会成功的，从集合中获取到的实例也可以直接进行修改而不需要写会操作，因为从集合中获取到的对象是引用类型，这意味着任何修改都会直接生效。类似Hibernate,但是用的不多</p>
+<ol start="2">
+<li>面向持久化的资源库</li>
+</ol>
+<p>面向持久化的资源库就是我们熟悉的数据库操作，但是我们需要把实现细节进行封装，资源库应该尽可能地模拟一个集合的操作方式，将细节封装，例如防止聚合添加重复的校验不再由客户端做，调用方不关心细节，可以完全作为一个集合的方式使用。</p>
+<p><strong>还有</strong></p>
+<ul>
+<li>对事务的管理绝对不应该放在领域模型和领域层中，而应该放在应用层<h4 id="资源库和dao的区别"><a href="#资源库和dao的区别" class="headerlink" title="资源库和dao的区别"></a>资源库和dao的区别</h4></li>
+<li>DAO主要从数据库表的角度来看待问题，并且提供CRUD操作，DAO相关的模式通常只是对数据库表的一层封装。</li>
+<li>而资源库采用面向集合的方式，而不是面向数据访问的方式。</li>
+<li>所以 资源库 可以看作 DAO，但是DAO不一定是资源库</li>
+</ul>
+<h3 id="基础设施"><a href="#基础设施" class="headerlink" title="基础设施"></a>基础设施</h3><p>基础设施的职责是为应用程序的其他部分提供技术支持。</p>
+<h3 id="集成限界上下文"><a href="#集成限界上下文" class="headerlink" title="集成限界上下文"></a>集成限界上下文</h3><ul>
+<li>常见的手段包括开放领域服务接口、开放HTTP服务以及消息发布-订阅机制。</li>
+</ul>
+<h2 id="领域对象的生命周期"><a href="#领域对象的生命周期" class="headerlink" title="领域对象的生命周期"></a>领域对象的生命周期</h2><p><img src="https://upload-images.jianshu.io/upload_images/13349286-e79f38f921de9fb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<ol>
+<li>使用FACTORY（工厂）来创建和重建复杂对象和AGGREGATE（聚合），从而封装它们的内部结构。</li>
+<li>在生命周期的中间和末尾使用REPOSITORY（存储库）来提供查找和检索持久化对象并封装庞大基础设施的手段。</li>
+</ol>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350033901">https://zhuanlan.zhihu.com/p/350033901</a><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2017/12/22/ddd-in-practice.html">https://tech.meituan.com/2017/12/22/ddd-in-practice.html</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/10/other/maven%E6%8F%92%E4%BB%B6%E7%9A%84%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -660,20 +870,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
