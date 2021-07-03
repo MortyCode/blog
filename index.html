@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-03 00:00:00 / 修改时间：15:38:12" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
+              <time title="创建时间：2021-07-03 00:00:00 / 修改时间：15:40:46" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,31 +230,13 @@
 <td>XA/2PC</td>
 <td>强一致性</td>
 <td>强依赖数据库，，资源锁定时间过长，很有可能出现死锁</td>
-<td>第一次 执行执行数据更改，不提交事务</td>
-</tr>
-<tr>
-<td>第二次 提交/回滚事务</td>
-<td></td>
-<td></td>
-<td></td>
+<td>第一次 执行执行数据更改，不提交事务,第二次 提交/回滚事务</td>
 </tr>
 <tr>
 <td>XA/3PC</td>
 <td>强一致性</td>
 <td>多一次预请求，在某些情况下，有可能性能会提升，有可能性能下降</td>
-<td>第一次 询问是否可以执行事务</td>
-</tr>
-<tr>
-<td>第二次 执行执行数据更改，不提交事务</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>第三次 提交/回滚事务</td>
-<td></td>
-<td></td>
-<td></td>
+<td>第一次 询问是否可以执行事务,第二次 执行执行数据更改，不提交事务,第三次 提交/回滚事务</td>
 </tr>
 <tr>
 <td>AT</td>
@@ -272,13 +254,7 @@
 <td>TCC</td>
 <td>几乎不会涉及到锁和资源的争用，具有很高的性能潜力。</td>
 <td>编码工作量大，复杂业务实现困难</td>
-<td>第一次 执行预请求方法</td>
-</tr>
-<tr>
-<td>第二次 执行回滚方法/提交事务方法</td>
-<td></td>
-<td></td>
-<td></td>
+<td>第一次 执行预请求方法,第二次 执行回滚方法/提交事务方法</td>
 </tr>
 <tr>
 <td>Saga</td>
@@ -288,12 +264,11 @@
 </tr>
 <tr>
 <td>Sage无法保证隔离性，需要额外加锁保证</td>
-<td>把大事务拆分成若干个子事务,T1，T2，…，Ti，…，Tn</td>
+<td>把大事务拆分成若干个子事务,T1，T2，…，Ti，…，Tn,每一个子事务都对应一个补偿动作，C1，C2，…，Ci，…，Cn</td>
 <td></td>
 <td></td>
 </tr>
 </tbody></table>
-<p>每一个子事务都对应一个补偿动作，C1，C2，…，Ci，…，Cn |</p>
 <h1 id="分布事务角色"><a href="#分布事务角色" class="headerlink" title="分布事务角色"></a>分布事务角色</h1><h4 id="TC-Transaction-Coordinator-事务协调者"><a href="#TC-Transaction-Coordinator-事务协调者" class="headerlink" title="TC (Transaction Coordinator) - 事务协调者"></a>TC (Transaction Coordinator) - 事务协调者</h4><ul>
 <li><p>维护全局和分支事务的状态，驱动全局事务提交或回滚。</p>
 </li>
