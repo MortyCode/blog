@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-07-03 00:00:00 / 修改时间：15:40:46" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
+              <time title="创建时间：2021-07-03 00:00:00 / 修改时间：15:43:02" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,13 +242,7 @@
 <td>AT</td>
 <td>实现简单，没有业务入侵</td>
 <td>数据隔离性不强，有可能脏读，脏写（在没有全局锁的时候）</td>
-<td>第一次 将业务代码和undo_log表的数据同时提交事务</td>
-</tr>
-<tr>
-<td>第二次 完成事务/使用undo_log表的数据进行回滚</td>
-<td></td>
-<td></td>
-<td></td>
+<td>第一次.将业务代码和undo_log表的数据同时提交事务,第二次 完成事务/使用undo_log表的数据进行回滚</td>
 </tr>
 <tr>
 <td>TCC</td>
@@ -259,14 +253,8 @@
 <tr>
 <td>Saga</td>
 <td>一阶段提交本地数据库事务，无锁，高性能；补偿服务易于理解，易于实现。</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
 <td>Sage无法保证隔离性，需要额外加锁保证</td>
 <td>把大事务拆分成若干个子事务,T1，T2，…，Ti，…，Tn,每一个子事务都对应一个补偿动作，C1，C2，…，Ci，…，Cn</td>
-<td></td>
-<td></td>
 </tr>
 </tbody></table>
 <h1 id="分布事务角色"><a href="#分布事务角色" class="headerlink" title="分布事务角色"></a>分布事务角色</h1><h4 id="TC-Transaction-Coordinator-事务协调者"><a href="#TC-Transaction-Coordinator-事务协调者" class="headerlink" title="TC (Transaction Coordinator) - 事务协调者"></a>TC (Transaction Coordinator) - 事务协调者</h4><ul>
@@ -283,7 +271,6 @@
 <li><p>一般为服务调用方，在XA模式中，一般为数据库</p>
 </li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625285876581-0dee4301-1b1f-4c7e-8185-3fbd1632afb7.png#align=left&display=inline&height=310&margin=%5Bobject%20Object%5D&name=image.png&originHeight=401&originWidth=821&size=35185&status=done&style=none&width=634" alt="image.png"></p>
 <h1 id="XA"><a href="#XA" class="headerlink" title="XA"></a>XA</h1><h2 id="两阶段提交"><a href="#两阶段提交" class="headerlink" title="两阶段提交"></a>两阶段提交</h2><h3 id="1-准备阶段"><a href="#1-准备阶段" class="headerlink" title="1. 准备阶段"></a>1. 准备阶段</h3><ul>
 <li><p>协调者询问事务的所有参与者是否准备好提交，如果已经准备好提交回复 Prepared，否则回复 Non-Prepared。</p>
 </li>
