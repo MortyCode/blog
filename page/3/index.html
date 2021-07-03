@@ -165,6 +165,92 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/12/linux/%E3%80%90linux%E7%AC%94%E8%AE%B0%E3%80%91java%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/12/linux/%E3%80%90linux%E7%AC%94%E8%AE%B0%E3%80%91java%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">【linux笔记】java环境</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-12 14:39:31" itemprop="dateCreated datePublished" datetime="2020-02-12T14:39:31+08:00">2020-02-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-12 23:56:57" itemprop="dateModified" datetime="2021-01-12T23:56:57+08:00">2021-01-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-下载jdk"><a href="#1-下载jdk" class="headerlink" title="1. 下载jdk"></a>1. 下载jdk</h2><p> <strong>wget</strong>    <em>–no-check-certificate –no-cookies –header “Cookie: oraclelicense=accept-securebackup-cookie”</em>    <strong><a target="_blank" rel="noopener" href="http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz">http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz</a></strong></p>
+<p>a1. 其中  <em>–no-cookies –header “Cookie: oraclelicense=accept-securebackup-cookie”</em> 为Oracle网站下载需要cookie才可以下载</p>
+<p>a2. 后面的下载地址可能会随着版本的变化而变，如果不可以需要到Oracle官网重新复制下载地址</p>
+<h2 id="2-解压-jdk-："><a href="#2-解压-jdk-：" class="headerlink" title="2. 解压 jdk ："></a>2. 解压 jdk ：</h2><p>tar -zvxf jdk-8u191-linux-x64.tar.gz</p>
+<h2 id="3-配置环境变量："><a href="#3-配置环境变量：" class="headerlink" title="3. 配置环境变量："></a>3. 配置环境变量：</h2><ol>
+<li>vim /etc/profile </li>
+<li>在最前面加：<pre><code>export JAVA_HOME=/opt/jdk1.8.0_191  
+export JRE_HOME=$&#123;JAVA_HOME&#125;/jre  
+export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib  
+export  PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</code></pre>
+</li>
+<li>执行profile文件  source /etc/profile  //这样可以使配置不用重启即可立即生效。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2020/02/11/java/Redis%E5%A4%87%E8%A6%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1123,7 +1209,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
