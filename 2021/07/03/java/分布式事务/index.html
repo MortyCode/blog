@@ -27,19 +27,11 @@
 <meta property="og:site_name" content="Rick-Code">
 <meta property="og:description" content="分布式事务的关键因素 两阶段提交 重试机制      优点 缺点 过程    XA&#x2F;2PC 强一致性 强依赖数据库，，资源锁定时间过长，很有可能出现死锁 第一次 执行执行数据更改，不提交事务,第二次 提交&#x2F;回滚事务   XA&#x2F;3PC 强一致性 多一次预请求，在某些情况下，有可能性能会提升，有可能性能下降 第一次 询问是否可以执行事务,第二次 执行执行数据更改，不提交事务,第三次 提交&#x2F;回滚事务">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070326493-ef8ff09d-dcb0-4f33-b812-9fac03331ec1.png#align=left&display=inline&height=316&margin=%5Bobject%20Object%5D&name=image.png&originHeight=385&originWidth=640&size=92367&status=done&style=stroke&width=526">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070550381-754baa1b-5abf-493f-9dcc-7c4406eb03ec.png#align=left&display=inline&height=192&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=640&size=92044&status=done&style=none&width=456">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070552088-c5c788ab-6fb6-425f-9a00-761f417bae6f.png#align=left&display=inline&height=283&margin=%5Bobject%20Object%5D&name=image.png&originHeight=391&originWidth=640&size=92660&status=done&style=none&width=464">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070559768-e703b5e9-52ba-4e63-b4b4-642d171d4e5b.png#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=image.png&originHeight=375&originWidth=640&size=89657&status=done&style=none&width=482">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070568055-5903d779-9a6e-4478-93d7-1631d99e6bf5.png#align=left&display=inline&height=255&margin=%5Bobject%20Object%5D&name=image.png&originHeight=304&originWidth=384&size=63302&status=done&style=none&width=322">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616941918031-5dd9d81f-862d-4c88-a8eb-994ff8106cff.png#align=left&display=inline&height=744&margin=%5Bobject%20Object%5D&originHeight=744&originWidth=1240&size=0&status=done&style=none&width=1240">
-<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1616941918214-5c17af8a-a7d1-417d-b1f6-93ed354fa82c.png#align=left&display=inline&height=358&margin=%5Bobject%20Object%5D&originHeight=358&originWidth=1191&size=0&status=done&style=none&width=1191">
 <meta property="article:published_time" content="2021-07-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-03T07:43:02.694Z">
+<meta property="article:modified_time" content="2021-07-05T03:33:23.464Z">
 <meta property="article:author" content="河神">
 <meta property="article:tag" content="分布式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070326493-ef8ff09d-dcb0-4f33-b812-9fac03331ec1.png#align=left&display=inline&height=316&margin=%5Bobject%20Object%5D&name=image.png&originHeight=385&originWidth=640&size=92367&status=done&style=stroke&width=526">
 
 <link rel="canonical" href="http://www.rcode.top/2021/07/03/java/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/">
 
@@ -198,10 +190,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-03 00:00:00 / 修改时间：15:43:02" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
+              <time title="创建时间：2021-07-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-03T00:00:00+08:00">2021-07-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-05 11:33:23" itemprop="dateModified" datetime="2021-07-05T11:33:23+08:00">2021-07-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -311,48 +309,39 @@
 </li>
 <li><p>PreCommit</p>
 <ul>
-<li>执行操作<h1 id="AT"><a href="#AT" class="headerlink" title="AT"></a>AT</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2></li>
+<li>执行操作</li>
 </ul>
 </li>
-<li><p>seata 实现的一种模式，改进了XA模式事务占用资源时间过长的问题</p>
-</li>
-<li><p>在业务数据提交时，自动拦截所有 SQL，分别保存 SQL 对数据修改前后结果的快照，生成行锁，通过本地事务一起提交到操作的数据源中，这就相当于自动记录了重做和回滚日志。</p>
-</li>
-<li><p>如果分布式事务成功提交了，那么我们后续只需清理每个数据源中对应的日志数据即可；而如果分布式事务需要回滚，就要根据日志数据自动产生用于补偿的“逆向 SQL”。</p>
-</li>
 </ul>
-<ul>
-<li><p>通过存储操作前数据的  UNDO_LOG 表来完成事务的回滚</p>
-<h2 id="整体机制"><a href="#整体机制" class="headerlink" title="整体机制"></a>整体机制</h2></li>
-<li><p>一阶段：</p>
-<ul>
+<h2 id="AT"><a href="#AT" class="headerlink" title="AT"></a>AT</h2><ul>
+<li>seata 实现的一种模式，改进了XA模式事务占用资源时间过长的问题</li>
+<li>在业务数据提交时，自动拦截所有 SQL，分别保存 SQL 对数据修改前后结果的快照，生成行锁，通过本地事务一起提交到操作的数据源中，这就相当于自动记录了重做和回滚日志。</li>
+<li>如果分布式事务成功提交了，那么我们后续只需清理每个数据源中对应的日志数据即可；而如果分布式事务需要回滚，就要根据日志数据自动产生用于补偿的“逆向 SQL”。</li>
+<li>通过存储操作前数据的  UNDO_LOG 表来完成事务的回滚</li>
+</ul>
+<h2 id="整体机制"><a href="#整体机制" class="headerlink" title="整体机制"></a>整体机制</h2><ul>
+<li>一阶段：<ul>
 <li><strong>业务数据</strong> 和 **回滚日志记录 **在同一个本地事务中提交，释放本地锁和连接资源。</li>
 </ul>
 </li>
-<li><p>二阶段：</p>
-<ul>
+<li>二阶段：<ul>
 <li>提交完成，在清理回滚日志记录。</li>
-<li>回滚通过一阶段的回滚日志进行反向补偿。<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2></li>
+<li>回滚通过一阶段的回滚日志进行反向补偿。</li>
 </ul>
 </li>
-<li><p>如果有 后门程序直接修改数据库，会导致AT模式的不可用</p>
-</li>
-<li><p>AT模式如果要实现<strong>写隔离 **，可以使用全局锁，要求本地事务提交之前，一定要先拿到针对修改记录的全局锁后才允许提交，而在没有获得全局锁之前就必须一直等待。这种设计以</strong>牺牲一定性能为代价**，避免了在两个分布式事务中，数据被同一个本地事务改写的情况，从而避免了脏写。</p>
-</li>
-<li><p>一旦一个方法使用了AT模式，则其他所有操作的都必须实现AT模式，</p>
-</li>
-<li><p>AT模式的默认隔离级别是读未提交，因为在分支事务是直接提交的，所以会造成脏读现象</p>
-<h1 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2></li>
-<li><p>TCC是服务化的两阶段编程模型，其Try、Confirm、Cancel 3个方法均由业务编码实现；</p>
-</li>
-<li><p>Try操作作为一阶段，负责资源的检查和预留</p>
-</li>
-<li><p>Confirm操作作为二阶段提交操作，执行真正的业务，Cancel是预留资源的取消；</p>
-</li>
-<li><p>对于我们来说，资源管理器一般是每个服务都有自己的资源管理器，进行资源管理，即TCC服务。</p>
-</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070326493-ef8ff09d-dcb0-4f33-b812-9fac03331ec1.png#align=left&display=inline&height=316&margin=%5Bobject%20Object%5D&name=image.png&originHeight=385&originWidth=640&size=92367&status=done&style=stroke&width=526" alt="image.png"></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>如果有 后门程序直接修改数据库，会导致AT模式的不可用</li>
+<li>AT模式如果要实现<strong>写隔离 **，可以使用全局锁，要求本地事务提交之前，一定要先拿到针对修改记录的全局锁后才允许提交，而在没有获得全局锁之前就必须一直等待。这种设计以</strong>牺牲一定性能为代价**，避免了在两个分布式事务中，数据被同一个本地事务改写的情况，从而避免了脏写。</li>
+<li>一旦一个方法使用了AT模式，则其他所有操作的都必须实现AT模式，</li>
+<li>AT模式的默认隔离级别是读未提交，因为在分支事务是直接提交的，所以会造成脏读现象</li>
+</ul>
+<h1 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>TCC是服务化的两阶段编程模型，其Try、Confirm、Cancel 3个方法均由业务编码实现；</li>
+<li>Try操作作为一阶段，负责资源的检查和预留</li>
+<li>Confirm操作作为二阶段提交操作，执行真正的业务，Cancel是预留资源的取消；</li>
+<li>对于我们来说，资源管理器一般是每个服务都有自己的资源管理器，进行资源管理，即TCC服务。</li>
+</ul>
 <h3 id="业务操作两阶段"><a href="#业务操作两阶段" class="headerlink" title="业务操作两阶段"></a>业务操作两阶段</h3><ul>
 <li>在接入TCC前，业务操作只需要一步就能完成</li>
 <li>接入TCC之后，需要考虑如何将其分成2阶段完成，把资源的检查和预留放在一阶段的Try操作中进行，把真正的业务操作的执行放在二阶段的Confirm操作中进行；<ul>
@@ -362,69 +351,66 @@
 </ul>
 </li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070550381-754baa1b-5abf-493f-9dcc-7c4406eb03ec.png#align=left&display=inline&height=192&margin=%5Bobject%20Object%5D&name=image.png&originHeight=270&originWidth=640&size=92044&status=done&style=none&width=456" alt="image.png"></p>
 <h3 id="空回滚"><a href="#空回滚" class="headerlink" title="空回滚"></a>空回滚</h3><ul>
 <li>TCC服务在<strong>未收到Try请求</strong>的情况下<strong>收到Cancel请求</strong>，这种场景被称为空回滚。TCC服务在实现时应当允许空回滚的执行；</li>
 <li>事务协调器在调用TCC服务的一阶段Try操作时，可能会出现因为丢包而导致的网络超时，此时事务协调器会触发二阶段回滚，调用TCC服务的Cancel操作；</li>
 <li>**解决方案  **可以根据 保存 全局事务ID  XID 的的状态，然后根据XID的状态来确定是否执行回滚操作，如果没有执行过try，则不用执行回滚操作</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070552088-c5c788ab-6fb6-425f-9a00-761f417bae6f.png#align=left&display=inline&height=283&margin=%5Bobject%20Object%5D&name=image.png&originHeight=391&originWidth=640&size=92660&status=done&style=none&width=464" alt="image.png"></p>
 <h3 id="事务悬挂"><a href="#事务悬挂" class="headerlink" title="事务悬挂"></a>事务悬挂</h3><ul>
 <li>用户在实现TCC服务时，应当允许空回滚，但是要拒绝执行空回滚之后到来的一阶段Try请求</li>
 <li>即在上面的情况下，已经执行了空回滚之后，Try请求才到来，这个时候如果执行了Try请求，那么之后肯定没有对应的提交和回滚操作，这样这个事务就被悬挂起来了，永久的，消耗资源。</li>
 </ul>
-<p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070559768-e703b5e9-52ba-4e63-b4b4-642d171d4e5b.png#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=image.png&originHeight=375&originWidth=640&size=89657&status=done&style=none&width=482" alt="image.png"></p>
 <h3 id="幂等控制"><a href="#幂等控制" class="headerlink" title="幂等控制"></a>幂等控制</h3><ul>
-<li><p>无论是网络数据包重传，还是异常事务的补偿执行，都会导致TCC服务的Try、Confirm或者Cancel操作被重复执行；</p>
-</li>
-<li><p>用户在实现TCC服务时，需要考虑幂等控制，即Try、Confirm、Cancel 执行次和执行多次的业务结果是一样的；</p>
-<h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1625070568055-5903d779-9a6e-4478-93d7-1631d99e6bf5.png#align=left&display=inline&height=255&margin=%5Bobject%20Object%5D&name=image.png&originHeight=304&originWidth=384&size=63302&status=done&style=none&width=322" alt="image.png"></h3><h3 id="业务数据可见性"><a href="#业务数据可见性" class="headerlink" title="业务数据可见性"></a>业务数据可见性</h3></li>
-<li><p>TCC服务的一阶段Try操作会做资源的预留，在二阶段操作执行之前，如果其他事务需要读取被预留的资源数据，那么处于中间状态的业务数据该如何向用户展示，需要业务在实现时考虑清楚；</p>
-</li>
-<li><p>通常的设计原则是“宁可不展示、少展示，也不多展示、错展示”；</p>
-<h3 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h3></li>
-<li><p>TCC服务的一阶段Try操作预留资源之后，在二阶段操作执行之前，预留的资源都不会被释放；如果此时其他分布式事务修改这些业务资源，会出现分布式事务的并发问题；</p>
-</li>
-<li><p>用户在实现TCC服务时，需要考虑业务数据的并发控制，尽量将逻辑锁粒度降到最低，以最大限度的提高分布式事务的并发性；</p>
-<h1 id="SAGA"><a href="#SAGA" class="headerlink" title="SAGA"></a>SAGA</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2></li>
-<li><p>SAGA 事务基于数据补偿代替回滚的解决</p>
-</li>
-<li><p>SAGA 的意思是“长篇故事、长篇记叙、一长串事件”，</p>
-<h3 id="SAGA-的目的"><a href="#SAGA-的目的" class="headerlink" title="SAGA 的目的"></a>SAGA 的目的</h3></li>
-<li><p>是为了避免大事务长时间锁定数据库的资源，后来才逐渐发展成将一个分布式环境中的大事务，分解为一系列本地事务的设计模式。</p>
-<h3 id="SAGA执行过程"><a href="#SAGA执行过程" class="headerlink" title="SAGA执行过程"></a>SAGA执行过程</h3><h4 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h4></li>
-<li><p>一部分是把大事务拆分成若干个小事务，将整个分布式事务 T 分解为 n 个子事务，我们命名为 T1，T2，…，Ti，…，Tn。每个子事务都应该、或者能被看作是原子行为。如果分布式事务 T 能够正常提交，那么它对数据的影响（最终一致性）就应该与连续按顺序成功提交子事务 Ti 等价。</p>
-</li>
-<li><p>另一部分是为每一个子事务设计对应的补偿动作，我们命名为 C1，C2，…，Ci，…，Cn。Ti 与 Ci 必须满足以下条件：</p>
-<ul>
+<li>无论是网络数据包重传，还是异常事务的补偿执行，都会导致TCC服务的Try、Confirm或者Cancel操作被重复执行；</li>
+<li>用户在实现TCC服务时，需要考虑幂等控制，即Try、Confirm、Cancel 执行次和执行多次的业务结果是一样的；</li>
+</ul>
+<h3 id="业务数据可见性"><a href="#业务数据可见性" class="headerlink" title="业务数据可见性"></a>业务数据可见性</h3><ul>
+<li>TCC服务的一阶段Try操作会做资源的预留，在二阶段操作执行之前，如果其他事务需要读取被预留的资源数据，那么处于中间状态的业务数据该如何向用户展示，需要业务在实现时考虑清楚；</li>
+<li>通常的设计原则是“宁可不展示、少展示，也不多展示、错展示”；</li>
+</ul>
+<h3 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h3><ul>
+<li>TCC服务的一阶段Try操作预留资源之后，在二阶段操作执行之前，预留的资源都不会被释放；如果此时其他分布式事务修改这些业务资源，会出现分布式事务的并发问题；</li>
+<li>用户在实现TCC服务时，需要考虑业务数据的并发控制，尽量将逻辑锁粒度降到最低，以最大限度的提高分布式事务的并发性；</li>
+</ul>
+<h1 id="SAGA"><a href="#SAGA" class="headerlink" title="SAGA"></a>SAGA</h1><h2 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h2><ul>
+<li>SAGA 事务基于数据补偿代替回滚的解决</li>
+<li>SAGA 的意思是“长篇故事、长篇记叙、一长串事件”，</li>
+</ul>
+<h3 id="SAGA-的目的"><a href="#SAGA-的目的" class="headerlink" title="SAGA 的目的"></a>SAGA 的目的</h3><ul>
+<li>是为了避免大事务长时间锁定数据库的资源，后来才逐渐发展成将一个分布式环境中的大事务，分解为一系列本地事务的设计模式。</li>
+</ul>
+<h3 id="SAGA执行过程"><a href="#SAGA执行过程" class="headerlink" title="SAGA执行过程"></a>SAGA执行过程</h3><h4 id="提交"><a href="#提交" class="headerlink" title="提交"></a>提交</h4><ul>
+<li>一部分是把大事务拆分成若干个小事务，将整个分布式事务 T 分解为 n 个子事务，我们命名为 T1，T2，…，Ti，…，Tn。每个子事务都应该、或者能被看作是原子行为。如果分布式事务 T 能够正常提交，那么它对数据的影响（最终一致性）就应该与连续按顺序成功提交子事务 Ti 等价。</li>
+<li>另一部分是为每一个子事务设计对应的补偿动作，我们命名为 C1，C2，…，Ci，…，Cn。Ti 与 Ci 必须满足以下条件：<ul>
 <li>Ti 与 Ci 都具备幂等性；</li>
 <li>Ti 与 Ci 满足交换律（Commutative），即不管是先执行 Ti 还是先执行 Ci，效果都是一样的；</li>
 <li>Ci 必须能成功提交，即不考虑 Ci 本身提交失败被回滚的情况，如果出现就必须持续重试直至成功，或者要人工介入。</li>
 </ul>
 </li>
-<li><p>如果 T1 到 Tn 均成功提交，那么事务就可以顺利完成</p>
-<h4 id="恢复模式"><a href="#恢复模式" class="headerlink" title="恢复模式"></a>恢复模式</h4></li>
-<li><p>正向恢复（Forward Recovery）</p>
-<ul>
+<li>如果 T1 到 Tn 均成功提交，那么事务就可以顺利完成</li>
+</ul>
+<h4 id="恢复模式"><a href="#恢复模式" class="headerlink" title="恢复模式"></a>恢复模式</h4><ul>
+<li>正向恢复（Forward Recovery）<ul>
 <li>如果 Ti 事务提交失败，则一直对 Ti 进行重试，直至成功为止（最大努力交付）。这种恢复方式不需要补偿，适用于事务最终都要成功的场景，比如在别人的银行账号中扣了款，就一定要给别人发货。正向恢复的执行模式为：T1，T2，…，Ti（失败），Ti（重试）…，Ti+1，…，Tn。</li>
 </ul>
 </li>
-<li><p>反向恢复（Backward Recovery）</p>
-<ul>
-<li>如果 Ti 事务提交失败，则一直执行 Ci 对 Ti 进行补偿，直至成功为止（最大努力交付）。这里要求 Ci 必须（在持续重试后）执行成功。反向恢复的执行模式为：T1，T2，…，Ti（失败），Ci（补偿），…，C2，C1。<h1 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h1></li>
+<li>反向恢复（Backward Recovery）<ul>
+<li>如果 Ti 事务提交失败，则一直执行 Ci 对 Ti 进行补偿，直至成功为止（最大努力交付）。这里要求 Ci 必须（在持续重试后）执行成功。反向恢复的执行模式为：T1，T2，…，Ti（失败），Ci（补偿），…，C2，C1。</li>
 </ul>
 </li>
 </ul>
-<h1 id="事务消息"><a href="#事务消息" class="headerlink" title="事务消息"></a>事务消息</h1><p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616941918031-5dd9d81f-862d-4c88-a8eb-994ff8106cff.png#align=left&display=inline&height=744&margin=%5Bobject%20Object%5D&originHeight=744&originWidth=1240&size=0&status=done&style=none&width=1240"></p>
-<hr>
-<h5 id="rocketMq"><a href="#rocketMq" class="headerlink" title="rocketMq:"></a>rocketMq:</h5><p><img src="https://cdn.nlark.com/yuque/0/2021/png/250654/1616941918214-5c17af8a-a7d1-417d-b1f6-93ed354fa82c.png#align=left&display=inline&height=358&margin=%5Bobject%20Object%5D&originHeight=358&originWidth=1191&size=0&status=done&style=none&width=1191"></p>
-<h5 id="事务消息发送步骤如下："><a href="#事务消息发送步骤如下：" class="headerlink" title="事务消息发送步骤如下："></a>事务消息发送步骤如下：</h5><ol>
+<h1 id="RocketMQ"><a href="#RocketMQ" class="headerlink" title="RocketMQ"></a>RocketMQ</h1><h5 id="事务消息发送步骤如下："><a href="#事务消息发送步骤如下：" class="headerlink" title="事务消息发送步骤如下："></a>事务消息发送步骤如下：</h5><ol>
 <li>发送方将半事务消息发送至消息队列 RocketMQ 版服务端。</li>
 <li>消息队列 RocketMQ 版服务端将消息持久化成功之后，向发送方返回 Ack 确认消息已经发送成功，此时消息为半事务消息。</li>
 <li>发送方开始执行本地事务逻辑。</li>
 <li>发送方根据本地事务执行结果向服务端提交二次确认（Commit 或是 Rollback），<br>服务端收到 Commit 状态则将半事务消息标记为可投递，订阅方最终将收到该消息；<br>服务端收到 Rollback 状态则删除半事务消息，订阅方将不会接受该消息。</li>
 </ol>
-<h5 id="事务消息回查步骤如下："><a href="#事务消息回查步骤如下：" class="headerlink" title="事务消息回查步骤如下："></a>事务消息回查步骤如下：</h5><h2 id="在断网或者是应用重启的特殊情况下，上述步骤-4-提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。"><a href="#在断网或者是应用重启的特殊情况下，上述步骤-4-提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。" class="headerlink" title="在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。"></a>在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。</h2><h2 id="发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。"><a href="#发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。" class="headerlink" title="发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。"></a>发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。</h2><h2 id="发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤-4-对半事务消息进行操作。"><a href="#发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤-4-对半事务消息进行操作。" class="headerlink" title="发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。"></a>发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。</h2>
+<h5 id="事务消息回查步骤如下："><a href="#事务消息回查步骤如下：" class="headerlink" title="事务消息回查步骤如下："></a>事务消息回查步骤如下：</h5><ul>
+<li> 在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。</li>
+<li>发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。</li>
+<li>发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。</li>
+</ul>
+
     </div>
 
     
@@ -446,7 +432,10 @@
     <a href="/2021/06/28/java/%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/" rel="prev" title="服务容错设计模式">
       <i class="fa fa-chevron-left"></i> 服务容错设计模式
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/05/java/MQ%E6%B6%88%E6%81%AF%E7%9A%84%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/" rel="next" title="MQ消息的常见问题">
+      MQ消息的常见问题 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -505,7 +494,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.</span> <span class="nav-text">分布式事务的关键因素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E4%BA%8B%E5%8A%A1%E8%A7%92%E8%89%B2"><span class="nav-number"></span> <span class="nav-text">分布事务角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TC-Transaction-Coordinator-%E4%BA%8B%E5%8A%A1%E5%8D%8F%E8%B0%83%E8%80%85"><span class="nav-number">0.0.1.</span> <span class="nav-text">TC (Transaction Coordinator) - 事务协调者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TM-Transaction-Manager-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">0.0.2.</span> <span class="nav-text">TM (Transaction Manager) - 事务管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RM-Resource-Manager-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">0.0.3.</span> <span class="nav-text">RM (Resource Manager) - 资源管理器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XA"><span class="nav-number"></span> <span class="nav-text">XA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.</span> <span class="nav-text">两阶段提交</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1. 准备阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8F%90%E4%BA%A4%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">2. 提交阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2PC%E7%9A%84%E5%89%8D%E6%8F%90"><span class="nav-number">2.</span> <span class="nav-text">2PC的前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2PC%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">2PC的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B3PC"><span class="nav-number">4.</span> <span class="nav-text">改进3PC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AT"><span class="nav-number"></span> <span class="nav-text">AT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">整体机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCC"><span class="nav-number"></span> <span class="nav-text">TCC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%93%8D%E4%BD%9C%E4%B8%A4%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">业务操作两阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E5%9B%9E%E6%BB%9A"><span class="nav-number">1.2.</span> <span class="nav-text">空回滚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%82%AC%E6%8C%82"><span class="nav-number">1.3.</span> <span class="nav-text">事务悬挂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%82%E7%AD%89%E6%8E%A7%E5%88%B6"><span class="nav-number">1.4.</span> <span class="nav-text">幂等控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">业务数据可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="nav-number">1.7.</span> <span class="nav-text">并发控制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SAGA"><span class="nav-number"></span> <span class="nav-text">SAGA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SAGA-%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">SAGA 的目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAGA%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">SAGA执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">恢复模式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RocketMQ"><span class="nav-number"></span> <span class="nav-text">RocketMQ</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF"><span class="nav-number"></span> <span class="nav-text">事务消息</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#rocketMq"><span class="nav-number">0.0.0.1.</span> <span class="nav-text">rocketMq:</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">0.0.0.2.</span> <span class="nav-text">事务消息发送步骤如下：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%9B%9E%E6%9F%A5%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">0.0.0.3.</span> <span class="nav-text">事务消息回查步骤如下：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%AD%E7%BD%91%E6%88%96%E8%80%85%E6%98%AF%E5%BA%94%E7%94%A8%E9%87%8D%E5%90%AF%E7%9A%84%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E4%B8%8A%E8%BF%B0%E6%AD%A5%E9%AA%A4-4-%E6%8F%90%E4%BA%A4%E7%9A%84%E4%BA%8C%E6%AC%A1%E7%A1%AE%E8%AE%A4%E6%9C%80%E7%BB%88%E6%9C%AA%E5%88%B0%E8%BE%BE%E6%9C%8D%E5%8A%A1%E7%AB%AF%EF%BC%8C%E7%BB%8F%E8%BF%87%E5%9B%BA%E5%AE%9A%E6%97%B6%E9%97%B4%E5%90%8E%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%B0%86%E5%AF%B9%E8%AF%A5%E6%B6%88%E6%81%AF%E5%8F%91%E8%B5%B7%E6%B6%88%E6%81%AF%E5%9B%9E%E6%9F%A5%E3%80%82"><span class="nav-number">1.</span> <span class="nav-text">在断网或者是应用重启的特殊情况下，上述步骤 4 提交的二次确认最终未到达服务端，经过固定时间后服务端将对该消息发起消息回查。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E6%96%B9%E6%94%B6%E5%88%B0%E6%B6%88%E6%81%AF%E5%9B%9E%E6%9F%A5%E5%90%8E%EF%BC%8C%E9%9C%80%E8%A6%81%E6%A3%80%E6%9F%A5%E5%AF%B9%E5%BA%94%E6%B6%88%E6%81%AF%E7%9A%84%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E6%89%A7%E8%A1%8C%E7%9A%84%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">发送方收到消息回查后，需要检查对应消息的本地事务执行的最终结果。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E6%96%B9%E6%A0%B9%E6%8D%AE%E6%A3%80%E6%9F%A5%E5%BE%97%E5%88%B0%E7%9A%84%E6%9C%AC%E5%9C%B0%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%9C%80%E7%BB%88%E7%8A%B6%E6%80%81%E5%86%8D%E6%AC%A1%E6%8F%90%E4%BA%A4%E4%BA%8C%E6%AC%A1%E7%A1%AE%E8%AE%A4%EF%BC%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BB%8D%E6%8C%89%E7%85%A7%E6%AD%A5%E9%AA%A4-4-%E5%AF%B9%E5%8D%8A%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E8%BF%9B%E8%A1%8C%E6%93%8D%E4%BD%9C%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">发送方根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤 4 对半事务消息进行操作。</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0"><span class="nav-number">1.</span> <span class="nav-text">分布式事务的关键因素</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E4%BA%8B%E5%8A%A1%E8%A7%92%E8%89%B2"><span class="nav-number"></span> <span class="nav-text">分布事务角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TC-Transaction-Coordinator-%E4%BA%8B%E5%8A%A1%E5%8D%8F%E8%B0%83%E8%80%85"><span class="nav-number">0.0.1.</span> <span class="nav-text">TC (Transaction Coordinator) - 事务协调者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TM-Transaction-Manager-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">0.0.2.</span> <span class="nav-text">TM (Transaction Manager) - 事务管理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RM-Resource-Manager-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-number">0.0.3.</span> <span class="nav-text">RM (Resource Manager) - 资源管理器</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XA"><span class="nav-number"></span> <span class="nav-text">XA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4"><span class="nav-number">1.</span> <span class="nav-text">两阶段提交</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1. 准备阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8F%90%E4%BA%A4%E9%98%B6%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">2. 提交阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2PC%E7%9A%84%E5%89%8D%E6%8F%90"><span class="nav-number">2.</span> <span class="nav-text">2PC的前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2PC%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">2PC的缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B3PC"><span class="nav-number">4.</span> <span class="nav-text">改进3PC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AT"><span class="nav-number">5.</span> <span class="nav-text">AT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">整体机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCC"><span class="nav-number"></span> <span class="nav-text">TCC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%93%8D%E4%BD%9C%E4%B8%A4%E9%98%B6%E6%AE%B5"><span class="nav-number">1.1.</span> <span class="nav-text">业务操作两阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E5%9B%9E%E6%BB%9A"><span class="nav-number">1.2.</span> <span class="nav-text">空回滚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%82%AC%E6%8C%82"><span class="nav-number">1.3.</span> <span class="nav-text">事务悬挂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%82%E7%AD%89%E6%8E%A7%E5%88%B6"><span class="nav-number">1.4.</span> <span class="nav-text">幂等控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">业务数据可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="nav-number">1.6.</span> <span class="nav-text">并发控制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SAGA"><span class="nav-number"></span> <span class="nav-text">SAGA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D-1"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SAGA-%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-number">1.1.</span> <span class="nav-text">SAGA 的目的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAGA%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">SAGA执行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">恢复模式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RocketMQ"><span class="nav-number"></span> <span class="nav-text">RocketMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%8F%91%E9%80%81%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">0.0.0.1.</span> <span class="nav-text">事务消息发送步骤如下：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%B6%88%E6%81%AF%E5%9B%9E%E6%9F%A5%E6%AD%A5%E9%AA%A4%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">0.0.0.2.</span> <span class="nav-text">事务消息回查步骤如下：</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -521,7 +510,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
