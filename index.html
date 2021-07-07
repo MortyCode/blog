@@ -555,6 +555,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/07/02/java/%E6%B1%A0%E5%8C%96%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/02/java/%E6%B1%A0%E5%8C%96%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">池化技术</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-02T00:00:00+08:00">2021-07-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-07 20:39:49" itemprop="dateModified" datetime="2021-07-07T20:39:49+08:00">2021-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>所管理的对象，无论是连接还是线程，它们的<strong>创建过程都比较耗时</strong>，也比较<strong>消耗系统资源。</strong>所以，我们把它们放在一个池子里统一管理起来，以达到<strong>提升性能和资源复用的目的。</strong><br>它的核心思想是<strong>空间换时间，</strong>期望使用预先创建好的对象来减少频繁创建对象的性能开销，同时还可以对对象进行统一的管理，降低了对象的使用的成本，总之是好处多多。</p>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>比方说存储池子中的对象肯定需要消耗多余的内存，如果对象没有被频繁使用，就会造成内存上的浪费。再比方说，池子中的对象需要在系统启动的时候就预先创建完成，这在一定程度上增加了系统启动时间。<br>不过相对于优点来说，是微不足道的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/06/28/java/%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2301,131 +2376,6 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/01/25/spring/spring%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/25/spring/spring%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E5%8E%9F%E7%90%86/" class="post-title-link" itemprop="url">Springboot自动装配</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-25 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-25T00:00:00+08:00">2021-01-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-27 01:01:07" itemprop="dateModified" datetime="2021-01-27T01:01:07+08:00">2021-01-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Spring的事件监听是通过注册在ApplicationContext的  ApplicationEvent 和 ApplicationListener 提供的。将ApplicationListener 注册在ApplicationContext后。通过ApplicationEventPublisher发布事件后，都会通知到ApplicationListener 中。实际上，这就是标准的观察者模式(Observer)。</p>
-<p>##在Spring中，默认已经实现了6种标准的事件</p>
-<h4 id="ContextRefreshedEvent"><a href="#ContextRefreshedEvent" class="headerlink" title="ContextRefreshedEvent"></a>ContextRefreshedEvent</h4><p>在ApplicationContext初始化以及刷新的时候会发布ContextRefreshedEvent事件,例如，ConfigurableApplicationContext在执行refresh()方法的时候，就会发布事件，对于ApplicationContext来说，只要上下文没有关闭，并且可以执行热刷新的操作，就可以重复触发这个事件。初始化完成，意味着加载完成所有的bean,并且执行了后处理方法,并且ApplicationContext对象可用。 例如，XmlWebApplicationContext支持热刷新，但GenericApplicationContext，AnnotationConfigApplicationContext不支持</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">	@Override</span><br><span class="line">	public void refresh() throws BeansException, IllegalStateException &#123;</span><br><span class="line">		synchronized (this.startupShutdownMonitor) &#123;</span><br><span class="line">				.....</span><br><span class="line"></span><br><span class="line">                                 &#x2F;&#x2F;在这里检查所有添加到ApplicationContext的监听器，并且注册</span><br><span class="line">				&#x2F;&#x2F; Check for listener beans and register them.</span><br><span class="line">				registerListeners();</span><br><span class="line">                                .... </span><br><span class="line">              </span><br><span class="line">				&#x2F;&#x2F; Last step: publish corresponding event.</span><br><span class="line">				finishRefresh();</span><br><span class="line">			&#125;</span><br><span class="line">                            ....</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">在finishRefresh（）中</span><br><span class="line">	&#x2F;**</span><br><span class="line">	 * Finish the refresh of this context, invoking the LifecycleProcessor&#39;s</span><br><span class="line">	 * onRefresh() method and publishing the</span><br><span class="line">	 * &#123;@link org.springframework.context.event.ContextRefreshedEvent&#125;.</span><br><span class="line">	 *&#x2F;</span><br><span class="line">	protected void finishRefresh() &#123;</span><br><span class="line">		&#x2F;&#x2F; Clear context-level resource caches (such as ASM metadata from scanning).</span><br><span class="line">		clearResourceCaches();</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Initialize lifecycle processor for this context.</span><br><span class="line">		initLifecycleProcessor();</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Propagate refresh to lifecycle processor first.</span><br><span class="line">		getLifecycleProcessor().onRefresh();</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Publish the final event. &#x2F;&#x2F;在这里发布了刷新事件</span><br><span class="line">		publishEvent(new ContextRefreshedEvent(this));</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Participate in LiveBeansView MBean, if active.</span><br><span class="line">		LiveBeansView.registerApplicationContext(this);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="ContextStartedEvent"><a href="#ContextStartedEvent" class="headerlink" title="ContextStartedEvent"></a>ContextStartedEvent</h4><p>在ApplicationContext的start()方法执行后，会发布ContextStartedEvent事件，start()方法以为着所有的bean都会收到一个显示的信号，这个信号通常是重新启动停止的bean，或者没有自动启动的bean，<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void start() &#123;</span><br><span class="line">	getLifecycleProcessor().start();</span><br><span class="line">	publishEvent(new ContextStartedEvent(this));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="ContextStoppedEvent"><a href="#ContextStoppedEvent" class="headerlink" title="ContextStoppedEvent"></a>ContextStoppedEvent</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void stop() &#123;</span><br><span class="line">	getLifecycleProcessor().stop();</span><br><span class="line">	publishEvent(new ContextStoppedEvent(this));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="ContextClosedEvent"><a href="#ContextClosedEvent" class="headerlink" title="ContextClosedEvent"></a>ContextClosedEvent</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">protected void doClose() &#123;</span><br><span class="line">        .....</span><br><span class="line">			try &#123;</span><br><span class="line">				&#x2F;&#x2F; Publish shutdown event.</span><br><span class="line">				publishEvent(new ContextClosedEvent(this));</span><br><span class="line">			&#125;</span><br><span class="line">			.....</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="RequestHandledEvent"><a href="#RequestHandledEvent" class="headerlink" title="RequestHandledEvent"></a>RequestHandledEvent</h4><h4 id="ServletRequestHandledEvent"><a href="#ServletRequestHandledEvent" class="headerlink" title="ServletRequestHandledEvent"></a>ServletRequestHandledEvent</h4><h2 id="具体使用"><a href="#具体使用" class="headerlink" title="具体使用"></a>具体使用</h2><h3 id="使用ApplicationEvent来发布事件"><a href="#使用ApplicationEvent来发布事件" class="headerlink" title="使用ApplicationEvent来发布事件"></a>使用ApplicationEvent来发布事件</h3><p>首先定义1个继承与 ApplicationEvent 的对象实体</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class CreateManger extends ApplicationEvent &#123;</span><br><span class="line">    private String data;</span><br><span class="line">    public CreateManger(ApplicationContext source,String data) &#123;</span><br><span class="line">        super(source);</span><br><span class="line">        this.data &#x3D; data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后在定义1个监听器，用来监听事件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class BaseListener implements ApplicationListener&lt;CreateManger&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(CreateManger event) &#123;</span><br><span class="line">        System.out.println(event.getData());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>对于Spring已经实现的事件，我们只需要添加监听器，不用添加监听对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class StartListener implements ApplicationListener&lt; ContextStartedEvent &gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onApplicationEvent(ContextStartedEvent event) &#123;</span><br><span class="line">        System.out.println(&quot;onApplicationEvent:&quot;+event.getTimestamp());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后我们再将监听器注册进我们的上下文中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class RegistryListener implements ApplicationContextAware &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException &#123;</span><br><span class="line">        ConfigurableApplicationContext configurableApplicationContext &#x3D; (ConfigurableApplicationContext)applicationContext;</span><br><span class="line">        configurableApplicationContext.addApplicationListener(new BaseListener());</span><br><span class="line">        configurableApplicationContext.addApplicationListener(new StartListener());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再定义一个事件发布器，另外，也可以通过applicationContext上下文来直接发布事件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Send implements ApplicationEventPublisherAware &#123;</span><br><span class="line">    public ApplicationEventPublisher publisher;</span><br><span class="line">    @Override</span><br><span class="line">    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) &#123;</span><br><span class="line">        this.publisher &#x3D; applicationEventPublisher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void publish(ApplicationEvent event)&#123;</span><br><span class="line">        publisher.publishEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void publish(Object event)&#123;</span><br><span class="line">        publisher.publishEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样，在我们的容器启动起来,执行start().或者发送CreateManger事件，就会在对应的监听器中监听变化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args) throws IOException, InterruptedException &#123;</span><br><span class="line">    AnnotationConfigApplicationContext applicationContext</span><br><span class="line">         &#x3D; new AnnotationConfigApplicationContext(&quot;con.note.config&quot;);</span><br><span class="line"></span><br><span class="line">    applicationContext.start();</span><br><span class="line">    Send send &#x3D; applicationContext.getBean(Send.class);</span><br><span class="line">    CreateManger createManger &#x3D; new CreateManger(applicationContext,&quot;mimi&quot;);</span><br><span class="line">    send.publish(createManger);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>事件同样也支持异步的操作，但是在我们直接的编码中，这种会稍微麻烦一点，我这边的实现是在 SimpleApplicationEventMulticaster 对象生成后，对其的 TaskExecutor 进行注入，但是这种方式的话，会将所有的事件都变为异步，具体下面的源码解析会说到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">public class SimpleApplicationEventMulticasterAware implements BeanPostProcessor &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException &#123;</span><br><span class="line"></span><br><span class="line">        if (bean instanceof SimpleApplicationEventMulticaster)&#123;</span><br><span class="line">            SimpleApplicationEventMulticaster simpleApplicationEventMulticaster &#x3D; (SimpleApplicationEventMulticaster)bean;</span><br><span class="line">            simpleApplicationEventMulticaster.setTaskExecutor(Executors.newFixedThreadPool(10));</span><br><span class="line">            return simpleApplicationEventMulticaster;</span><br><span class="line">        &#125;</span><br><span class="line">        return bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="使用注解来使用事件监听"><a href="#使用注解来使用事件监听" class="headerlink" title="使用注解来使用事件监听"></a>使用注解来使用事件监听</h4><p>使用注解来监听的话，整体流程相对于我们直接使用ApplicationEvent会方便一些，使用注解的话，我们不但可以监听继承于ApplicationEvent的对象，也可以监听任意Object对象</p>
-<p>其主要通过 @EventListener 注解来监听事件，其原理下面会说到。其包括监听的对象，以及 condition，一个条件，对我们监听的事件进行过滤，其支持spel表达式。代码（4）</p>
-<p>其中如果需要异步执行的话，只需要在方法加上@Async注解即可。（需要配合@EnableAsync使用）</p>
-<p>对于多个监听器，可以使用 @Order(42) 来定义顺序</p>
-<p>如果我们的方法是拥有返回值的，那么我们的当前事件处理完成之后，就会发布另一个事件,代码（3）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">    @EventListener(value &#x3D; &#123;ContextClosedEvent.class, ContextStoppedEvent.class&#125;)</span><br><span class="line">    public void springListener(ApplicationContextEvent applicationContextEvent)&#123;</span><br><span class="line"></span><br><span class="line">        ApplicationContext applicationContext &#x3D; applicationContextEvent.getApplicationContext();</span><br><span class="line">        SimpleApplicationEventMulticaster bean &#x3D; applicationContext.getBean(SimpleApplicationEventMulticaster.class);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Async</span><br><span class="line">    @Order(42)</span><br><span class="line">    @EventListener(value &#x3D; &#123;CreateManger.class&#125;)</span><br><span class="line">    public void baseListener(CreateManger createManger) throws InterruptedException &#123;</span><br><span class="line">        Thread.sleep(1000L);</span><br><span class="line">        System.out.println(&quot;createManger---&gt;&quot;+createManger.getTimestamp());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">(3)</span><br><span class="line">    &#x2F;&#x2F;指定完了CreateManger 然后执行BuyManger </span><br><span class="line">    @EventListener(value &#x3D; &#123;CreateManger.class&#125;)</span><br><span class="line">    public BuyManger baseListener(CreateManger createManger) throws InterruptedException &#123;</span><br><span class="line">        Thread.sleep(1000L);</span><br><span class="line">        System.out.println(&quot;createManger---&gt;&quot;+createManger.getTimestamp());</span><br><span class="line">        return new BuyManger(&quot;测试&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">(4)其表示事件的属性等于test的时候，才会去执行</span><br><span class="line">    @EventListener(value &#x3D; &#123;CreateManger.class&#125;,condition &#x3D; &quot;#createManger.data &#x3D;&#x3D; &#39;test&#39;&quot;)</span><br><span class="line">    public BuyManger baseListener(CreateManger createManger) throws InterruptedException &#123;</span><br><span class="line">        Thread.sleep(1000L);</span><br><span class="line">        System.out.println(&quot;createManger---&gt;&quot;+createManger.getTimestamp());</span><br><span class="line">        return new BuyManger(&quot;测试&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><h3 id="注册事件篇"><a href="#注册事件篇" class="headerlink" title="注册事件篇"></a>注册事件篇</h3><h3 id="使用ApplicationListener注册"><a href="#使用ApplicationListener注册" class="headerlink" title="使用ApplicationListener注册"></a>使用ApplicationListener注册</h3><h3 id="使用-EventListener注解注册"><a href="#使用-EventListener注解注册" class="headerlink" title="使用@EventListener注解注册"></a>使用@EventListener注解注册</h3><p>使用注解注册的时候，Spring会把方法包装成为ApplicationListenerMethodAdapter对象，然后注册在spring中</p>
-<ol>
-<li>在EventListenerMethodProcessor 对象中<br>这个对象实现了 SmartInitializingSingleton 接口，其中的 afterSingletonsInstantiated()方法；是在所有bean初始化完成之后调用的，<br>其中的核心方法在于 processBean，最终在这个方法，将方法信息，源配置类，包装成 ApplicationListenerMethodAdapter 对象，在之后通过反射进行调用<br>同时，最终也是通过 context.addApplicationListener()注册到上下文中</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">private void processBean(final String beanName, final Class&lt;?&gt; targetType) &#123;</span><br><span class="line">		if (!this.nonAnnotatedClasses.contains(targetType) &amp;&amp;</span><br><span class="line">				AnnotationUtils.isCandidateClass(targetType, EventListener.class) &amp;&amp;</span><br><span class="line">				!isSpringContainerClass(targetType)) &#123;</span><br><span class="line"></span><br><span class="line">			Map&lt;Method, EventListener&gt; annotatedMethods &#x3D; null;</span><br><span class="line">			try &#123;</span><br><span class="line">				annotatedMethods &#x3D; MethodIntrospector.selectMethods(targetType,</span><br><span class="line">						(MethodIntrospector.MetadataLookup&lt;EventListener&gt;) method -&gt;</span><br><span class="line">								AnnotatedElementUtils.findMergedAnnotation(method, EventListener.class));</span><br><span class="line">			&#125;</span><br><span class="line">			catch (Throwable ex) &#123;...&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				&#x2F;&#x2F; Non-empty set of methods</span><br><span class="line">				ConfigurableApplicationContext context &#x3D; this.applicationContext;</span><br><span class="line">				Assert.state(context !&#x3D; null, &quot;No ApplicationContext set&quot;);</span><br><span class="line">				List&lt;EventListenerFactory&gt; factories &#x3D; this.eventListenerFactories;</span><br><span class="line">				Assert.state(factories !&#x3D; null, &quot;EventListenerFactory List not initialized&quot;);</span><br><span class="line">				for (Method method : annotatedMethods.keySet()) &#123;</span><br><span class="line">					for (EventListenerFactory factory : factories) &#123;</span><br><span class="line">						if (factory.supportsMethod(method)) &#123;</span><br><span class="line">							Method methodToUse &#x3D; AopUtils.selectInvocableMethod(method, context.getType(beanName));</span><br><span class="line">							&#x2F;&#x2F;最终在这个方法，将方法信息，源配置类，包装成 ApplicationListenerMethodAdapter 对象，在之后通过反射进行调用</span><br><span class="line">							ApplicationListener&lt;?&gt; applicationListener &#x3D;</span><br><span class="line">									factory.createApplicationListener(beanName, targetType, methodToUse);</span><br><span class="line">							if (applicationListener instanceof ApplicationListenerMethodAdapter) &#123;</span><br><span class="line">								((ApplicationListenerMethodAdapter) applicationListener).init(context, this.evaluator);</span><br><span class="line">							&#125;</span><br><span class="line">							context.addApplicationListener(applicationListener);</span><br><span class="line">							break;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				if (logger.isDebugEnabled()) &#123;</span><br><span class="line">					logger.debug(annotatedMethods.size() + &quot; @EventListener methods processed on bean &#39;&quot; +</span><br><span class="line">							beanName + &quot;&#39;: &quot; + annotatedMethods);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>ApplicationListenerMethodAdapter的构造函数中可以看到，将@EventListener的注解中的 condition，order，参数 等等都封装起来，供事件触发调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public ApplicationListenerMethodAdapter(String beanName, Class&lt;?&gt; targetClass, Method method) &#123;</span><br><span class="line">	this.beanName &#x3D; beanName;</span><br><span class="line">	this.method &#x3D; BridgeMethodResolver.findBridgedMethod(method);</span><br><span class="line">	this.targetMethod &#x3D; (!Proxy.isProxyClass(targetClass) ?</span><br><span class="line">			AopUtils.getMostSpecificMethod(method, targetClass) : this.method);</span><br><span class="line">	this.methodKey &#x3D; new AnnotatedElementKey(this.targetMethod, targetClass);</span><br><span class="line"></span><br><span class="line">	EventListener ann &#x3D; AnnotatedElementUtils.findMergedAnnotation(this.targetMethod, EventListener.class);</span><br><span class="line">	this.declaredEventTypes &#x3D; resolveDeclaredEventTypes(method, ann);</span><br><span class="line">	this.condition &#x3D; (ann !&#x3D; null ? ann.condition() : null);</span><br><span class="line">	this.order &#x3D; resolveOrder(this.targetMethod);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="publishEvent的实现"><a href="#publishEvent的实现" class="headerlink" title="publishEvent的实现"></a>publishEvent的实现</h4><ol>
-<li>首先判断事件的类型是直接继承ApplicationEvent的，还是Object类型的事件， 上面说过，事件可以直接发布对象</li>
-<li>在这里会做一个判断，如果是在监听器初始化完成之前发布的事件，就在这里先放入earlyApplicationEvents中，如果初始化完成的，就直接调用multicastEvent来执行</li>
-<li>如果当前命名空间还有父亲节点，也需要给父亲推送该消息</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">protected void publishEvent(Object event, @Nullable ResolvableType eventType) &#123;</span><br><span class="line">		Assert.notNull(event, &quot;Event must not be null&quot;);</span><br><span class="line">1. 首先判断事件的类型是直接继承ApplicationEvent的，还是Object类型的事件， 上面说过，事件可以直接发布对象</span><br><span class="line">		&#x2F;&#x2F; Decorate event as an ApplicationEvent if necessary</span><br><span class="line">		ApplicationEvent applicationEvent;</span><br><span class="line">		if (event instanceof ApplicationEvent) &#123;</span><br><span class="line">			applicationEvent &#x3D; (ApplicationEvent) event;</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			applicationEvent &#x3D; new PayloadApplicationEvent&lt;&gt;(this, event);</span><br><span class="line">			if (eventType &#x3D;&#x3D; null) &#123;</span><br><span class="line">				eventType &#x3D; ((PayloadApplicationEvent&lt;?&gt;) applicationEvent).getResolvableType();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Multicast right now if possible - or lazily once the multicaster is initialized</span><br><span class="line">		if (this.earlyApplicationEvents !&#x3D; null) &#123;</span><br><span class="line">			this.earlyApplicationEvents.add(applicationEvent);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; Publish event via parent context as well...</span><br><span class="line">		if (this.parent !&#x3D; null) &#123;</span><br><span class="line">			if (this.parent instanceof AbstractApplicationContext) &#123;</span><br><span class="line">				((AbstractApplicationContext) this.parent).publishEvent(event, eventType);</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				this.parent.publishEvent(event);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="multicastEvent"><a href="#multicastEvent" class="headerlink" title="multicastEvent"></a>multicastEvent</h4><p>这里就是之前异步的时候配置的线程池的用处</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) &#123;</span><br><span class="line">	ResolvableType type &#x3D; (eventType !&#x3D; null ? eventType : resolveDefaultEventType(event));</span><br><span class="line">	Executor executor &#x3D; getTaskExecutor();</span><br><span class="line">	for (ApplicationListener&lt;?&gt; listener : getApplicationListeners(event, type)) &#123;</span><br><span class="line">		if (executor !&#x3D; null) &#123;</span><br><span class="line">                               &#x2F;&#x2F;异步执行</span><br><span class="line">			executor.execute(() -&gt; invokeListener(listener, event));</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">                               &#x2F;&#x2F;同步执行</span><br><span class="line">			invokeListener(listener, event);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="invokeListener-doInvokeListener"><a href="#invokeListener-doInvokeListener" class="headerlink" title="invokeListener#doInvokeListener"></a>invokeListener#doInvokeListener</h4><p>最终 是通过各个监听器的onApplicationEvent 来执行事件监听</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private void doInvokeListener(ApplicationListener listener, ApplicationEvent event) &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			listener.onApplicationEvent(event);</span><br><span class="line">		&#125;</span><br><span class="line">		catch (ClassCastException ex) &#123;</span><br><span class="line">			....</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>而注解配置的监听器最终通过反射来执行方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public void processEvent(ApplicationEvent event) &#123;</span><br><span class="line">	Object[] args &#x3D; resolveArguments(event);</span><br><span class="line">	if (shouldHandle(event, args)) &#123;</span><br><span class="line">                       &#x2F;&#x2F;最终这里通过代理执行事件方法</span><br><span class="line">		Object result &#x3D; doInvoke(args);</span><br><span class="line">		if (result !&#x3D; null) &#123;  </span><br><span class="line">                                 如果返回值不为空，判断是否是需要再次发布事件，就是方法的返回值的用处</span><br><span class="line">			handleResult(result);</span><br><span class="line">		&#125;</span><br><span class="line">		else &#123;</span><br><span class="line">			logger.trace(&quot;No result object given - no result to handle&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-<hr>
-<p>spring文档位置：<br><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#spring-core">https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#spring-core</a><br>1.15.2. Standard and Custom Events</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2497,7 +2447,7 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
