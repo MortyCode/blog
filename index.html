@@ -154,6 +154,9 @@
   </div>
 
 
+  <a href="https://github.com/MortyCode" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg t="1625728495147" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="11790" width="64" height="64"><path d="M371.2 940.032v-112.128a102.4 102.4 0 0 1 33.28-78.848C282.624 727.04 231.424 652.288 231.424 563.2a171.008 171.008 0 0 1 41.984-114.176 153.6 153.6 0 0 1 4.608-102.4 179.2 179.2 0 0 1 107.008 39.424 379.392 379.392 0 0 1 97.792-11.776 387.584 387.584 0 0 1 98.816 11.776 177.152 177.152 0 0 1 105.472-37.888 153.6 153.6 0 0 1 4.608 102.4 172.544 172.544 0 0 1 42.496 112.64c0 88.576-51.2 163.328-173.568 184.832a111.104 111.104 0 0 1 32.768 78.848v113.152a340.992 340.992 0 0 1-222.208 0z" fill="#FFC300" opacity=".6" p-id="11791"></path><path d="M819.2 518.144a217.088 217.088 0 0 0-46.08-134.144 194.048 194.048 0 0 0-9.728-117.248 24.064 24.064 0 0 0-21.504-16.384 204.8 204.8 0 0 0-124.928 39.936 495.616 495.616 0 0 0-207.36 0 208.384 208.384 0 0 0-126.976-41.984 27.648 27.648 0 0 0-22.016 17.408 198.144 198.144 0 0 0-9.216 118.784A219.136 219.136 0 0 0 204.8 518.144a221.696 221.696 0 0 0 174.592 222.208 143.36 143.36 0 0 0-17.92 67.072 88.064 88.064 0 0 1-80.896-35.328 168.96 168.96 0 0 0-68.096-72.192 25.6 25.6 0 1 0-22.528 46.08 114.688 114.688 0 0 1 45.056 48.64 132.608 132.608 0 0 0 118.784 64.512h6.656v79.36h51.2V814.08a92.16 92.16 0 0 1 29.184-70.144 25.088 25.088 0 0 0 8.192-27.136 24.064 24.064 0 0 0-19.968-17.408C287.232 673.792 256 586.752 256 518.144A166.4 166.4 0 0 1 297.984 409.6a26.112 26.112 0 0 0 4.608-25.088 136.704 136.704 0 0 1 0-82.432 196.096 196.096 0 0 1 84.992 38.4 25.6 25.6 0 0 0 22.016 2.048 432.64 432.64 0 0 1 204.8 0 24.576 24.576 0 0 0 22.016-4.608 199.168 199.168 0 0 1 83.968-36.864 136.704 136.704 0 0 1 0 80.896 26.624 26.624 0 0 0 5.12 24.576 164.352 164.352 0 0 1 42.496 111.616c0 97.28-61.44 161.792-173.056 181.248a26.624 26.624 0 0 0-19.968 17.408 27.136 27.136 0 0 0 6.656 26.112 102.4 102.4 0 0 1 29.184 70.144v125.952a25.6 25.6 0 0 0 51.2 0v-125.952a153.6 153.6 0 0 0-18.432-72.192A221.696 221.696 0 0 0 819.2 518.144z" fill="#333333" p-id="11792"></path><path d="M512 25.6a485.888 485.888 0 0 0-295.936 870.4 25.6 25.6 0 1 0 31.232-40.448A435.2 435.2 0 1 1 947.2 512a436.224 436.224 0 0 1-219.648 377.856 25.6 25.6 0 0 0 12.8 47.616 24.064 24.064 0 0 0 12.8-3.584A485.888 485.888 0 0 0 512 25.6z" fill="#333333" p-id="11793"></path></svg></a>
+
+
     <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
@@ -611,6 +614,117 @@
       
           <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>所管理的对象，无论是连接还是线程，它们的<strong>创建过程都比较耗时</strong>，也比较<strong>消耗系统资源。</strong>所以，我们把它们放在一个池子里统一管理起来，以达到<strong>提升性能和资源复用的目的。</strong><br>它的核心思想是<strong>空间换时间，</strong>期望使用预先创建好的对象来减少频繁创建对象的性能开销，同时还可以对对象进行统一的管理，降低了对象的使用的成本，总之是好处多多。</p>
 <h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>比方说存储池子中的对象肯定需要消耗多余的内存，如果对象没有被频繁使用，就会造成内存上的浪费。再比方说，池子中的对象需要在系统启动的时候就预先创建完成，这在一定程度上增加了系统启动时间。<br>不过相对于优点来说，是微不足道的。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/07/01/java/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
+      <meta itemprop="name" content="河神">
+      <meta itemprop="description" content="你可以跑,但你不能躲">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rick-Code">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/01/java/%E5%B9%B6%E5%8F%91%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">线程安全</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-01T00:00:00+08:00">2021-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-08 15:52:55" itemprop="dateModified" datetime="2021-07-08T15:52:55+08:00">2021-07-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">分布式</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="线程安全是什么？"><a href="#线程安全是什么？" class="headerlink" title="线程安全是什么？"></a>线程安全是什么？</h2><ul>
+<li>当多个线程同时访问一个对象时，如果不用考虑这些线程在运行时环境下的调度和交替执行，也不需要进行额外的同步，或者在调用方进行任何其他的协调操作，调用这个对象的行为都可以获得正确的结果，那就称这个对象是线程安全的。</li>
+<li>所以线程安全的定义是：<strong>同一个对象被多个线程同时访问，在任何情况下，获得的结果都是正确 。</strong></li>
+</ul>
+<h3 id="这样的话，线程安全对象就必须："><a href="#这样的话，线程安全对象就必须：" class="headerlink" title="这样的话，线程安全对象就必须："></a>这样的话，线程安全对象就必须：</h3><ol>
+<li>代码本身封装了必要的安全保障手段 如 <strong>互斥</strong>和**同步 **等，保证了可见性，原子性，有序性 的代码。</li>
+</ol>
+<h3 id="死锁的条件"><a href="#死锁的条件" class="headerlink" title="死锁的条件"></a>死锁的条件</h3><ul>
+<li><strong>死锁指的是多个相互竞争资源的线程因为互相的等待，导致的永久阻塞。</strong><ul>
+<li>互斥 —- 最基础的条件，不可以破坏</li>
+<li>占有且等待</li>
+<li>不可抢占</li>
+<li>循环等待</li>
+</ul>
+</li>
+</ul>
+<h4 id="破坏死锁"><a href="#破坏死锁" class="headerlink" title="破坏死锁"></a>破坏死锁</h4><ol>
+<li>同时获取所有资源，不允许单个占有后等待，破坏占有且等待</li>
+<li>获取资源增加时限，超时后，自动释放已经抢占的资源</li>
+<li>资源获取有顺序，没有第一个资源就不可获取其他资源</li>
+</ol>
+<h5 id="死锁解除"><a href="#死锁解除" class="headerlink" title="死锁解除"></a>死锁解除</h5><ol>
+<li>资源剥夺 挂起进程，释放资源</li>
+<li>进程撤销 撤销部分死锁进程</li>
+<li>进程回退 回退部分进程到可以避免死锁的位点，但是这个释放是自行，而不是剥夺</li>
+</ol>
+<h3 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h3><ul>
+<li>多个线程主动释放占有资源给别的线程，然后资源一直在多个线程之间移动，但是任务确无法执行，永久阻塞。</li>
+</ul>
+<h3 id="线程饥饿"><a href="#线程饥饿" class="headerlink" title="线程饥饿"></a>线程饥饿</h3><ul>
+<li>优先级高的线程一直抢占优先级低线程的资源，导致低优先级线程无法得到执行，这就是饥饿</li>
+<li>一个线程一直占着一个资源不放而导致其他线程得不到执行，</li>
+<li>解决方式：公平锁</li>
+</ul>
+<h2 id="管程是什么？"><a href="#管程是什么？" class="headerlink" title="管程是什么？"></a>管程是什么？</h2><ul>
+<li>管程，指的是管理共享变量以及对共享变量的操作过程，让他们支持并发</li>
+<li>用java来表述就是 管理类的成员变量和成员方法，让这个类是线程安全的</li>
+</ul>
 
       
     </div>
@@ -2105,281 +2219,10 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.rcode.top/2021/02/13/netty/netty/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://z3.ax1x.com/2021/05/30/2VQ8M9.jpg">
-      <meta itemprop="name" content="河神">
-      <meta itemprop="description" content="你可以跑,但你不能躲">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rick-Code">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/13/netty/netty/" class="post-title-link" itemprop="url">网络通信原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-13 19:49:31" itemprop="dateCreated datePublished" datetime="2021-02-13T19:49:31+08:00">2021-02-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-30 17:14:36" itemprop="dateModified" datetime="2021-05-30T17:14:36+08:00">2021-05-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/netty/" itemprop="url" rel="index"><span itemprop="name">netty</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <table>
-<thead>
-<tr>
-<th align="center">TCP/IP</th>
-<th align="center">TCP/IP</th>
-<th align="center">OSI</th>
-<th align="center">内容</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">应用层</td>
-<td align="center">应用层</td>
-<td align="center">应用层</td>
-<td align="center">HTTP/FTP/POP3 等等应用协议</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">表示层</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">会话层</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">传输层</td>
-<td align="center">传输层</td>
-<td align="center">传输层</td>
-<td align="center">TCP协议</td>
-</tr>
-<tr>
-<td align="center">网络层</td>
-<td align="center">网络层</td>
-<td align="center">网络层</td>
-<td align="center">IP协议</td>
-</tr>
-<tr>
-<td align="center">网络接口层</td>
-<td align="center">数据链路层</td>
-<td align="center">数据链路层</td>
-<td align="center">将0 1 信号进行组封装位数据包</td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center">物理层</td>
-<td align="center">物理层</td>
-<td align="center">基于电信号发送高低位信号</td>
-</tr>
-</tbody></table>
-<h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><p>客户端发起请求</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">client</th>
-<th align="center"></th>
-<th align="center">server</th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">syn_send</td>
-<td align="center">SYN=1   seq = x</td>
-<td align="center">-&gt;</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">&lt;-</td>
-<td align="center">SYN = 1   ACK=1    seq=y ack= x+1</td>
-<td align="center">syn_recv</td>
-</tr>
-<tr>
-<td align="center">连接成功</td>
-<td align="center">ACK=1  ack = y+1</td>
-<td align="center">-&gt;</td>
-<td align="center"></td>
-<td align="center">连接成功</td>
-</tr>
-</tbody></table>
-<h2 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h2><table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">写</th>
-<th align="center"></th>
-<th align="center">读</th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"></td>
-<td align="center">seq=x+1 ack=y+1</td>
-<td align="center">-&gt;</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">&lt;-</td>
-<td align="center">ack = x+2</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><p>任意一方发起</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">client</th>
-<th align="center"></th>
-<th align="center">server</th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">fin_wait_1</td>
-<td align="center">FIN=1 seq=u</td>
-<td align="center">-&gt;</td>
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">fin_wait_2</td>
-<td align="center"></td>
-<td align="center">&lt;-</td>
-<td align="center">ACK=1 ack=u+1  seq=v</td>
-<td align="center">close_wait</td>
-</tr>
-<tr>
-<td align="center">time_walt</td>
-<td align="center"></td>
-<td align="center">&lt;-</td>
-<td align="center">FIN =1 ACK=1 seq =w ack=u+1</td>
-<td align="center">last_ack</td>
-</tr>
-<tr>
-<td align="center">time_walt</td>
-<td align="center">ACK=1 seq=u+1 ack=w+1</td>
-<td align="center">-&gt;</td>
-<td align="center"></td>
-<td align="center">close()</td>
-</tr>
-</tbody></table>
-<ol>
-<li>客户端发起中断请求，FIN 请求，seq为(前面传送过来的最后一个数据字节+1)，意味着客户端没有数据发送了</li>
-<li>此时返回一个ACK确认，表示收到了，但是服务端如果有数据需要发送，还是可以继续发送，客户端也需要接受。并且服务端进行等待关闭。客户端接口之后，进入终止等待2状态</li>
-<li>当服务端的数据发送完成之后，服务端 发送FIN 请求，服务端进入最后确认状态</li>
-<li>当客户端收到最后确认之后，发送确认消息，服务端收到后立即 进入CLOSE 状态。但是客户端此时还没有关闭，必须等待（2MSL）2倍最长报文寿命的时候，才能进入CLOSE状态 ，（可以设置不等待，直接关闭）</li>
-</ol>
-<h2 id="IO是什么"><a href="#IO是什么" class="headerlink" title="IO是什么"></a>IO是什么</h2><ol>
-<li><p>对于Unix来说，一切皆文件，Socket,管道，FIFO,终端，都是文件，操作这些文件，就是IO操作</p>
-</li>
-<li><p> 文件描述符（FD）,文件描述符标识 文件流，让操作系统可以找到需要操作的流。</p>
-<h2 id="用户空间-内核空间"><a href="#用户空间-内核空间" class="headerlink" title="用户空间/内核空间"></a>用户空间/内核空间</h2></li>
-<li><p>内核空间存放的是内核代码 和 数据</p>
-<ol>
-<li>权限为0级</li>
-</ol>
-</li>
-<li><p>用户空间存放的是用户代码 和 数据 </p>
-<ol>
-<li>权限为3级</li>
-</ol>
-</li>
-</ol>
-<h3 id="一般的网络操作为："><a href="#一般的网络操作为：" class="headerlink" title="一般的网络操作为："></a>一般的网络操作为：</h3><ol>
-<li>等待数据到达网卡，然后将数据复制到内核缓冲区</li>
-<li>从内核缓冲区复制数据，然后拷贝到用户空间</li>
-</ol>
-<h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ul>
-<li>IO模型一般分为两个步骤，1 等待 2.数据复制<table>
-<thead>
-<tr>
-<th>IO模型</th>
-<th>特点</th>
-<th>优点</th>
-<th>缺点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>阻塞IO模型</td>
-<td>在IO执行的两个阶段，都会被阻塞</td>
-<td>1.阻塞进程不占用CPU</td>
-<td></td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-<p>2.响应即时 | 1.需要为每一个请求分配一个线程，系统开销大，不适合大并发 |<br>| 非阻塞IO模型 | 第一阶段不阻塞，由阻塞变为不断的轮询<br>第二阶段阻塞 |  | 1.需要不断轮询，CPU消耗大，适合<br>2.需要为每一个请求分配一个线程，系统开销大，不适合大并发<br>3.响应不及时 |<br>| 多路复用IO模型 | 第一阶段，多个进程的I/O注册到一个复用器（Selector）上面，当没有数据的时候Selector阻塞，当有数据的时候，会返回数据。</p>
-<p>第二阶段阻塞 | 1.多个请求可以由一个线程进行管理，节省CPU 和 系统消耗。<br>2.适合高并发应用，性能好 | 开发难度大 |<br>| 信号驱动IO模型 | 第一阶段由系统通过注册的信号来通知用户进程，是非阻塞的</p>
-<p>第二阶段阻塞 | 应用场景少 |  |<br>| 异步IO模型 | 第一阶段 第二阶段 都不阻塞，一步完成后通知通知应用程序 | JAVA的aio就是这样 |  |</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2447,20 +2290,20 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2474,6 +2317,9 @@ ps:在es的bulk操作中，可以把索引，type加在操作前面，这样在j
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
           <a href="https://www.jianshu.com/u/40227ed13cdc" title="https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;40227ed13cdc" rel="noopener" target="_blank">简书</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/MortyCode" title="https:&#x2F;&#x2F;github.com&#x2F;MortyCode" rel="noopener" target="_blank">GitHub</a>
         </li>
     </ul>
   </div>
